@@ -350,4 +350,4 @@ document.addEventListener('mousemove', e => {
     createPetal(e.clientX, e.clientY);
     window.lastPetalTime = Date.now();
   }
-});
+})
