@@ -466,10 +466,11 @@ background: none;
   position: absolute;
   left: -70px;
   bottom: -200px;
-  width: 420px; /* Одинаковая ширина для всех */
+  width: 420px;
   height: auto;
   object-fit: contain;
   transition: transform 0.5s ease, opacity 0.5s ease;
+  z-index: 1; /* было просто абсолютное, добавь меньше гербов */
 }
 
 .card-text {
@@ -481,6 +482,7 @@ background: none;
   transition: opacity 0.5s ease, transform 0.5s ease;
   opacity: 1;
   transform: translateY(0);
+  z-index: 2; /* меньше гербов */
 }
 
 .faculty {
@@ -856,4 +858,5 @@ background: none;
 .group-message-button:hover {
   background-color: #aa4c4c;
 }
+
 
