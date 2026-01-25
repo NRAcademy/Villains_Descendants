@@ -856,50 +856,62 @@ background: none;
 .group-message-button:hover {
   background-color: #aa4c4c;
 }
-
 /* ===============================
-   📱 АДАПТИВ ПОД ТЕЛЕФОН
+   📱📐 ТЕЛЕФОН — ГОРИЗОНТАЛЬНО
    =============================== */
-@media (max-width: 768px) {
+@media (max-width: 932px) and (orientation: landscape) {
 
-  /* --- Шапка --- */
-  .site-header {
-    height: 60px;
-    background: rgba(0, 0, 0, 0.9);
-  }
-
-  .header-inner {
-    padding: 0 20px;
-    gap: 20px;
-    justify-content: space-around;
-  }
-
-  .header-link {
+  html, body {
     font-size: 14px;
   }
 
+  /* ==== ШАПКА ==== */
+  .site-header {
+    height: 50px;
+  }
+
+  .header-inner {
+    padding: 0 12px;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .header-link {
+    font-size: 13px;
+  }
+
   .header-icon img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
   }
 
-  /* --- Первый блок --- */
+  /* ==== ПЕРВЫЙ БЛОК ==== */
   .first-block {
-    padding: 0 20px;
-    background-position: center;
-    background-size: cover;
+    padding-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
-  .title-first {
-    font-size: 28px;
-  }
-
-  .subtitle-first {
-    font-size: 16px;
+  .content-center {
+    margin-top: 0;
+    gap: 12px;
   }
 
   .coffin {
-    width: 40px;
+    width: 36px;
+  }
+
+  .title-first {
+    font-size: 26px;
+    line-height: 1.1;
+  }
+
+  .subtitle-first {
+    font-size: 14px;
+  }
+
+  .start-wrap {
+    gap: 20px;
   }
 
   .start-line {
@@ -910,82 +922,68 @@ background: none;
     font-size: 18px;
   }
 
-  /* --- Винил --- */
+  /* ==== ВИНИЛ ==== */
   .vinyl {
-    bottom: 100px;
-    left: -70px;
-    width: 120px;
-    height: 120px;
+    bottom: 40px;
+    left: -60px;
+    width: 90px;
+    height: 90px;
   }
 
-  /* --- Второй блок --- */
+  /* ==== ВТОРОЙ БЛОК ==== */
   .story-block {
-    padding: 40px 20px;
-    gap: 60px;
+    padding: 30px 20px;
+    gap: 50px;
   }
 
   .story-section {
-    flex-direction: column !important;
-    text-align: center;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
   }
 
-  .story-image,
+  .story-image {
+    flex: 0 0 50%;
+  }
+
   .story-text {
-    max-width: 100%;
-    flex: none;
+    flex: 0 0 50%;
+    max-width: 50%;
+    font-size: 14px;
+    line-height: 1.4;
   }
 
   .story-caption p {
-    font-size: 16px;
-  }
-
-  .story-text {
     font-size: 14px;
-    line-height: 1.4;
-    text-align: justify;
   }
 
-  .btn-more img {
-    max-width: 180px;
-  }
-
-  .btn-more span {
-    font-size: 12px;
-  }
-
-  /* --- Третий блок --- */
+  /* ==== ТРЕТИЙ БЛОК ==== */
   .third-block {
-    background-size: cover;
-    padding-bottom: 80px;
+    padding-bottom: 60px;
   }
 
   .title {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .subtitle {
-    font-size: 16px;
-    margin-bottom: 50px;
+    font-size: 14px;
+    margin-bottom: 40px;
   }
 
   .card {
-    width: 100%;
-    max-width: 90%;
+    max-width: 100%;
   }
 
   .character {
-    position: relative;
-    width: 250px;
-    left: 0;
-    bottom: 0;
-    margin: 0 auto;
-    display: block;
+    width: 220px !important;
+    left: -40px !important;
+    bottom: -80px !important;
   }
 
   .card-text {
-    position: static;
-    text-align: center;
-    margin-top: 20px;
+    top: 20px;
+    left: 200px;
   }
 
   .faculty {
@@ -994,127 +992,45 @@ background: none;
 
   .description-small,
   .description-big {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .button-box {
-    position: static;
-    margin: 20px auto;
-    text-align: center;
+    bottom: 40px;
+    left: -60px;
+    width: 140px;
   }
 
-  .herbs {
-    position: static;
-    justify-content: center;
+  .herbs img {
+    width: 42px;
   }
 
-  /* --- Четвёртый блок --- */
-  .icon-row {
-    flex-direction: column;
-    gap: 20px;
+  /* ==== ЧЕТВЁРТЫЙ БЛОК ==== */
+  .fourth-block {
+    padding: 40px 16px 80px;
   }
 
   .icon-img {
     width: 120px;
   }
 
-  /* --- Пятый блок --- */
-  .fifth-block-bg {
-    display: none;
-  }
-
-  .fifth-hero {
-    text-align: center;
-    padding: 20px;
-  }
-
+  /* ==== ПЯТЫЙ БЛОК ==== */
   .fifth-title {
     font-size: 24px;
+    margin-bottom: 40px;
   }
 
   .fifth-subtitle {
-    font-size: 16px;
+    font-size: 14px;
   }
 
-  .fifth-buttons {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .column {
-    width: 100%;
-    text-align: center;
+  .fifth-button .button-img {
+    width: 260px;
   }
 
   .fifth-columns {
-    flex-direction: column;
-    align-items: center;
+    padding: 20px;
+    gap: 30px;
   }
 }
-
-
-/* ===============================
-   💻 АДАПТИВ ПОД ПЛАНШЕТ
-   =============================== */
-@media (min-width: 769px) and (max-width: 1024px) {
-
-  .header-inner {
-    padding: 0 40px;
-    gap: 40px;
-  }
-
-  .header-link {
-    font-size: 18px;
-  }
-
-  .title-first {
-    font-size: 40px;
-  }
-
-  .subtitle-first {
-    font-size: 20px;
-  }
-
-  .story-block {
-    padding: 60px 40px;
-  }
-
-  .story-section {
-    flex-direction: column;
-  }
-
-  .story-text {
-    max-width: 90%;
-    font-size: 16px;
-  }
-
-  .third-block {
-    background-size: cover;
-  }
-
-  .character {
-    width: 320px;
-    left: 0;
-    bottom: 0;
-    margin: 0 auto;
-  }
-
-  .card-text {
-    position: static;
-    text-align: center;
-  }
-
-  .herbs {
-    justify-content: center;
-  }
-
-  .icon-img {
-    width: 140px;
-  }
-
-  .fifth-block-bg {
-    opacity: 0.3;
-  }
-}
-
 
