@@ -567,20 +567,20 @@ background: none;
 
 .herbs {
   position: absolute;
-  height: 70px;
-  width: auto;
-  object-fit: contain;
   bottom: 5px;
   left: 65%;
   transform: translateX(-50%);
   display: flex;
   gap: 5px;
+  z-index: 10; /* <- добавляем, чтобы гербы были сверху */
 }
 
 .herbs img {
   width: 60px;
   height: auto;
   object-fit: contain;
+  cursor: pointer; /* чтобы было понятно, что кликабельно */
+  pointer-events: auto; /* на всякий случай */
 }
 
 .herbs img:hover {
@@ -856,3 +856,4 @@ background: none;
 .group-message-button:hover {
   background-color: #aa4c4c;
 }
+
