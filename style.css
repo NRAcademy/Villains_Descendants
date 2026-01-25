@@ -1,3 +1,4 @@
+/* ========== ШРИФТЫ ========== */
 @font-face {
   font-family: 'AmericanaTOT';
   src: url('first_block_home_page/AmericanaTOT.otf') format('opentype');
@@ -14,42 +15,35 @@
   font-family: 'ConstantineThird';
   src: url('third_block_home_page/Constantine.otf') format('opentype');
 }
+@font-face {
+  font-family: "Gangitem";
+  src: url("third_block_home_page/Gangitem.otf");
+}
 
+/* ========== СБРОС И ОСНОВНЫЕ СТИЛИ ========== */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
 html, body {
   height: 100%;
-  margin: 0;
-  font-family: 'AmericanaTOT', sans-serif;
-  color: #fff;
-  background: #000; /* оставляем чёрный фон для всего сайта */
-  overflow-x: hidden;
-}
-
-body {
   margin: 0;
   font-family: 'AmericanaTOT', sans-serif;
   color: #fff;
   background: #000;
   overflow-x: hidden;
 }
-
 img {
   display: block;
   max-width: 100%;
   height: auto;
   user-select: none;
 }
-
 a {
   color: inherit;
   text-decoration: none;
 }
-
 button {
   font: inherit;
   color: inherit;
@@ -58,52 +52,49 @@ button {
   cursor: pointer;
 }
 
-/* ==== ШАПКА ==== */
+/* =============================== */
+/* ===== ШАПКА ===== */
 .site-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 2.3cm; /* фиксированная высота */
+  height: 2.3cm;
   background: rgba(1, 1, 1, 0.777);
   display: flex;
   align-items: center;
-  z-index: 1000; /* всегда поверх */
+  z-index: 1000;
 }
-
 .header-inner {
   width: 100%;
-  padding: 0 6cm 0 4cm; /* слева 4см, справа 6см */
+  padding: 0 6cm 0 4cm;
   display: flex;
   justify-content: flex-end;
   gap: 80px;
   align-items: center;
 }
-
 .header-link,
 .header-icon {
-  font-family: 'Anticva', serif; 
+  font-family: 'Anticva', serif;
   font-size: 24px;
   gap: 80px;
   transition: 0.3s;
 }
-
 .header-link:hover {
   text-shadow: 0 0 10px white;
 }
-
 .header-icon img {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   object-fit: contain;
 }
-
 .header-icon:hover img {
   filter: drop-shadow(0 0 8px white);
 }
 
-/* ==== ПЕРВЫЙ БЛОК ==== */
+/* =============================== */
+/* ===== ПЕРВЫЙ БЛОК ===== */
 .first-block {
   height: 100vh;
   background: url("first_block_home_page/фон.png") no-repeat center/cover;
@@ -116,112 +107,84 @@ button {
   text-align: center;
   position: relative;
 }
-
 .content-center {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-top: 0
+  gap: 30px;
+  margin-top: 210px;
 }
-
-.coffins-row {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.coffin {
-  width: 80px;
-}
-
-.content-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px; /* одинаковый промежуток между всеми элементами */
-  margin-top: 210px; /* можно подрегулировать, чтобы поднять/опустить весь блок */
-}
-
 .title-first {
   font-family: 'AmericanaTOT', serif;
   font-size: 48px;
   font-weight: normal;
   line-height: 1.2;
   margin: 0;
-  transform: scaleY(1.2); /* растягиваем на 120% */
-  transform-origin: center; 
+  transform: scaleY(1.2);
+  transform-origin: center;
 }
-
 .subtitle-first {
   font-family: 'AmericanaTOT', serif;
   font-size: 24px;
   font-weight: normal;
   line-height: 1.3;
   margin: 0;
-  transform: scaleY(1.2); /* растягиваем на 120% */
-  transform-origin: center; 
+  transform: scaleY(1.2);
+  transform-origin: center;
 }
-
 .start-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px; /* одинаковое расстояние между линией и кнопкой */
+  gap: 40px;
 }
-
 .start-line {
   width: 120px;
 }
-
 .start-btn {
   font-family: 'Anticva';
   font-size: 32px;
   transition: 0.3s;
 }
-
 .start-btn:hover {
   text-shadow: 0 0 10px white;
 }
 
-/* ==== ВИНИЛ ==== */
+/* ===== ВИНИЛ ===== */
 .vinyl {
   position: fixed;
   bottom: 300px;
-  left: -100px;   /* половина ширины в минус */
+  left: -100px;
   width: 200px;
   height: 200px;
   cursor: pointer;
   z-index: 900;
 }
-
 .vinyl img {
   display: block;
   width: 100%;
-  transform-origin: center center; 
+  transform-origin: center center;
   animation: spin 6s linear infinite;
   animation-play-state: paused;
 }
-
 .vinyl.playing img {
   animation-play-state: running;
 }
-
 @keyframes spin {
   from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
 }
 
-/* ==== ВТОРОЙ БЛОК ==== */
+/* =============================== */
+/* ===== ВТОРОЙ БЛОК ===== */
 .second-block {
   min-height: 100vh;
-background: url("second_block_home_page/фон.png") no-repeat center center / cover;
+  background: url("second_block_home_page/фон.png") no-repeat center center / cover;
   background-attachment: fixed; 
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #000000;
+  color: #000;
   font-size: 32px;
 }
 
@@ -1033,4 +996,5 @@ background: none;
     gap: 30px;
   }
 }
+
 
