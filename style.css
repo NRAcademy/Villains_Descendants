@@ -834,6 +834,11 @@ background: none;
   background-color: #aa4c4c;
 }
 
+.fifth-block .fifth-content .fifth-buttons {
+  position: relative !important;
+  top: 30px !important;
+}
+
 button,
 a,
 [role="button"],
