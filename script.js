@@ -344,3 +344,19 @@ document.addEventListener('mousemove', e => {
     window.lastPetalTime = Date.now();
   }
 })
+
+// Запрет правой кнопки мыши
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// Запрет копирования
+document.addEventListener('copy', e => e.preventDefault());
+
+// Запрет горячих клавиш (Ctrl+C, Ctrl+U, Ctrl+S, F12)
+document.addEventListener('keydown', e => {
+  if (
+    (e.ctrlKey && ['c', 'u', 's', 'a'].includes(e.key.toLowerCase())) ||
+    e.key === 'F12'
+  ) {
+    e.preventDefault();
+  }
+});
