@@ -673,34 +673,30 @@ background: none;
 .fifth-block {
   position: relative;
   width: 100%;
-  min-height: 600px;
   text-align: center;
   overflow: hidden;
 }
 
-/* Фон */
+/* Фон 5 — хлеб */
 .fifth-block-bg {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  display: block;
   width: 100%;
   height: auto;
-  z-index: 0;
 }
 
-/* Кнопки поверх фона */
+/* Кнопки — майонез поверх хлеба */
 .fifth-buttons {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  top: 45%; /* двигай вверх/вниз */
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 5;
 
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
-
-  margin-top: -180px; /* чем меньше значение, тем выше кнопки */
-  margin-bottom: 80px;
 }
 
 .fifth-button {
