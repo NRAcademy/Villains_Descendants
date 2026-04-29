@@ -732,16 +732,15 @@ background: none;
 
 /* Колонки */
 .fifth-columns {
-  width: 100%;
+  width: calc(100% - 120px);
+  max-width: 1200px;
   box-sizing: border-box;
 
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 60px;
 
-  gap: 60px;
-  margin-top: 120px;
+  margin: 120px auto 0;
 
   background: rgba(0, 0, 0, 0.85);
   padding: 40px 60px;
@@ -751,27 +750,26 @@ background: none;
   z-index: 2;
 }
 
-.column {
-  flex: 1 1 200px;
-  min-width: 180px;
+.fifth-columns > .column {
+  min-width: 0;
   text-align: left;
 }
 
-.column-title {
+.fifth-columns .column-title {
   font-family: "Anticva", serif;
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 40px;
+  margin: 0 0 28px;
   color: #883a3a;
 }
 
-.column ul {
+.fifth-columns ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.column li {
+.fifth-columns li {
   font-family: "Anticva", serif;
   font-size: 14px;
   font-weight: normal;
@@ -779,18 +777,19 @@ background: none;
   cursor: pointer;
   transition: color 0.3s ease, transform 0.2s ease;
   color: #f0f0f0;
+  white-space: normal;
 }
 
-.column li:hover {
+.fifth-columns li:hover {
   color: #883a3a;
   transform: translateX(4px);
 }
 
 .help-row {
   display: flex;
-  align-items: center;    /* 🔹 по центру по вертикали */
+  align-items: center;
   gap: 10px;
-  margin-top: 16px;
+  margin-top: 0;
   margin-bottom: 24px;
 }
 
@@ -801,14 +800,13 @@ background: none;
   flex-shrink: 0;
 }
 
-/* "Создатель" как <li> с эффектом и выравниванием */
 .creator-text {
   font-family: "Anticva", serif;
   font-size: 14px;
   color: #f0f0f0;
   cursor: pointer;
   transition: color 0.3s ease, transform 0.2s ease;
-  line-height: 1; /* 🔹 строгое выравнивание по центру */
+  line-height: 1;
 }
 
 .creator-text:hover {
@@ -816,7 +814,6 @@ background: none;
   transform: translateX(4px);
 }
 
-/* Красная кнопка "ЛС группы" */
 .group-message-button {
   background-color: #883a3a;
   color: #ffffff;
