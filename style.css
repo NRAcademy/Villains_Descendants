@@ -674,6 +674,9 @@ background: none;
   position: relative;
   width: 100%;
   text-align: center;
+
+  margin-top: -80px;
+  margin-bottom: -80px;
 }
 
 /* Фон */
@@ -686,7 +689,7 @@ background: none;
 .fifth-content {
   position: relative;
   z-index: 2;
-  margin-top: -190px;
+  margin-top: -160px;
 }
 
 /* Кнопки */
