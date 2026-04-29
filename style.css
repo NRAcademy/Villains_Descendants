@@ -732,21 +732,29 @@ background: none;
 
 /* Колонки */
 .fifth-columns {
-  margin-top: 60px; /* теперь будет работать */
-  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex !important;
+  flex-direction: row !important;
   justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
+  align-items: flex-start;
+
+  gap: 60px;
+  margin-top: 120px;
 
   background: rgba(0, 0, 0, 0.85);
   padding: 40px 60px;
   border-radius: 12px;
+
+  position: relative;
+  z-index: 2;
 }
 
 .column {
-  text-align: left;
   flex: 1 1 200px;
   min-width: 180px;
+  text-align: left;
 }
 
 .column-title {
