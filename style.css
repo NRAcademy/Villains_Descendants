@@ -674,7 +674,7 @@ background: none;
   position: relative;
   width: 100%;
   text-align: center;
-  margin-bottom: -120px;
+  margin-bottom: -80px;
 }
 
 /* Фон */
@@ -689,7 +689,7 @@ background: none;
   position: relative;
   z-index: 2;
 
-  margin-top: -120px; /* вот это ключ! регулируешь здесь */
+  margin-top: -160px; /* вот это ключ! регулируешь здесь */
 }
 
 /* Кнопки */
