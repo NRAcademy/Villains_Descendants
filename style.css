@@ -680,6 +680,7 @@ background: none;
 .fifth-hero {
   position: relative;
   width: 100%;
+  overflow: visible;
 }
 
 .fifth-block-bg {
@@ -688,11 +689,9 @@ background: none;
 }
 
 .fifth-content {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 40;
+  position: relative;
   z-index: 5;
+  margin-top: -80px;
 }
 
 .fifth-buttons {
