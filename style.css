@@ -687,11 +687,9 @@ background: none;
 
 /* ТОЛЬКО верх (поднимаем) */
 .fifth-content {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  left: 50%;
-  top: 20%;
-  transform: translateX(-50%);
+  margin-top: -145px;
   width: 100%;
 }
 
