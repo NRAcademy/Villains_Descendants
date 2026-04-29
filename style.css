@@ -690,7 +690,7 @@ background: none;
   position: absolute;
   z-index: 2;
   left: 50%;
-  top: 48%;
+  top: 52%;
   transform: translateX(-50%);
   width: 100%;
 }
