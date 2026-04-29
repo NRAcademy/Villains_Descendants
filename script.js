@@ -284,6 +284,8 @@ if (id === "2") {
   });
 });
 
+document.body.style.cursor = "url('first_block_home_page/custom-cursor.png') 0 0, auto";
+
 // Анимация лепестков при клике или зажатии
 const petalImages = [
   'first_block_home_page/petal1.png',
