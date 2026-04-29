@@ -704,6 +704,7 @@ background: none;
   position: relative;
   display: inline-block;
   cursor: pointer;
+  transform: translateY(25px);
 }
 
 .fifth-button .button-img {
