@@ -284,15 +284,6 @@ if (id === "2") {
   });
 });
 
-// Установка пользовательского курсора
-document.body.style.cursor = "url('first_block_home_page/custom-cursor.png'), auto";
-
-// Установка курсора на все интерактивные элементы
-const allInteractive = document.querySelectorAll('button, a, input, textarea, select, label');
-allInteractive.forEach(el => {
-  el.style.cursor = "url('first_block_home_page/custom-cursor.png'), auto";
-});
-
 // Анимация лепестков при клике или зажатии
 const petalImages = [
   'first_block_home_page/petal1.png',
