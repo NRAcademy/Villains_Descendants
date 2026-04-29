@@ -852,23 +852,3 @@ a,
 .fifth-columns li {
   cursor: url("first_block_home_page/custom-cursor.png") 0 0, auto !important;
 }
-
-* {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-img {
-  pointer-events: none;
-}
-
-.herbs img,
-.vinyl img,
-.icon-wrapper img,
-.header-icon img,
-.fifth-button .button-img,
-.btn-more img {
-  pointer-events: auto;
-}
