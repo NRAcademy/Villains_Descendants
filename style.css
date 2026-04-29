@@ -852,3 +852,10 @@ a,
 .fifth-columns li {
   cursor: url("first_block_home_page/custom-cursor.png") 0 0, auto !important;
 }
+
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
