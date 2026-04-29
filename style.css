@@ -674,7 +674,7 @@ background: none;
   position: relative;
   width: 100%;
   text-align: center;
-  margin-bottom: -80px;
+  margin-bottom: -160px;
 }
 
 /* Фон */
@@ -760,7 +760,7 @@ background: none;
   font-family: "Anticva", serif;
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 0px;
+  margin-bottom: 60px;
   color: #883a3a;
 }
 
