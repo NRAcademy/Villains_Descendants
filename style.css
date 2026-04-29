@@ -833,4 +833,31 @@ background: none;
   background-color: #aa4c4c;
 }
 
+html,
+body,
+*,
+*::before,
+*::after {
+  cursor: url("first_block_home_page/custom-cursor.png"), auto !important;
+}
+
+button,
+a,
+input,
+textarea,
+select,
+label,
+[role="button"],
+.fifth-button,
+.btn-more,
+.button-box,
+.icon-wrapper,
+.herbs img,
+.vinyl,
+.group-message-button,
+.creator-text,
+.column li {
+  cursor: url("first_block_home_page/custom-cursor.png"), pointer !important;
+}
+
 
