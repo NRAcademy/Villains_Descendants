@@ -697,14 +697,14 @@ background: none;
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-top: 0px;
+  margin-top: 45px;
 }
 
 .fifth-button {
   position: relative;
   display: inline-block;
   cursor: pointer;
-  transform: translateY(25px);
+  transform: translateY(45px);
 }
 
 .fifth-button .button-img {
