@@ -691,7 +691,7 @@ background: none;
   position: absolute;
   left: 0;
   right: 0;
-  top: 55%;
+  top: 35%;
   transform: translateY(-100%);
   z-index: 5;
 }
