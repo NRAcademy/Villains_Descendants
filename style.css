@@ -689,9 +689,11 @@ background: none;
 }
 
 .fifth-content {
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10%;
   z-index: 5;
-  margin-top: -80px;
 }
 
 .fifth-buttons {
