@@ -738,7 +738,7 @@ background: none;
 .fifth-columns {
   display: flex;
   justify-content: space-between;
-  gap: 60px;
+  gap: 20px;
   margin-top: 60px;
   flex-wrap: wrap;
 
