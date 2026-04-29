@@ -671,29 +671,30 @@ background: none;
 }
 
 .fifth-block {
-  position: relative;
   width: 100%;
   text-align: center;
-
   margin-top: -50px;
   margin-bottom: -50px;
 }
 
-/* Фон */
+.fifth-hero {
+  position: relative;
+  width: 100%;
+}
+
 .fifth-block-bg {
   display: block;
   width: 100%;
 }
 
-/* ТОЛЬКО верх (поднимаем) */
 .fifth-content {
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 57%;
   z-index: 2;
-  margin-top: -250px;
-  width: 100%;
 }
 
-/* Кнопки */
 .fifth-buttons {
   display: flex;
   justify-content: center;
