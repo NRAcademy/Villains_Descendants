@@ -673,26 +673,34 @@ background: none;
 .fifth-block {
   position: relative;
   width: 100%;
-  /* min-height: 100vh; — удалить или уменьшить */
-  min-height: 600px; /* например */
+  min-height: 600px;
   text-align: center;
-  padding-bottom: 0; /* или положительное значение */
   overflow: hidden;
 }
 
-/* Герой блок */
-.fifth-hero {
-  position: relative;
-  z-index: 1;
-  margin-top: -150px;
+/* Фон */
+.fifth-block-bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: auto;
+  z-index: 0;
 }
 
-/* Кнопки */
+/* Кнопки поверх фона */
 .fifth-buttons {
+  position: relative;
+  z-index: 2;
+
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 20px;
-  margin-bottom: 080px;
+
+  margin-top: -100px; /* чем меньше значение, тем выше кнопки */
+  margin-bottom: 80px;
 }
 
 .fifth-button {
@@ -712,12 +720,14 @@ background: none;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scaleY(1.05);
+
   font-family: "Anticva", serif;
   font-size: 20px;
   font-weight: normal;
   color: #ffffff;
-  transition: filter 0.3s ease, color 0.3s ease;
+
   white-space: nowrap;
+  transition: filter 0.3s ease, color 0.3s ease;
 }
 
 .fifth-button:hover .button-img,
@@ -733,9 +743,11 @@ background: none;
   gap: 60px;
   margin-top: 60px;
   flex-wrap: wrap;
+
   background: rgba(0, 0, 0, 0.85);
   padding: 40px 60px;
   border-radius: 12px;
+
   position: relative;
   z-index: 2;
 }
