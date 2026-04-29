@@ -680,20 +680,6 @@ background: none;
   overflow: hidden;
 }
 
-/* Цветы */
-.fifth-flowers {
-  position: absolute;
-  top: 600px;
-  left: 50%;
- margin-top:-650px;
-  transform: translateX(-50%);
-  width: auto;
-  height: auto;
-  object-fit: cover;
-  z-index: 0;
-  pointer-events: none;
-}
-
 /* Герой блок */
 .fifth-hero {
   position: relative;
