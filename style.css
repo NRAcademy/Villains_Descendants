@@ -518,7 +518,7 @@ background: none;
 .button-box {
   position: absolute;
   bottom: 100px;
-  left: 100px;
+  left: -100px;
   width: 180px;
   display: flex;
   align-items: center;
@@ -552,18 +552,18 @@ background: none;
 .button-icon {
   position: absolute;
   top: 40%;
-  left: -30px;
+  left: -10px; /* было -30px */
   width: 65px;
-  height: 60px; /* добавь это */
-  object-fit: contain; /* или 'cover' если нужно обрезать */
+  height: 60px;
+  object-fit: contain;
   transform: translateY(-50%);
-  z-index: 3;
+  z-index: 5;
 }
 
 .button-text {
   position: absolute;
   top: 55%;
-  left: 35px;
+  left: 55px; /* было 35px */
   transform: translateY(-50%);
   font-family: "Anticva", serif;
   font-size: 13px;
