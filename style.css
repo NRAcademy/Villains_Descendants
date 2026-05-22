@@ -518,8 +518,8 @@ background: none;
 .button-box {
   position: absolute;
   bottom: 100px;
-  left: -100px;
-  width: 180px;
+  left: 140px; /* ← ВМЕСТО -100px! Меняйте это значение, чтобы двигать ВСЮ кнопку целиком влево/вправо */
+  width: 200px; /* Немного увеличили ширину, чтобы крупные иконки (65-70px) из JS и текст не теснились */
   height: 70px;
   display: flex;
   align-items: center;
@@ -542,50 +542,53 @@ background: none;
   filter: brightness(0.6);
 }
 
-/* Текст остаётся читаемым — можно добавить лёгкий оттенок */
 .button-box:hover .button-text {
   color: #222;
 }
 
 /* Фон кнопки */
 .button-bg {
-  width: 160px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 170px; /* Подогнали под новый размер контейнера */
   display: block;
+  z-index: 1;
 }
 
 /* Мини герб */
 .button-icon {
   position: absolute;
-  top: 40%;
-  left: 500px; /* ← сдвиг правее */
-  width: 65px;
-  height: 60px;
+  top: 50%;
+  left: 20px; /* ← Теперь иконка аккуратно привязана к левому краю внутри кнопки */
   object-fit: contain;
   transform: translateY(-50%);
   z-index: 5;
+  /* Размеры (65px/60px) будут автоматически управляться из вашего JS */
 }
 
 /* Текст */
 .button-text {
   position: absolute;
   top: 50%;
-  left: 180px; /* ← сдвиг правее */
+  left: 95px; /* ← Текст встает сразу после мини-герба внутри кнопки */
   transform: translateY(-50%);
   font-family: "Anticva", serif;
   font-size: 13px;
   color: black;
-  z-index: 2;
+  z-index: 5;
   white-space: nowrap;
 }
 
-/* Гербы */
+/* Список семи гербов */
 .herbs {
   position: absolute;
-  bottom: -90px; /* ← опускает ниже */
+  bottom: -150px; /* ← Сдвинули ниже (было -90px). Чем больше минус, тем ниже опустятся гербы */
   left: 65%;
   transform: translateX(-50%);
   display: flex;
-  gap: 5px;
+  gap: 8px; /* Немного увеличили расстояние между ними для аккуратности */
   z-index: 10;
 }
 
