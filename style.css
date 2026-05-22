@@ -454,10 +454,11 @@ background: none;
   position: relative;
   display: inline-block;
   max-width: 1000px;
+  width: 100%; 
 }
 
 .background-card {
-  width: 92%;
+  width: 100%; 
   display: block;
   position: relative;
   z-index: 1;
@@ -465,8 +466,8 @@ background: none;
 
 .character {
   position: absolute;
-  left: -70px;
-  bottom: -200px;
+  left: -70px !important;    /* !important защитит позицию от JS */
+  bottom: -200px !important; /* если JS пытается управлять координатами */
   width: 420px;
   height: auto;
   object-fit: contain;
@@ -517,9 +518,9 @@ background: none;
 
 .button-box {
   position: absolute;
-  bottom: 100px;
-  left: 140px; /* ← ВМЕСТО -100px! Меняйте это значение, чтобы двигать ВСЮ кнопку целиком влево/вправо */
-  width: 200px; /* Немного увеличили ширину, чтобы крупные иконки (65-70px) из JS и текст не теснились */
+  bottom: 100px !important; /* Управляй высотой кнопки здесь */
+  left: 140px !important;   /* Управляй положением влево/вправо здесь */
+  width: 200px; 
   height: 70px;
   display: flex;
   align-items: center;
@@ -584,11 +585,11 @@ background: none;
 /* Список семи гербов */
 .herbs {
   position: absolute;
-  bottom: -150px; /* ← Сдвинули ниже (было -90px). Чем больше минус, тем ниже опустятся гербы */
+  bottom: -150px !important; /* Теперь значение -150px (или ниже) точно сработает */
   left: 65%;
   transform: translateX(-50%);
   display: flex;
-  gap: 8px; /* Немного увеличили расстояние между ними для аккуратности */
+  gap: 8px; 
   z-index: 10;
 }
 
