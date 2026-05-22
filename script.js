@@ -3,7 +3,7 @@ const bgMusic = document.getElementById('bgMusic');
 const vinyl = document.getElementById('vinyl'); 
 
 let playing = false; 
-let fading = null; 
+let fading = null; // Единый контроллер для анимации громкости
 
 // Кнопка «НАЧАТЬ» — музыка + скролл
 startBtn.addEventListener('click', () => { 
@@ -23,15 +23,19 @@ vinyl.addEventListener('click', () => {
 function playMusic() { 
   clearInterval(fading); 
   bgMusic.volume = 0.0; 
-  const target = 0.8; 
-  const step = 0.05; 
-  const iv = setInterval(() => { 
-    bgMusic.volume = Math.min(target, bgMusic.volume + step); 
-    if (bgMusic.volume >= target) clearInterval(iv); 
-  }, 120); 
   bgMusic.play(); 
   playing = true; 
   vinyl.classList.add('playing'); 
+
+  const target = 0.8; 
+  const step = 0.05; 
+  
+  fading = setInterval(() => { 
+    bgMusic.volume = Math.min(target, bgMusic.volume + step); 
+    if (bgMusic.volume >= target) {
+      clearInterval(fading);
+    }
+  }, 120); 
 } 
 
 function fadeOutAndPause() { 
@@ -48,8 +52,7 @@ function fadeOutAndPause() {
       bgMusic.volume = 0.8; 
     } 
   }, 120); 
-}
-
+} 
 
 document.addEventListener("DOMContentLoaded", function () {
   const herbs = document.querySelectorAll(".herbs img");
@@ -61,8 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const faculty = document.querySelector(".faculty");
   const descSmall = document.querySelector(".description-small");
   const descBig = document.querySelector(".description-big");
-  
-  // НАХОДИМ КНОПКУ «ПОДРОБНЕЕ»
   const buttonBox = document.querySelector(".button-box");
 
   const data = {
@@ -71,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
       character: "персонаж 1.png",
       miniHerb: "mini-herb-1.png",
       cardBg: "подкладка.png",
-      faculty: "Heartslabiyul",
+      faculty: "Heartslabyul",
       link: "https://vk.com/pages?oid=-237442725&p=Heartslabyul",
       descSmall: `По мотивам: Алиса в стране чудес<br>
                   Вдохновлен: Красная королева<br>
@@ -194,7 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // ИНИЦИАЛИЗАЦИЯ ССЫЛКИ ПО УМОЛЧАНИЮ (При загрузке страницы для Heartslabyul)
   if (buttonBox && data[1]) {
     buttonBox.onclick = () => window.open(data[1].link, '_blank');
   }
@@ -204,7 +204,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const id = herb.dataset.id;
       if (!data[id]) return;
 
-      // 1. Скрываем персонажа и текст
       character.style.transition = "transform 0.5s ease, opacity 0.5s ease";
       character.style.transform = "translateX(-200px)";
       character.style.opacity = "0";
@@ -213,46 +212,37 @@ document.addEventListener("DOMContentLoaded", function () {
       cardText.style.opacity = "0";
       cardText.style.transform = "translateY(10px)";
 
-      // 2. Через 500 мс — меняем контент и снова показываем
       setTimeout(() => {
         const item = data[id];
 
-        // Обновляем фон, подкладку, мини-герб
         background.style.backgroundImage = `url('third_block_home_page/${item.background}')`;
         cardBackground.src = `third_block_home_page/${item.cardBg}`;
         miniHerb.src = `third_block_home_page/${item.miniHerb}`;
 
-        // ДИНАМИЧЕСКИ ОБНОВЛЯЕМ ССЫЛКУ КНОПКИ
         if (buttonBox) {
           buttonBox.onclick = () => window.open(item.link, '_blank');
         }
 
-        // По умолчанию размеры мини-герба
         miniHerb.style.width = "65px";
         miniHerb.style.height = "60px";
 
-        // Отдельный размер для id "1", "2", "3"
         if (["1", "2", "3"].includes(id)) {
           miniHerb.style.width = "65px";
           miniHerb.style.height = "60px";
         }
 
-        // Общий увеличенный размер для 4, 5, 6, 7
         if (["4", "5", "6", "7"].includes(id)) {
           miniHerb.style.width = "70px";
           miniHerb.style.height = "60px";
         }
 
-        // Обновляем текст
         faculty.textContent = item.faculty;
         descSmall.innerHTML = item.descSmall;
         descBig.innerHTML = item.descBig;
 
-        // Обновляем персонажа
         character.src = `third_block_home_page/${item.character}`;
         character.style.width = item.width || "420px";
 
-        // Позиционируем персонажа
         if (id === "2") {
           character.style.left = "-30px";
           character.style.bottom = "-110px";
@@ -269,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
           character.style.left = "-90px";
           character.style.bottom = "-80px";
           character.style.width = "430px";
-         } else if (id === "6") {
+        } else if (id === "6") {
           character.style.left = "-80px";
           character.style.bottom = "-80px";
           character.style.width = "440px";
@@ -282,14 +272,12 @@ document.addEventListener("DOMContentLoaded", function () {
           character.style.bottom = "-200px";
         }
 
-        // Готовим эффект появления персонажа и текста
         character.style.transform = "translateX(200px)";
         character.style.opacity = "0";
 
         cardText.style.transform = "translateY(10px)";
         cardText.style.opacity = "0";
 
-        // 3. Плавно показываем персонажа и текст
         requestAnimationFrame(() => {
           character.style.transition = "transform 0.5s ease, opacity 0.5s ease";
           character.style.transform = "translateX(0)";
@@ -306,7 +294,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.body.style.cursor = "url('first_block_home_page/custom-cursor.png') 0 0, auto";
 
-// Анимация лепестков при клике или зажатии
 const petalImages = [
   'first_block_home_page/petal1.png',
   'first_block_home_page/petal2.png',
@@ -324,7 +311,7 @@ function createPetal(x, y) {
   petal.style.width = (20 + Math.random() * 30) + 'px';
   petal.style.pointerEvents = 'none';
   petal.style.opacity = '1';
-  petal.style.zIndex = 9999;
+  petal.style.zIndex = "9999";
   petal.style.transition = 'transform 1.5s ease-out, opacity 1.5s ease-out';
 
   document.body.appendChild(petal);
@@ -342,12 +329,7 @@ function createPetal(x, y) {
   }, 1500);
 }
 
-// Один лепесток при клике
-document.addEventListener('click', e => {
-  createPetal(e.clientX, e.clientY);
-});
-
-// Следование лепестков за курсором при зажатии
+// Флаг зажатия мыши
 let isMouseDown = false;
 
 document.addEventListener('mousedown', e => {
@@ -355,7 +337,11 @@ document.addEventListener('mousedown', e => {
 });
 
 document.addEventListener('mouseup', e => {
-  if (e.button === 0) isMouseDown = false;
+  if (e.button === 0) {
+    isMouseDown = false;
+    // Создаем лепесток только при полноценном одиночном клике
+    createPetal(e.clientX, e.clientY);
+  }
 });
 
 document.addEventListener('mousemove', e => {
@@ -363,15 +349,11 @@ document.addEventListener('mousemove', e => {
     createPetal(e.clientX, e.clientY);
     window.lastPetalTime = Date.now();
   }
-})
+});
 
-// Запрет правой кнопки мыши
+// Защитные функции
 document.addEventListener('contextmenu', e => e.preventDefault());
-
-// Запрет копирования
 document.addEventListener('copy', e => e.preventDefault());
-
-// Запрет горячих клавиш (Ctrl+C, Ctrl+U, Ctrl+S, F12)
 document.addEventListener('keydown', e => {
   if (
     (e.ctrlKey && ['c', 'u', 's', 'a'].includes(e.key.toLowerCase())) ||
