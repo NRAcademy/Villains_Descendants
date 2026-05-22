@@ -556,8 +556,8 @@ background: none;
 /* Мини герб */
 .button-icon {
   position: absolute;
-  top: 50%;
-  left: 160px; /* ← сдвиг правее */
+  top: 40%;
+  left: 500px; /* ← сдвиг правее */
   width: 65px;
   height: 60px;
   object-fit: contain;
