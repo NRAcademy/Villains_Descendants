@@ -562,18 +562,19 @@ background: none;
 .button-icon {
   position: absolute;
   top: 50%;
-  left: 20px; /* ← Теперь иконка аккуратно привязана к левому краю внутри кнопки */
+  left: 15px !important;     /* Прижимаем аккуратно к левому краю */
+  width: 50px !important;    /* ЖЁСТКО возвращаем ему аккуратный размер */
+  height: 50px !important;   /* !important не даст его раздуть из JS */
   object-fit: contain;
   transform: translateY(-50%);
   z-index: 5;
-  /* Размеры (65px/60px) будут автоматически управляться из вашего JS */
 }
 
 /* Текст */
 .button-text {
   position: absolute;
   top: 50%;
-  left: 95px; /* ← Текст встает сразу после мини-герба внутри кнопки */
+  left: 80px !important;     /* Сдвигаем вправо, чтобы он не пересекался с гербом */
   transform: translateY(-50%);
   font-family: "Anticva", serif;
   font-size: 13px;
@@ -585,8 +586,8 @@ background: none;
 /* Список семи гербов */
 .herbs {
   position: absolute;
-  bottom: -150px !important; /* Теперь значение -150px (или ниже) точно сработает */
-  left: 65%;
+  bottom: -40px !important;  /* БЫЛО -150px. Чем ближе к 0, тем ВЫШЕ поднимутся гербы */
+  left: 50%;                 /* Выравниваем ровно по центру карточки */
   transform: translateX(-50%);
   display: flex;
   gap: 8px; 
