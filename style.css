@@ -520,8 +520,11 @@ background: none;
   bottom: 100px;
   left: -100px;
   width: 180px;
-  display: inline-block;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
 }
 
 /* Плавные переходы для всех элементов */
@@ -863,9 +866,4 @@ a,
 .button-icon {
   z-index: 5;
   display: block;
-}
-
-.button-box {
-  position: absolute;
-  z-index: 20;
 }
