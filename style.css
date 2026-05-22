@@ -520,6 +520,7 @@ background: none;
   bottom: 100px;
   left: -100px;
   width: 180px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -528,11 +529,13 @@ background: none;
 }
 
 /* Плавные переходы для всех элементов */
-.button-bg, .button-icon, .button-text {
+.button-bg,
+.button-icon,
+.button-text {
   transition: filter 0.3s ease, color 0.3s ease;
 }
 
-/* Эффект при наведении: затемнение всех элементов */
+/* Наведение */
 .button-box:hover .button-bg,
 .button-box:hover .button-icon,
 .button-box:hover .button-text {
@@ -541,18 +544,20 @@ background: none;
 
 /* Текст остаётся читаемым — можно добавить лёгкий оттенок */
 .button-box:hover .button-text {
-  color: #222; /* чуть темнее, если нужно */
+  color: #222;
 }
 
+/* Фон кнопки */
 .button-bg {
   width: 160px;
   display: block;
 }
 
+/* Мини герб */
 .button-icon {
   position: absolute;
   top: 50%;
-  left: 10px; /* было -30px */
+  left: 25px; /* ← сдвиг правее */
   width: 65px;
   height: 60px;
   object-fit: contain;
@@ -560,10 +565,11 @@ background: none;
   z-index: 5;
 }
 
+/* Текст */
 .button-text {
   position: absolute;
   top: 50%;
-  left: 80px; /* было 35px */
+  left: 95px; /* ← сдвиг правее */
   transform: translateY(-50%);
   font-family: "Anticva", serif;
   font-size: 13px;
@@ -572,9 +578,10 @@ background: none;
   white-space: nowrap;
 }
 
+/* Гербы */
 .herbs {
   position: absolute;
-  bottom: -25px; /* Было 5px. Отрицательное значение опустит гербы ниже, к самому краю или за него */
+  bottom: -55px; /* ← опускает ниже */
   left: 65%;
   transform: translateX(-50%);
   display: flex;
@@ -586,8 +593,8 @@ background: none;
   width: 60px;
   height: auto;
   object-fit: contain;
-  cursor: pointer; /* чтобы было понятно, что кликабельно */
-  pointer-events: auto; /* на всякий случай */
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .herbs img:hover {
