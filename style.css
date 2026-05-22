@@ -854,3 +854,18 @@ a,
 .fifth-columns li {
   cursor: url("first_block_home_page/custom-cursor.png") 0 0, auto !important;
 }
+
+.button-bg,
+.button-text {
+  pointer-events: none;
+}
+
+.button-icon {
+  z-index: 5;
+  display: block;
+}
+
+.button-box {
+  position: absolute;
+  z-index: 20;
+}
