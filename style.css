@@ -518,7 +518,7 @@ background: none;
 .button-box {
   position: absolute;
   bottom: 100px;
-  left: -200px;
+  left: 100px;
   width: 180px;
   display: flex;
   align-items: center;
