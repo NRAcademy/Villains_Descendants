@@ -557,7 +557,7 @@ background: none;
 .button-icon {
   position: absolute;
   top: 50%;
-  left: 25px; /* ← сдвиг правее */
+  left: 160px; /* ← сдвиг правее */
   width: 65px;
   height: 60px;
   object-fit: contain;
@@ -569,7 +569,7 @@ background: none;
 .button-text {
   position: absolute;
   top: 50%;
-  left: 95px; /* ← сдвиг правее */
+  left: 180px; /* ← сдвиг правее */
   transform: translateY(-50%);
   font-family: "Anticva", serif;
   font-size: 13px;
@@ -581,7 +581,7 @@ background: none;
 /* Гербы */
 .herbs {
   position: absolute;
-  bottom: -55px; /* ← опускает ниже */
+  bottom: -90px; /* ← опускает ниже */
   left: 65%;
   transform: translateX(-50%);
   display: flex;
