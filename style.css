@@ -267,17 +267,19 @@ button {
 
 .button-box {
   position: absolute;
-  bottom: 100px;
-  left: 140px;
-  width: 200px;
+  bottom: 35px;       /* Опускаем кнопку ниже, чтобы она встала под текст */
+  left: auto;         /* Отменяем привязку к левому краю */
+  right: 45px;        /* Сдвигаем кнопку в правый нижний угол карты */
+  width: 220px;       /* Немного увеличим ширину, чтобы текст и иконка не сжимались */
   height: 70px;
+  z-index: 10;        /* Гарантируем, что кнопка будет кликабельной поверх фона */
 }
 
 /* FIX ICON */
 
 .button-icon {
   position: absolute;
-  left: 40px;
+  left: 15px;         /* Подвигаем мини-герб чуть правее от края рамки кнопки */
   width: 50px;
   top: 50%;
   transform: translateY(-50%);
@@ -285,7 +287,7 @@ button {
 
 .button-text {
   position: absolute;
-  left: 80px;
+  left: 75px;         /* Корректируем положение текста относительно мини-герба */
   top: 50%;
   transform: translateY(-50%);
 }
@@ -294,11 +296,12 @@ button {
 
 .herbs {
   position: absolute;
-  bottom: -40px;
+  bottom: 25px;       /* Меняем отрицательный (-40px) на положительный, поднимая ряд на нижнюю линию блока */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
+  z-index: 10;        /* Чтобы гербы отображались поверх красной подложки */
 }
 
 /* ================= FOURTH BLOCK ================= */
