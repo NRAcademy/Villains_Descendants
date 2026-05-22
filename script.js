@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
     1: {
       background: "фон 3.png",
       character: "персонаж 1.png",
-      miniHerb: "mini-herb-1.png",
+      miniHerb: "мини герб 1.png",
       cardBg: "подкладка.png",
       faculty: "Heartslabyul",
       link: "https://vk.com/pages?oid=-237442725&p=Heartslabyul",
