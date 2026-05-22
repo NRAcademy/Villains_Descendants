@@ -460,6 +460,8 @@ background: none;
 .background-card {
   width: 92%;
   display: block;
+  position: relative;
+  z-index: 1;
 }
 
 .character {
@@ -470,7 +472,8 @@ background: none;
   height: auto;
   object-fit: contain;
   transition: transform 0.5s ease, opacity 0.5s ease;
-  z-index: 1; /* было просто абсолютное, добавь меньше гербов */
+  z-index: 2;
+  pointer-events: none;
 }
 
 .card-text {
