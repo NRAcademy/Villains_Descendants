@@ -552,7 +552,7 @@ background: none;
 .button-icon {
   position: absolute;
   top: 40%;
-  left: -10px; /* было -30px */
+  left: -30px; /* было -30px */
   width: 65px;
   height: 60px;
   object-fit: contain;
@@ -563,7 +563,7 @@ background: none;
 .button-text {
   position: absolute;
   top: 55%;
-  left: 55px; /* было 35px */
+  left: 35px; /* было 35px */
   transform: translateY(-50%);
   font-family: "Anticva", serif;
   font-size: 13px;
