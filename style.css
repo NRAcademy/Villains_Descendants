@@ -854,7 +854,3 @@ a,
 .fifth-columns li {
   cursor: url("first_block_home_page/custom-cursor.png") 0 0, auto !important;
 }
-
-.button-bg, .button-icon, .button-text {
-  pointer-events: none;
-}
