@@ -703,38 +703,39 @@ background: none;
   transform: translateY(0); 
 } 
 
-.fifth-button { 
-  display: inline-block; 
-  text-decoration: none; 
-  color: inherit; 
-  cursor: pointer; 
-} 
+.fifth-button {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
 
-.fifth-button 
-.button-img { 
-  display: block; 
-  width: 380px; 
-  transition: filter 0.3s ease; 
-} 
+.fifth-button .button-img {
+  display: block;
+  width: 380px;
+  transition: filter 0.3s ease;
+}
 
-.fifth-button 
-.button-text { 
-  position: absolute; 
-  top: 50%; 
-  left: 50%; 
-  transform: translate(-50%, -50%) scaleY(1.05); 
-  font-family: "Anticva", serif; 
-  font-size: 20px; 
-  font-weight: normal; 
-  color: #ffffff; 
-  white-space: nowrap; 
-  transition: filter 0.3s ease, color 0.3s ease; 
-} 
+.fifth-button .button-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scaleY(1.05);
 
-.fifth-button:hover 
-.button-img, .fifth-button:hover 
-.button-text { 
-  filter: brightness(0.6); color: #222; 
+  font-family: "Anticva", serif;
+  font-size: 20px;
+  font-weight: normal;
+  color: #ffffff;
+
+  white-space: nowrap;
+  transition: filter 0.3s ease, color 0.3s ease;
+}
+
+.fifth-button:hover .button-img,
+.fifth-button:hover .button-text {
+  filter: brightness(0.6);
+  color: #222;
 }
 
 /* Колонки */
