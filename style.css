@@ -1,19 +1,25 @@
+/* =======================
+   FONTS
+======================= */
+
 @font-face {
   font-family: 'AmericanaTOT';
   src: url('first_block_home_page/AmericanaTOT.otf') format('opentype');
 }
+
 @font-face {
   font-family: 'Anticva';
-  src: url('first_block_home_page/Anticva.otf') format('opentype');
+  src: url('third_block_home_page/Anticva.otf') format('opentype');
 }
+
 @font-face {
-  font-family: 'ConstantineSecond';
+  font-family: 'Constantine';
   src: url('second_block_home_page/Constantine.otf') format('opentype');
 }
-@font-face {
-  font-family: 'ConstantineThird';
-  src: url('third_block_home_page/Constantine.otf') format('opentype');
-}
+
+/* =======================
+   BASE RESET
+======================= */
 
 *,
 *::before,
@@ -24,14 +30,7 @@
 html, body {
   height: 100%;
   margin: 0;
-  font-family: 'AmericanaTOT', sans-serif;
-  color: #fff;
-  background: #000; /* оставляем чёрный фон для всего сайта */
-  overflow-x: hidden;
-}
-
-body {
-  margin: 0;
+  padding: 0;
   font-family: 'AmericanaTOT', sans-serif;
   color: #fff;
   background: #000;
@@ -58,22 +57,25 @@ button {
   cursor: pointer;
 }
 
-/* ==== ШАПКА ==== */
+/* =======================
+   HEADER
+======================= */
+
 .site-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 2.3cm; /* фиксированная высота */
+  height: 2.3cm;
   background: rgba(1, 1, 1, 0.777);
   display: flex;
   align-items: center;
-  z-index: 1000; /* всегда поверх */
+  z-index: 1000;
 }
 
 .header-inner {
   width: 100%;
-  padding: 0 6cm 0 4cm; /* слева 4см, справа 6см */
+  padding: 0 6cm 0 4cm;
   display: flex;
   justify-content: flex-end;
   gap: 80px;
@@ -82,9 +84,8 @@ button {
 
 .header-link,
 .header-icon {
-  font-family: 'Anticva', serif; 
+  font-family: 'Anticva', serif;
   font-size: 24px;
-  gap: 80px;
   transition: 0.3s;
 }
 
@@ -99,11 +100,10 @@ button {
   object-fit: contain;
 }
 
-.header-icon:hover img {
-  filter: drop-shadow(0 0 8px white);
-}
+/* =======================
+   FIRST BLOCK
+======================= */
 
-/* ==== ПЕРВЫЙ БЛОК ==== */
 .first-block {
   height: 100vh;
   background: url("first_block_home_page/фон.png") no-repeat center/cover;
@@ -121,8 +121,8 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-top: 0
+  gap: 30px;
+  margin-top: 210px;
 }
 
 .coffins-row {
@@ -136,39 +136,24 @@ button {
   width: 80px;
 }
 
-.content-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px; /* одинаковый промежуток между всеми элементами */
-  margin-top: 210px; /* можно подрегулировать, чтобы поднять/опустить весь блок */
-}
-
 .title-first {
   font-family: 'AmericanaTOT', serif;
   font-size: 48px;
-  font-weight: normal;
-  line-height: 1.2;
+  transform: scaleY(1.2);
   margin: 0;
-  transform: scaleY(1.2); /* растягиваем на 120% */
-  transform-origin: center; 
 }
 
 .subtitle-first {
   font-family: 'AmericanaTOT', serif;
   font-size: 24px;
-  font-weight: normal;
-  line-height: 1.3;
+  transform: scaleY(1.2);
   margin: 0;
-  transform: scaleY(1.2); /* растягиваем на 120% */
-  transform-origin: center; 
 }
 
 .start-wrap {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 40px; /* одинаковое расстояние между линией и кнопкой */
+  gap: 40px;
 }
 
 .start-line {
@@ -178,18 +163,16 @@ button {
 .start-btn {
   font-family: 'Anticva';
   font-size: 32px;
-  transition: 0.3s;
 }
 
-.start-btn:hover {
-  text-shadow: 0 0 10px white;
-}
+/* =======================
+   VINYL
+======================= */
 
-/* ==== ВИНИЛ ==== */
 .vinyl {
   position: fixed;
   bottom: 300px;
-  left: -100px;   /* половина ширины в минус */
+  left: -100px;
   width: 200px;
   height: 200px;
   cursor: pointer;
@@ -197,9 +180,8 @@ button {
 }
 
 .vinyl img {
-  display: block;
   width: 100%;
-  transform-origin: center center; 
+  transform-origin: center;
   animation: spin 6s linear infinite;
   animation-play-state: paused;
 }
@@ -210,34 +192,25 @@ button {
 
 @keyframes spin {
   from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
 }
 
-/* ==== ВТОРОЙ БЛОК ==== */
-.second-block {
-  min-height: 100vh;
-background: url("second_block_home_page/фон.png") no-repeat center center / cover;
-  background-attachment: fixed; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #000000;
-  font-size: 32px;
-}
+/* =======================
+   SECOND BLOCK
+======================= */
 
 .story-block {
   display: flex;
   flex-direction: column;
   gap: 120px;
   padding: 80px 4cm;
-  background: #000000;
+  background: #000;
 }
 
 .story-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0%;
   max-width: 800px;
   margin: 0 auto;
 }
@@ -248,22 +221,12 @@ background: url("second_block_home_page/фон.png") no-repeat center center / c
 
 .story-image {
   flex: 0 0 85%;
-  display: flex;
-  justify-content: center;
   position: relative;
-}
-
-.story-image img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  display: block;
 }
 
 .story-caption {
   position: absolute;
   inset: 0;
-  z-index: 2;
 }
 
 .cap {
@@ -271,257 +234,70 @@ background: url("second_block_home_page/фон.png") no-repeat center center / c
   color: white;
   font-family: 'Anticva';
   font-size: 25px;
-  white-space: nowrap; /* ← запрет переноса */
-  text-shadow: 0 0 6px rgba(255,255,255,0.8),
-               0 0 12px rgba(255,255,255,0.6);
-}
-
-.cap-top {
-  bottom: 160px;
-  left: 70%;
-  transform: translateX(-50%);
-}
-
-.cap-bottom {
-  bottom: 120px;
-  left: 55%;
-  transform: translateX(-50%);
-}
-
-.cap-one {
-  bottom: 100px;
-  left: 30%;
-  transform: translateX(-50%);
-}
-
-/* Вторая надпись */
-.cap-two {
-  bottom: 60px;
-  left: 130px;
-}
-
-/* Третья надпись */
-.cap-three {
-  bottom: 20px;
-  left: 220px;
-}
-
-.cap-skorbi-1 {
-  bottom: 90px;
-  left: 60%;
-  transform: translateX(-50%);
-}
-
-.cap-skorbi-2 {
-  bottom: 53px;
-  left: 300px;
-  transform: translateX(-50%);
-}
-
-.cap-skorbi-3 {
-  bottom: 15px;
-  right: 70px;
-  transform: translateX(-50%);
-}
-
-/* ЗДЕСЬ НАЧНЕТСЯ */
-.cap-start-1 {
-  bottom: 70px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.cap-start-2 {
-  bottom: 30px;
-  left: 35%;
-  transform: translateX(-50%);
-}
-
-.story-caption p {
-  text-shadow: 0 0 6px rgba(255,255,255,0.8),
-               0 0 12px rgba(255,255,255,0.6);
+  text-shadow: 0 0 6px rgba(255,255,255,0.8);
+  white-space: nowrap;
 }
 
 .story-text {
   flex: 0 0 40%;
-  max-width: 40%;
   font-family: 'Constantine';
   font-size: 18px;
   line-height: 1.6;
   color: #ddd;
   text-align: justify;
-  margin-top: 0px; 
-background: none;
 }
 
-.story-text.right {
-  text-align: right;
-}
-
-.story-text.left {
-  text-align: left;
-}
-
-.story-button {
-  display: flex;
-  justify-content: center;
-  margin-top: -50px;
-}
-
-.btn-more {
-  position: relative;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: 'Anticva';
-  font-size: 28px;  /* размер кнопки (изображения) */
-  color: black;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: opacity 0.3s ease;
-}
-
-.btn-more img {
-  display: block;
-  max-width: 260px;
-  transition: opacity 0.3s ease;
-}
-
-.btn-more span {
-  font-size: 16px;          /* уменьшенный размер текста */
-  color: black;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.btn-more:hover {
-  opacity: 0.6;
-}
-
-/* ===== СТИЛИ ДЛЯ ТРЕТЬЕГО БЛОКА ===== */
-@font-face {
-  font-family: "Anticva";
-  src: url("third_block_home_page/Anticva.otf");
-}
-@font-face {
-  font-family: "Gangitem";
-  src: url("third_block_home_page/Gangitem.otf");
-}
-@font-face {
-  font-family: "Constantine";
-  src: url("third_block_home_page/Constantine.otf");
-}
+/* =======================
+   THIRD BLOCK
+======================= */
 
 .third-block {
-  background: url("third_block_home_page/фон 3.png") no-repeat center center;
+  background: url("third_block_home_page/фон 3.png") no-repeat center;
   background-size: auto 120%;
   position: relative;
-  padding: 0 0 180px; /* убраны боковые отступы */
+  padding: 0 0 180px;
   text-align: center;
   color: white;
   width: 100%;
 }
 
 .title {
-  font-family: "Anticva", serif;
+  font-family: "Anticva";
   font-size: 40px;
-  font-weight: normal;
+  transform: scaleY(1.2);
   text-shadow: 0 0 10px white;
-  margin-bottom: 15px;
-  transform: scaleY(1.2); /* вытяжка по вертикали */
-  transform-origin: center;
 }
 
 .subtitle {
-  font-family: "Anticva", serif;
+  font-family: "Anticva";
   font-size: 20px;
   display: flex;
-  transform: none;
   justify-content: center;
-  align-items: center;
   gap: 18px;
   margin-bottom: 100px;
 }
 
-.subtitle .line {
-  height: 5px;
-}
-
 .card {
   position: relative;
-  display: inline-block;
   max-width: 1000px;
-  width: 100%; 
-}
-
-.background-card {
-  width: 100%; 
-  display: block;
-  position: relative;
-  z-index: 1;
+  margin: 0 auto;
 }
 
 .character {
   position: absolute;
-  left: -70px !important;    /* !important защитит позицию от JS */
-  bottom: -200px !important; /* если JS пытается управлять координатами */
+  left: -70px;
+  bottom: -200px;
   width: 420px;
-  height: auto;
   object-fit: contain;
-  transition: transform 0.5s ease, opacity 0.5s ease;
   z-index: 2;
-  pointer-events: none;
 }
 
-.card-text {
-  position: absolute;
-  top: 50px;
-  left: 300px;
-  text-align: left;
-  color: white;
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  opacity: 1;
-  transform: translateY(0);
-  z-index: 2; /* меньше гербов */
-}
-
-.faculty {
-  font-family: "Gangitem", serif;
-  font-size: 48px;
-  transform: scaleY(1.2);
-  letter-spacing: 1px;
-  font-weight: normal;
-  font-style: normal;
-  top: 150px;
-  left: 300px;
-  margin-bottom: 20px;
-  margin-top: -10px; /* поднимет выше */
-}
-
-.description-small {
-  font-family: "Constantine", serif;
-  transform: scaleY(1.2);
-  font-size: 14px;
-  line-height: 1.2;
-  margin-bottom: 20px;
-}
-
-.description-big {
-  font-family: "Constantine", serif;
-  transform: scaleY(1.2);
-  font-size: 14px;
-  line-height: 1.2;
-}
-
+/* BUTTON */
 .button-box {
   position: absolute;
-  bottom: 100px !important; /* Управляй высотой кнопки здесь */
-  left: 140px !important;   /* Управляй положением влево/вправо здесь */
-  width: 200px; 
+  bottom: 100px;
+  left: 140px;
+  width: 200px;
   height: 70px;
   display: flex;
   align-items: center;
@@ -530,349 +306,51 @@ background: none;
   z-index: 20;
 }
 
-/* Плавные переходы для всех элементов */
-.button-bg,
-.button-icon,
-.button-text {
-  transition: filter 0.3s ease, color 0.3s ease;
-}
-
-/* Наведение */
-.button-box:hover .button-bg,
-.button-box:hover .button-icon,
-.button-box:hover .button-text {
-  filter: brightness(0.6);
-}
-
-.button-box:hover .button-text {
-  color: #222;
-}
-
-/* Фон кнопки */
 .button-bg {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 170px; /* Подогнали под новый размер контейнера */
-  display: block;
-  z-index: 1;
+  width: 170px;
 }
 
-/* Мини герб */
 .button-icon {
   position: absolute;
-  top: 50%;
-  left: 40px !important;     /* Прижимаем аккуратно к левому краю */
-  width: 50px !important;    /* ЖЁСТКО возвращаем ему аккуратный размер */
-  height: 50px !important;   /* !important не даст его раздуть из JS */
-  object-fit: contain;
-  transform: translateY(-50%);
-  z-index: 5;
-  display: block;
+  left: 40px;
+  width: 50px;
+  height: 50px;
 }
 
-/* Текст */
 .button-text {
   position: absolute;
-  top: 50%;
-  left: 80px !important;     /* Сдвигаем вправо, чтобы он не пересекался с гербом */
-  transform: translateY(-50%);
-  font-family: "Anticva", serif;
+  left: 80px;
+  font-family: "Anticva";
   font-size: 13px;
   color: black;
-  z-index: 5;
-  white-space: nowrap;
 }
 
-/* Список семи гербов */
+/* HERBS */
 .herbs {
   position: absolute;
-  bottom: -40px !important;  /* БЫЛО -150px. Чем ближе к 0, тем ВЫШЕ поднимутся гербы */
-  left: 50%;                 /* Выравниваем ровно по центру карточки */
+  bottom: -40px;
+  left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 8px; 
-  z-index: 10;
+  gap: 8px;
 }
 
-.herbs img {
-  width: 60px;
-  height: auto;
-  object-fit: contain;
-  cursor: pointer;
-  pointer-events: auto;
-}
+/* =======================
+   FOURTH BLOCK
+======================= */
 
-.herbs img:hover {
-  filter: brightness(70%);
-}
-
-
-/* ===== ЧЕТВЁРТЫЙ БЛОК ===== */
 .fourth-block {
-  background-color: black;
+  background: black;
   padding: 60px 20px 120px;
-  color: white;
   text-align: center;
 }
 
-.fourth-block .title {
-  font-family: "Anticva", serif;
-  font-size: 40px;
-  font-weight: normal;
-  transform: scaleY(1.2);
-  text-shadow: 0 0 10px white;
-  margin: 0 0 15px;
-}
-
-.fourth-block .subtitle {
-  font-family: "Anticva", serif;
-  font-size: 24px;
-  font-weight: normal;          /* убираем жирность */
-  transform: none;              /* убираем вытягивание */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 80px;
-}
-
-.fourth-block .line {
-  height: 5px;
-}
-
-.icon-grid {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 50px;
-}
-
-.icon-row {
-  display: flex;
-  gap: 40px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.icon-wrapper {
-  position: relative;
-  transition: filter 0.3s ease;
-  cursor: pointer;
-}
-
-.icon-img {
-  width: 180px; 
-  height: auto;
-  transition: filter 0.3s ease;
-}
-
-.icon-label {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) translateY(100%);
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  width: auto;
-  height: auto;
-  pointer-events: none;
-}
-
-.icon-wrapper:hover .icon-img {
-  filter: brightness(1.2) drop-shadow(0 0 10px white);
-}
-
-.icon-wrapper:hover .icon-label {
-  opacity: 1;
-  transform: translateX(-50%) translateY(10px);
-}
+/* =======================
+   FIFTH BLOCK
+======================= */
 
 .fifth-block {
   width: 100%;
   text-align: center;
-  margin-top: -50px;
-  margin-bottom: -50px;
-}
-
-.fifth-hero {
-  position: relative;
-  width: 100%;
-  overflow: visible;
-}
-
-.fifth-block-bg {
-  display: block;
-  width: 100%;
-}
-
-.fifth-content {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 10%;
-  z-index: 5;
-}
-
-.fifth-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 0;
-  transform: translateY(0);
-}
-
-.fifth-button {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  transform: none;
-}
-
-.fifth-button .button-img {
-  display: block;
-  width: 380px;
-  transition: filter 0.3s ease;
-}
-
-.fifth-button .button-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scaleY(1.05);
-
-  font-family: "Anticva", serif;
-  font-size: 20px;
-  font-weight: normal;
-  color: #ffffff;
-
-  white-space: nowrap;
-  transition: filter 0.3s ease, color 0.3s ease;
-}
-
-.fifth-button:hover .button-img,
-.fifth-button:hover .button-text {
-  filter: brightness(0.6);
-  color: #222;
-}
-
-/* Колонки */
-.fifth-columns {
-  width: calc(100% - 120px);
-  max-width: 1200px;
-  box-sizing: border-box;
-
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 60px;
-
-  margin: 120px auto 0;
-
-  background: rgba(0, 0, 0, 0.85);
-  padding: 40px 60px;
-  border-radius: 12px;
-
-  position: relative;
-  z-index: 2;
-}
-
-.fifth-columns > .column {
-  min-width: 0;
-  text-align: left;
-}
-
-.fifth-columns .column-title {
-  font-family: "Anticva", serif;
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0 0 28px;
-  color: #883a3a;
-}
-
-.fifth-columns ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.fifth-columns li {
-  font-family: "Anticva", serif;
-  font-size: 14px;
-  font-weight: normal;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: color 0.3s ease, transform 0.2s ease;
-  color: #f0f0f0;
-  white-space: normal;
-}
-
-.fifth-columns li:hover {
-  color: #883a3a;
-  transform: translateX(4px);
-}
-
-.help-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 0;
-  margin-bottom: 24px;
-}
-
-.coffin-icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.creator-text {
-  font-family: "Anticva", serif;
-  font-size: 14px;
-  color: #f0f0f0;
-  cursor: pointer;
-  transition: color 0.3s ease, transform 0.2s ease;
-  line-height: 1;
-}
-
-.creator-text:hover {
-  color: #883a3a;
-  transform: translateX(4px);
-}
-
-.group-message-button {
-  background-color: #883a3a;
-  color: #ffffff;
-  font-family: "Anticva", serif;
-  font-size: 14px;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.group-message-button:hover {
-  background-color: #aa4c4c;
-}
-
-button,
-a,
-[role="button"],
-.fifth-button,
-.btn-more,
-.button-box,
-.icon-wrapper,
-.herbs img,
-.vinyl,
-.group-message-button,
-.creator-text,
-.fifth-columns li {
-  cursor: url("first_block_home_page/custom-cursor.png") 0 0, auto !important;
-}
-
-.button-bg,
-.button-text {
-  pointer-events: none;
 }
