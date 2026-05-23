@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const item = data[currentId];
 
       if (item && item.link) {
-        window.location.href = item.link;
+        window.open(item.link, "_blank");
       }
     });
   }
