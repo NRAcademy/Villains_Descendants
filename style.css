@@ -292,9 +292,10 @@ button {
   left: -70px;
   bottom: -200px;
   width: 420px;
-  height: 650px; /* фиксируем одинаковую высоту */
+  /* Добавляем жесткое ограничение высоты */
+  height: 600px; /* Подберите высоту в пикселях под ваш дизайн */
   object-fit: contain;
-  object-position: bottom;
+  object-position: bottom center; /* Удерживает ноги/низ персонажа на одной линии */
   z-index: 2;
   transform: translateX(0);
   transition: transform 0.5s ease, opacity 0.5s ease;
@@ -324,9 +325,10 @@ button {
   top: 50%;
   left: 40px;
   transform: translateY(-50%);
-  width: 55px;
-  height: 55px;
-  object-fit: contain;
+  width: 55px;  /* Жесткая ширина */
+  height: 55px; /* Жесткая высота */
+  object-fit: contain; /* Гарантирует, что герб не деформируется */
+  flex-shrink: 0;
   z-index: 5;
 }
 
@@ -352,13 +354,10 @@ button {
 }
 
 .herbs img {
-  width: 68px;
-  height: 68px;
-  min-width: 68px;
-  min-height: 68px;
-  object-fit: contain;
-  object-position: center bottom;
-  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  object-fit: contain; /* Картинка пропорционально впишется в 60х60px */
+  flex-shrink: 0;      /* Запрещает браузеру сжимать гербы, если им мало места */
   display: block;
 }
 
