@@ -283,13 +283,21 @@ button {
   margin: 0 auto;
 }
 
+.card-text {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
 .character {
   position: absolute;
   left: -70px;
   bottom: -200px;
   width: 420px;
+  height: auto;
   object-fit: contain;
   z-index: 2;
+  /* важно для JS-анимации */
+  transform: translateX(0);
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
 /* BUTTON */
@@ -313,9 +321,13 @@ button {
 
 .button-icon {
   position: absolute;
+  top: 50%;
   left: 40px;
-  width: 50px;
-  height: 50px;
+  transform: translateY(-50%);
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  z-index: 5;
 }
 
 .button-text {
@@ -333,7 +345,16 @@ button {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 8px;
+  align-items: center;   /* КЛЮЧ */
+  justify-content: center;
+  gap: 10px;
+}
+
+.herbs img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  display: block;
 }
 
 /* =======================
