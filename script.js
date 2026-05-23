@@ -61,7 +61,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const faculty = document.querySelector(".faculty");
   const descSmall = document.querySelector(".description-small");
   const descBig = document.querySelector(".description-big");
+const buttonBox = document.querySelector(".button-box");
 
+buttonBox.addEventListener("click", () => {
+  const id = document.querySelector(".herbs img.active")?.dataset.id || "1";
+  const item = data[id];
+
+  if (item?.link) {
+    window.open(item.link, "_blank");
+  }
+});
+  
 const data = {
   1: {
     background: "фон 3.png",
