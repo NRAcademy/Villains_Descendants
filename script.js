@@ -284,14 +284,7 @@ if (id === "2") {
   });
 });
 
-// Установка пользовательского курсора
-document.body.style.cursor = "url('first_block_home_page/custom-cursor.png'), auto";
-
-// Установка курсора на все интерактивные элементы
-const allInteractive = document.querySelectorAll('button, a, input, textarea, select, label');
-allInteractive.forEach(el => {
-  el.style.cursor = "url('first_block_home_page/custom-cursor.png'), auto";
-});
+document.body.style.cursor = "url('first_block_home_page/custom-cursor.png') 0 0, auto";
 
 // Анимация лепестков при клике или зажатии
 const petalImages = [
@@ -349,5 +342,21 @@ document.addEventListener('mousemove', e => {
   if (isMouseDown && (!window.lastPetalTime || Date.now() - window.lastPetalTime > 50)) {
     createPetal(e.clientX, e.clientY);
     window.lastPetalTime = Date.now();
+  }
+})
+
+// Запрет правой кнопки мыши
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// Запрет копирования
+document.addEventListener('copy', e => e.preventDefault());
+
+// Запрет горячих клавиш (Ctrl+C, Ctrl+U, Ctrl+S, F12)
+document.addEventListener('keydown', e => {
+  if (
+    (e.ctrlKey && ['c', 'u', 's', 'a'].includes(e.key.toLowerCase())) ||
+    e.key === 'F12'
+  ) {
+    e.preventDefault();
   }
 });
