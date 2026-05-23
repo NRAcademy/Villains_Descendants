@@ -705,19 +705,11 @@ background: none;
 }
 
 .fifth-button {
+  position: relative;
   display: inline-block;
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
 }
 
-.fifth-button .button-img {
-  display: block;
-  width: 380px;
-  transition: filter 0.3s ease;
-}
-
-.fifth-button .button-text {
+.fifth-button-text {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -733,7 +725,7 @@ background: none;
 }
 
 .fifth-button:hover .button-img,
-.fifth-button:hover .button-text {
+.fifth-button:hover .fifth-button-text {
   filter: brightness(0.6);
   color: #222;
 }
