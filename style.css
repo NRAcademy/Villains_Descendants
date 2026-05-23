@@ -705,10 +705,10 @@ background: none;
 }
 
 .fifth-button {
-  position: relative;
   display: inline-block;
+  text-decoration: none;
+  color: inherit;
   cursor: pointer;
-  transform: none;
 }
 
 .fifth-button .button-img {
