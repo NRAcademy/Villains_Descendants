@@ -62,13 +62,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const descSmall = document.querySelector(".description-small");
   const descBig = document.querySelector(".description-big");
 
-  const data = {
+const data = {
   1: {
     background: "фон 3.png",
     character: "персонаж 1.png",
     miniHerb: "мини герб 1.png",
     cardBg: "подкладка.png",
     faculty: "Heartslabiyul",
+    link: "https://vk.com/pages?oid=-237442725&p=Heartslabyul",
     descSmall: `По мотивам: Алиса в стране чудес<br>
                 Вдохновлен: Красная королева<br>
                 Сильные стороны: Дисциплина и порядок<br>
@@ -87,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
     miniHerb: "мини герб 2.png",
     cardBg: "подкладка 2.png",
     faculty: "Savanaclaw",
+    link: "https://vk.com/pages?oid=-237442725&p=Savanaclaw",
     descSmall: `По мотивам: Король Лев<br>
                 Вдохновлен: Король зверей Шрам<br>
                 Сильные стороны: Сила и выносливость<br>
@@ -104,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
     miniHerb: "мини герб 3.png",
     cardBg: "подкладка 3.png",
     faculty: "Octavinelle",
+    link: "https://vk.com/pages?oid=-237442725&p=Octavinelle",
     descSmall: `По мотивам: Русалочка<br>
                 Вдохновлен: Морская ведьма Урсула<br>
                 Сильные стороны: Хитрость и торговая жилка<br>
@@ -121,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
     miniHerb: "мини герб 4.png",
     cardBg: "подкладка 4.png",
     faculty: "Scarabia",
+    link: "https://vk.com/pages?oid=-237442725&p=Scarabia",
     descSmall: `По мотивам: Аладдин<br>
                 Вдохновлен: Колдун песков Джафар<br>
                 Сильные стороны: Харизма и убеждение<br>
@@ -138,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
     miniHerb: "мини герб 5.png",
     cardBg: "подкладка 5.png",
     faculty: "Pomefiore",
+    link: "https://vk.com/pages?oid=-237442725&p=Pomefiore",
     descSmall: `По мотивам: Белоснежка и семь гномов<br>
                 Вдохновлен: Злая Королева<br>
                 Сильные стороны: Стремление к совершенству и красоте<br>
@@ -155,6 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
     miniHerb: "мини герб 6.png",
     cardBg: "подкладка 6.png",
     faculty: "Ignihyde",
+    link: "https://vk.com/pages?oid=-237442725&p=Ignihyde",
     descSmall: `По мотивам: Геркулес<br>
                 Вдохновлен: Подземный бог Аид<br>
                 Сильные стороны: Интеллект и изобретательность<br>
@@ -172,6 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
     miniHerb: "мини герб 7.png",
     cardBg: "подкладка 7.png",
     faculty: "Diasomnia",
+    link: "https://vk.com/pages?oid=-237442725&p=Diasomnia",
     descSmall: `По мотивам: Спящая красавица<br>
                 Вдохновлен: Терновая ведьма Малефисента<br>
                 Сильные стороны: Могущество и талант в магии.<br>
@@ -179,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
     descBig: `Диасомния, основанная на принципах элегантности<br>
               Терновой ведьмы, собирает студентов, преуспевающих<br>
               в общей магии. Это одно из самых загадочных и<br>
-              таинственных общежитий, окутанное атмосферой<br>
+              таинственных open-общежитий, окутанное атмосферой<br>
               мрачного величия.`
   }
 };
