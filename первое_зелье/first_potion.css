@@ -1,0 +1,430 @@
+/* ================= ПОДКЛЮЧЕНИЕ ШРИФТА ================= */
+@font-face {
+    font-family: 'Anticva';
+    src: url('Anticva.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ================= ГЛОБАЛЬНАЯ ФИКСАЦИЯ КУРСОРA ================= */
+html, body, *, 
+a, a:hover, 
+button, button:hover, 
+img, img:hover, 
+.cell-slot, .cell-slot:hover,
+.chosen-slot, .chosen-slot:hover,
+.header-link, .header-link:hover {
+    cursor: url('../menu/custom-cursor.png') 0 0, url('/menu/custom-cursor.png') 0 0, url('../custom-cursor.png') 0 0, auto !important;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #060713; /* Картинку background-image отсюда удаляем */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+/* ==== ШАПКА ==== */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px; 
+    background: rgba(1, 1, 1, 0.75);
+    display: flex;
+    align-items: center;
+    z-index: 1000; 
+}
+
+.header-inner {
+    width: 100%;
+    padding: 0 5%;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    align-items: center;
+}
+
+.header-link {
+    font-family: 'Anticva', serif; 
+    font-size: 22px;
+    color: #ffffff; 
+    text-decoration: none; 
+    letter-spacing: 1px; 
+    transition: 0.3s ease;
+    white-space: nowrap;
+}
+
+.header-link:hover {
+    color: #ffffff; 
+    text-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* Главный контейнер игры */
+.game-container {
+    position: relative;
+    width: 100vw;
+    height: 75vw;
+    /* background: url('фон.png') no-repeat center center; <-- ЭТУ СТРОКУ НУЖНО УДАЛИТЬ */
+  z-index: 10; /* Видео с z-index: 1 окажется ровно ПОД игрой */
+    background: transparent !important; /* Делаем прозрачным, чтобы видеть видео под ним */
+    background-size: contain;
+}
+
+/* ================= ЛЕВАЯ ЧАСТЬ: АЛХИМИЧЕСКИЙ КРУГ ================= */
+.alchemy-section {
+    position: absolute;
+    left: 9.5%;
+    top: 30%;
+    width: 44%;
+    height: 55%;
+}
+
+.orbit-bg {
+    position: absolute;
+    top: 11%;
+    left: 11%;
+    width: 78%;
+    height: 78%;
+    background: url('круг.png') no-repeat center center;
+    background-size: contain;
+}
+
+.center-stand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 55%;
+    height: 55%;
+    background: url('стенд.png') no-repeat center center;
+    background-size: contain;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+/* Финальный флакон зелья при Успехе */
+.final-potion-result {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 70%;
+    background: url('../зелье/первое_зелье.png') no-repeat center center;
+    background-size: contain;
+    transform: translate(-50%, -60%);
+    z-index: 10;
+    animation: potionBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.slots-rotator {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rotateCircle 25s linear infinite;
+    z-index: 3;
+}
+
+.slots-rotator.frozen {
+    animation-play-state: paused !important;
+}
+
+.cell-slot {
+    position: absolute;
+    width: 28%;  
+    height: 28%;
+    margin-top: -14%; 
+    margin-left: -14%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.cell-slot::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('ячейка.png') no-repeat center center;
+    background-size: contain;
+    z-index: 1;
+    transition: filter 0.2s ease;
+}
+
+.ingredient-img {
+    width: 75%;
+    height: 75%;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.cell-slot.grayscale::before { filter: brightness(0.4) grayscale(100%); }
+.cell-slot.grayscale:hover::before { filter: brightness(1) grayscale(0%); }
+.cell-slot.grayscale:hover { transform: scale(1.05); }
+.cell-slot.active-selected::before { filter: brightness(1) grayscale(0%) !important; }
+
+.cell-slot:nth-child(1) { top: 11%; left: 50%; }
+.cell-slot:nth-child(2) { top: 30.5%; left: 84%; }
+.cell-slot:nth-child(3) { top: 69.5%; left: 84%; }
+.cell-slot:nth-child(4) { top: 89%; left: 50%; }
+.cell-slot:nth-child(5) { top: 69.5%; left: 16%; }
+.cell-slot:nth-child(6) { top: 30.5%; left: 16%; }
+
+.cell-slot { animation: counterRotate 25s linear infinite; }
+.cell-slot.frozen { animation-play-state: paused !important; }
+
+/* ================= ПРАВАЯ ЧАСТЬ: МЕНЮ ЗЕЛЬЕВАРЕНИЯ ================= */
+.menu-section {
+    position: absolute;
+    right: 7%;
+    top: 33%;
+    width: 38%;
+    height: 48%;
+    background: url('блок_первое_зелье.png') no-repeat center center;
+    background-size: contain;
+}
+
+.ingredients-slots-row {
+    position: absolute;
+    top: 57%; 
+    left: 10%;
+    width: 80%;
+    height: 18%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chosen-slot {
+    width: 21%;
+    height: 100%;
+    background: url('../ингредиенты/ингредиент_пустой.png') no-repeat center center;
+    background-size: contain;
+    transition: filter 0.2s ease;
+}
+
+.chosen-slot:hover { filter: brightness(0.75); }
+
+/* ОФОРМЛЕНИЕ ТАЙМЕРА И ИТОГОВЫХ СТАТУСОВ */
+.game-timer {
+    position: absolute;
+    bottom: 6%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Anticva', serif;
+    font-size: 54px;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    user-select: none;
+    white-space: nowrap;
+}
+
+.game-timer.win-status {
+    color: #26d07c !important;
+    text-shadow: 0 0 15px rgba(38, 208, 124, 0.6) !important;
+}
+
+.game-timer.lose-status {
+    color: #ff3b30 !important;
+    text-shadow: 0 0 15px rgba(255, 59, 48, 0.6) !important;
+}
+
+/* ================= ЭКРАНЫ ОВЕРЛЕЕВ (ОТСЧЕТ И ЗАГРУЗКА) ================= */
+.countdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999; 
+    transition: opacity 0.5s ease;
+}
+
+.countdown-number {
+    font-family: 'Anticva', serif;
+    font-size: 120px;
+    color: #ffffff;
+    text-shadow: 0 0 30px #ffffff;
+    animation: pulseCount 1s ease-in-out infinite;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.88);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99995;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.loading-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.coffins-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.coffin {
+    width: 75px;
+    height: 140px;
+    object-fit: contain;
+    filter: brightness(0.25); 
+    transition: filter 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.coffin.active-coffin {
+    filter: brightness(1) !important;
+}
+
+.loading-title-text {
+    font-family: 'Anticva', serif;
+    font-size: 28px;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    min-height: 40px;
+}
+
+/* Оверлей для гифки провала */
+.fail-gif-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 90;
+    pointer-events: none;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+}
+.fail-gif-overlay.run-animation {
+    animation: fadeExplosion 2.5s ease-in-out forwards;
+}
+
+/* ================= МОДАЛЬНОЕ ОКНО "ИНФОРМАЦИЯ" ================= */
+
+/* Затемняющий оверлей на весь экран */
+.info-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.65); /* Степень затемнения фонда */
+    z-index: 100000;                 /* Поверх игры и шапки */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out; /* Плавное появление */
+}
+
+/* Класс активации модального окна */
+.info-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Карточка свитком/информацией */
+.info-card-body {
+    width: 62vw;                     /* Пропорциональный размер под экраны */
+    height: 44vw;
+    background: url('информация.png') no-repeat center center;
+    background-size: contain;
+    position: relative;              /* ОБЯЗАТЕЛЬНО: чтобы кнопка позиционировалась от углов карточки */
+    transform: scale(0.9);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.info-modal-overlay.active .info-card-body {
+    transform: scale(1);             /* Эффект легкого всплытия */
+}
+
+/* Кнопка закрытия справа на свитке */
+.info-close-btn {
+    position: absolute;
+    top: 2vw;                        /* Отступ от верхнего края карточки */
+    right: 2vw;                      /* Отступ от правого края карточки */
+    width: 12vw;
+    height: 4vw;
+    background: url('кнопка.png') no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    z-index: 10;                     /* Чтобы кнопка гарантированно была поверх картинки */
+}
+
+/* Интерактивность для кнопки */
+.info-close-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.15);
+}
+
+.info-close-btn:active {
+    transform: scale(0.95);
+    filter: brightness(0.85);
+}
+
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;   /* Строго 100% ширины экрана */
+    height: 100vh;  /* Строго 100% высоты экрана */
+    object-fit: cover; /* Видео аккуратно подстроится под размеры без искажения пропорций */
+    pointer-events: none; /* Клики будут проходить насквозь к игре */
+    z-index: 1; /* Оставляем его на фоне под игровыми элементами */
+}
+
+/* ================= АНИМАЦИИ ================= */
+@keyframes rotateCircle {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes counterRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+}
+@keyframes pulseCount {
+    0% { transform: scale(0.6); opacity: 0; }
+    20% { opacity: 1; }
+    80% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1.2); opacity: 0; }
+}
+@keyframes potionBounce {
+    0% { transform: translate(-50%, -60%) scale(0); opacity: 0; }
+    60% { transform: translate(-50%, -60%) scale(1.15); opacity }
+    }
