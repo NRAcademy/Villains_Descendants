@@ -1,3 +1,34 @@
+// 1. Инициализация Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyCDqgERmj0eVbwY2O5I1_cL8UtQ-KSlIUY",
+  authDomain: "villains-descendants.firebaseapp.com",
+  projectId: "villains-descendants",
+  storageBucket: "villains-descendants.firebasestorage.app",
+  messagingSenderId: "984025435773",
+  appId: "1:984025435773:web:cf34da4c90876229a5eb14",
+  measurementId: "G-18B62XXSZ5"
+};
+
+// Инициализируем один раз
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore(); 
+
+// 2. Пример функции для сохранения результата в базу данных
+function saveResultToDatabase(name, vkID, timeSpent) {
+    db.collection("leaderboard").add({
+        name: name,
+        vkID: vkID,
+        time: timeSpent,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp() // сохранит точное время сервера
+    })
+    .then(() => {
+        console.log("Результат успешно сохранен в базу!");
+    })
+    .catch((error) => {
+        console.error("Ошибка при сохранении: ", error);
+    });
+}
+
 // Ждем, пока вся структура страницы полностью загрузится
 document.addEventListener("DOMContentLoaded", () => {
    
