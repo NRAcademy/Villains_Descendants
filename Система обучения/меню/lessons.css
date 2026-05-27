@@ -8,9 +8,10 @@ body {
 
 @font-face {
     font-family: 'Anticva';
-    src: url('Anticva.otf') format('opentype');
+    src: url('./Anticva.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 /* ================= ШАПКА ================= */
@@ -23,12 +24,16 @@ body {
     left: 0;
 
     width: 100%;
+
     height: 80px;
 
     background: rgba(1, 1, 1, 0.75);
 
     display: flex;
+
     align-items: center;
+
+    justify-content: center;
 
     z-index: 10000;
 }
@@ -37,32 +42,34 @@ body {
 
     width: 100%;
 
-    padding: 0 5%;
+    padding: 0 15px;
 
     display: flex;
 
     justify-content: center;
 
-    gap: 80px;
-
     align-items: center;
+
+    gap: 18px;
+
+    flex-wrap: nowrap;
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
+}
+
+.header-inner::-webkit-scrollbar {
+    display: none;
 }
 
 .header-link {
 
-    font-family: 'Anticva', serif;
-
-    font-size: 22px;
-
-    color: #ffffff;
-
-    text-decoration: none;
-
-    letter-spacing: 1px;
-
-    transition: 0.3s ease;
+    font-size: 14px;
 
     white-space: nowrap;
+
+    flex-shrink: 0;
 }
 
 .header-link:hover {
@@ -190,4 +197,120 @@ img:hover,
 .header-link:hover {
 
     cursor: none !important;
+}
+
+/* ===================================================== */
+/* 📱 АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНА */
+/* ===================================================== */
+
+@media (max-width: 768px) {
+
+  /* убираем кастомный курсор на телефоне */
+  html,
+  body,
+  * {
+    cursor: auto !important;
+  }
+
+  #cursor {
+    display: none;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* ================= ШАПКА ================= */
+
+  .site-header {
+    height: auto;
+    padding: 15px 0;
+  }
+
+  .header-inner {
+
+    flex-wrap: wrap;
+
+    gap: 18px;
+
+    padding: 0 20px;
+  }
+
+  .header-link {
+
+    font-size: 16px;
+
+    letter-spacing: 0.5px;
+  }
+
+  /* ================= ФОН ================= */
+
+  .background {
+
+    background:
+      url("../меню/фон.png")
+      no-repeat
+      top center;
+
+    /* 🔥 сохраняем ПК-композицию */
+    background-size: cover;
+
+    position: fixed;
+  }
+
+  /* ================= КОНТЕНТ ================= */
+
+  .content {
+
+    padding-top: 140px;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    padding-bottom: 120px;
+  }
+
+  /* ================= НАЗВАНИЕ ================= */
+
+  .title {
+
+    width: 95%;
+
+    max-width: 650px;
+
+    margin-bottom: 40px;
+
+    transform: translateY(0);
+  }
+
+  /* ================= СЕТКА ================= */
+
+  .lessons-grid {
+
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+
+    width: 100%;
+  }
+
+  /* ================= КАРТОЧКИ ================= */
+
+  .lesson {
+
+    width: 100%;
+
+    max-width: 340px;
+
+    height: auto;
+  }
+
+  /* отключаем hover на телефонах */
+  .lesson:hover {
+
+    transform: none;
+
+    filter: none;
+  }
+
 }
