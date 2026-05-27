@@ -11,124 +11,66 @@ body {
     src: url('./Anticva.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
-    font-display: swap;
 }
 
-/* ===================================================== */
-/* 📱 АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНА */
-/* ===================================================== */
+/* ================= ШАПКА ================= */
 
-@media (max-width: 768px) {
+.site-header {
 
-  /* убираем кастомный курсор на телефоне */
-  html,
-  body,
-  * {
-    cursor: auto !important;
-  }
+    position: fixed;
 
-  #cursor {
-    display: none;
-  }
+    top: 0;
+    left: 0;
 
-  body {
-    overflow-x: hidden;
-  }
+    width: 100%;
 
-  /* ================= ШАПКА ================= */
+    height: 80px;
 
-  .site-header {
-    height: auto;
-    padding: 15px 0;
-  }
+    background: rgba(1, 1, 1, 0.75);
 
-  .header-inner {
+    display: flex;
 
-    flex-wrap: wrap;
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 10000;
+}
+
+.header-inner {
+
+    width: 100%;
+
+    padding: 0 15px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
 
     gap: 18px;
 
-    padding: 0 20px;
-  }
+    flex-wrap: nowrap;
 
-  .header-link {
+    overflow-x: auto;
 
-    font-size: 16px;
-
-    letter-spacing: 0.5px;
-  }
-
-  /* ================= ФОН ================= */
-
-  .background {
-
-    background:
-      url("../меню/фон.png")
-      no-repeat
-      top center;
-
-    /* 🔥 сохраняем ПК-композицию */
-    background-size: cover;
-
-    position: fixed;
-  }
-
-  /* ================= КОНТЕНТ ================= */
-
-  .content {
-
-    padding-top: 140px;
-
-    padding-left: 20px;
-    padding-right: 20px;
-
-    padding-bottom: 120px;
-  }
-
-  /* ================= НАЗВАНИЕ ================= */
-
-  .title {
-
-    width: 95%;
-
-    max-width: 650px;
-
-    margin-bottom: 40px;
-
-    transform: translateY(0);
-  }
-
-  /* ================= СЕТКА ================= */
-
-  .lessons-grid {
-
-    grid-template-columns: 1fr;
-
-    gap: 25px;
-
-    width: 100%;
-  }
-
-  /* ================= КАРТОЧКИ ================= */
-
-  .lesson {
-
-    width: 100%;
-
-    max-width: 340px;
-
-    height: auto;
-  }
-
-  /* отключаем hover на телефонах */
-  .lesson:hover {
-
-    transform: none;
-
-    filter: none;
-  }
-
+    scrollbar-width: none;
 }
+
+.header-inner::-webkit-scrollbar {
+    display: none;
+}
+
+.header-link {
+
+    font-size: 14px;
+
+    white-space: nowrap;
+
+    flex-shrink: 0;
+}
+
 .header-link:hover {
 
     color: #ffffff;
