@@ -121,6 +121,18 @@ const vkRegex = /^(https?:\/\/vk\.com\/)?@?[a-zA-Z0-9_]+$/;
                 }
             }
 
+           let users = JSON.parse(localStorage.getItem("users_db")) || [];
+
+const duplicate = users.find(u =>
+    u.name.toLowerCase() === charName.toLowerCase() ||
+    u.vkID === lowercaseVk
+);
+
+if (duplicate) {
+    errorMessage.textContent = "Этот персонаж или VK уже зарегистрирован!";
+    return;
+}
+           
             // УСПЕШНАЯ АВТОРИЗАЦИЯ
             // Сохраняем сессию текущего игрока для передачи на игровую страницу
             sessionStorage.setItem("currentPlayerName", charName);
@@ -131,6 +143,14 @@ const vkRegex = /^(https?:\/\/vk\.com\/)?@?[a-zA-Z0-9_]+$/;
     vkID: lowercaseVk
 }));
 
+           users.push({
+    name: charName,
+    vkID: lowercaseVk,
+    time: Date.now()
+});
+
+localStorage.setItem("users_db", JSON.stringify(users));
+           
             // Плавно прячем окно регистрации
             overlay.style.opacity = "0";
             setTimeout(() => {
@@ -262,3 +282,23 @@ document.addEventListener('mousemove', e => {
         window.lastAppleTime = Date.now();
     }
 });
+
+let lastScrollY = 0;
+const header = document.querySelector(".site-header");
+
+window.addEventListener("scroll", () => {
+    const currentY = window.scrollY;
+
+    if (currentY > lastScrollY) {
+        // вниз — скрываем
+        header.style.transform = "translateY(-100%)";
+        header.style.transition = "0.3s ease";
+    } else {
+        // вверх — показываем
+        header.style.transform = "translateY(0)";
+    }
+
+    lastScrollY = currentY;
+});
+
+
