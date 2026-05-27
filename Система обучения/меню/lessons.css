@@ -74,6 +74,28 @@ body {
         0 0 20px rgba(255,255,255,0.6);
 }
 
+/* Контейнер для занятий */
+.lessons-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 колонки по умолчанию */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Для мобильных телефонов (вертикально) */
+@media screen and (max-width: 768px) {
+    .lessons-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+    }
+}
+
+/* Для телефонов в горизонтальном режиме (если нужно) */
+@media screen and (orientation: landscape) and (max-width: 900px) {
+    .lessons-container {
+        grid-template-columns: repeat(3, 1fr); /* Можно оставить 3, если места хватает */
+    }
+}
+
 /* фон */
 .background {
   position: fixed;
