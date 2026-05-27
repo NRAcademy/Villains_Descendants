@@ -623,29 +623,9 @@ background: none;
   height: 5px;
 }
 
-.icon-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-.icon-row {
-  display: flex;
-  gap: 40px;
-  justify-content: center;
-  flex-wrap: nowrap; /* 🔥 ВОТ ЭТО ИСПРАВЛЕНИЕ */
-}
-
-.icon-row:nth-child(2) {
-  margin-bottom: 80px;
-}
-
-.icon-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: auto;
-}
+.icon-grid { display: flex; flex-direction: column; align-items: center; gap: 50px; } 
+.icon-row { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; } 
+.icon-wrapper { position: relative; transition: filter 0.3s ease; cursor: pointer; }
 
 .icon-img {
   width: 180px; 
