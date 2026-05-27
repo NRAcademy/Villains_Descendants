@@ -42,13 +42,29 @@ html, body {
     top: -60px; /* Скрываем вверх за пределы экрана */
 }
 
-/* Медиа-запрос для телефона (горизонтальный режим) */
-@media screen and (orientation: landscape) and (max-width: 900px) {
-    .site-header {
-        height: 50px; /* Уменьшаем высоту для телефона */
+/* Адаптивность для мобильных телефонов */
+@media (max-width: 768px) {
+    /* Для страницы уроков: перестраиваем сетку в 1 столбец */
+    .lessons-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
     }
-    .toggle-btn {
-        display: block; /* Показываем кнопку сворачивания */
+
+    /* Для страницы меню: если есть flex-контейнеры, переключаем на колонку */
+    .menu-container {
+        flex-direction: column !important;
+        align-items: center;
+    }
+
+    /* Уменьшаем заголовки, чтобы они не вылезали за экран */
+    .main-title {
+        max-width: 90% !important;
+    }
+
+    /* Делаем поля ввода (в анкете) на всю ширину экрана */
+    input {
+        width: 90% !important;
+        box-sizing: border-box;
     }
 }
 
