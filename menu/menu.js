@@ -1,4 +1,7 @@
-// 1. Инициализация Firebase
+<div id="rotate-warning">
+    Пожалуйста, поверните устройство горизонтально
+</div>
+  // 1. Инициализация Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCDqgERmj0eVbwY2O5I1_cL8UtQ-KSlIUY",
   authDomain: "villains-descendants.firebaseapp.com",
