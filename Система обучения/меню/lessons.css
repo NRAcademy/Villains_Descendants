@@ -8,7 +8,7 @@ body {
 
 @font-face {
     font-family: 'Anticva';
-    src: url('Anticva.otf') format('opentype');
+    src: url('./Anticva.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
