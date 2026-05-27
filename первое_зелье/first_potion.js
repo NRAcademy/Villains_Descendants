@@ -794,3 +794,11 @@ function saveResultToLeaderboard(name, time) {
     // Сохраняем обратно
     localStorage.setItem("potion_leaderboard", JSON.stringify(leaderboard));
 }
+
+document.getElementById('toggle-header-btn').addEventListener('click', () => {
+    const header = document.querySelector('.site-header');
+    header.classList.toggle('hidden');
+    // Меняем стрелочку
+    document.getElementById('toggle-header-btn').innerText = 
+        header.classList.contains('hidden') ? '▲' : '▼';
+});
