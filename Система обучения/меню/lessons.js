@@ -84,3 +84,15 @@ function createLeaf(x, y) {
     leaf.remove();
   }, 1000);
 }
+document.addEventListener("DOMContentLoaded", () => {
+    const header = document.getElementById("main-header");
+    const toggleBtn = document.getElementById("toggle-header-btn");
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener("click", () => {
+            header.classList.toggle("header-hidden");
+            // Меняем стрелочку при клике
+            toggleBtn.textContent = header.classList.contains("header-hidden") ? "▲" : "▼";
+        });
+    }
+});
