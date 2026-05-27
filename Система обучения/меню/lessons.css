@@ -74,26 +74,38 @@ body {
         0 0 20px rgba(255,255,255,0.6);
 }
 
-/* Контейнер для занятий */
-.lessons-container {
+/* 1. Сетка занятий: 3 колонки на ПК, 2 на телефоне */
+.lessons-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 колонки по умолчанию */
+    grid-template-columns: repeat(3, 1fr); /* По умолчанию 3 */
     gap: 20px;
     padding: 20px;
 }
 
-/* Для мобильных телефонов (вертикально) */
-@media screen and (max-width: 768px) {
-    .lessons-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+/* Адаптация для мобильных */
+@media (max-width: 850px) {
+    .lessons-grid {
+        grid-template-columns: repeat(2, 1fr); /* Стало 2 */
     }
 }
 
-/* Для телефонов в горизонтальном режиме (если нужно) */
-@media screen and (orientation: landscape) and (max-width: 900px) {
-    .lessons-container {
-        grid-template-columns: repeat(3, 1fr); /* Можно оставить 3, если места хватает */
-    }
+/* 2. Сворачиваемая шапка */
+.site-header {
+    transition: transform 0.3s ease;
+}
+
+.header-hidden {
+    transform: translateY(-100%); /* Убирает шапку вверх */
+}
+
+.toggle-btn {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
 }
 
 /* фон */
