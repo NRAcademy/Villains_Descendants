@@ -2,100 +2,127 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Зельеварение — Болтливое зелье</title>
+
     <link rel="stylesheet" href="first_potion.css">
 </head>
+
 <body>
 
-    <video autoplay muted loop playsinline id="bg-video">
-     <source src="фон.mp4" type="video/mp4">
-        Ваш браузер не поддерживает видео в формате HTML5.
-    </video>
+<!-- ================= ФОН ВИДЕО ================= -->
+<video autoplay muted loop playsinline id="bg-video">
+    <source src="фон.mp4" type="video/mp4">
+</video>
 
-    <div class="countdown-overlay" id="countdown-overlay">
-        <div class="countdown-number" id="countdown-text">3</div>
-    </div>
+<!-- ================= ОТСЧЁТ ================= -->
+<div class="countdown-overlay" id="countdown-overlay">
+    <div class="countdown-number" id="countdown-text">3</div>
+</div>
 
-    <div class="wait-modal-overlay" id="wait-modal" style="display: none;">
+<!-- ================= ОЖИДАНИЕ ================= -->
+<div class="wait-modal-overlay" id="wait-modal" style="display:none;">
     <div class="wait-modal-content">
-        <img src="../уведомление/ожидание.png" alt="Ожидание" class="wait-bg">
- <button class="understand-btn" id="understand-btn"></button>
+        <img src="../уведомление/ожидание.png" class="wait-bg" alt="Ожидание">
+        <button class="understand-btn" id="understand-btn"></button>
     </div>
 </div>
 
-    <div class="loading-overlay" id="loading-overlay">
-        <div class="coffins-container">
-            <img src="../загрузка/первый_гроб.png" alt="Гроб 1" class="coffin" id="coffin-1">
-            <img src="../загрузка/второй_гроб.png" alt="Гроб 2" class="coffin" id="coffin-2">
-            <img src="../загрузка/третий_гроб.png" alt="Гроб 3" class="coffin" id="coffin-3">
-        </div>
-        <div class="loading-title-text" id="loading-text"></div>
+<!-- ================= ЗАГРУЗКА ================= -->
+<div class="loading-overlay" id="loading-overlay">
+    <div class="coffins-container">
+        <img src="../загрузка/первый_гроб.png" id="coffin-1" class="coffin">
+        <img src="../загрузка/второй_гроб.png" id="coffin-2" class="coffin">
+        <img src="../загрузка/третий_гроб.png" id="coffin-3" class="coffin">
     </div>
 
-    <header class="site-header" role="banner">
-        <button id="toggle-header-btn" class="toggle-btn">▼</button>
-        <nav class="header-inner" aria-label="Главное меню">
-            <a class="header-link" href="https://nracademy.github.io/Villains_Descendants/" target="_blank">НАЗАД</a>
-            <a class="header-link" href="https://nracademy.github.io/Villains_Descendants/" target="_blank">ГЛАВНАЯ</a>
-            <a class="header-link" href="https://vk.com/villains_descendants" target="_blank">ГРУППА</a>
-            <a class="header-link" href="https://vk.com/veneno_bianco" target="_blank">ВОПРОСЫ?</a>
-        </nav>
-    </header>
+    <div class="loading-title-text" id="loading-text"></div>
+</div>
 
-    <div class="game-container">
-        
-        <div class="alchemy-section">
-            <div class="orbit-bg"></div>
-            <div class="center-stand"></div>
-            
-            <div class="slots-rotator" id="slots-rotator">
-                <div class="cell-slot grayscale" data-ingredient="badyan">
-                    <img src="../выбор/бадьян.png" alt="Бадьян" class="ingredient-img">
-                </div>
-                <div class="cell-slot grayscale" data-ingredient="mandrake">
-                    <img src="../выбор/мандрагора.png" alt="Мандрагора" class="ingredient-img">
-                </div>
-                <div class="cell-slot grayscale" data-ingredient="honey_water">
-                    <img src="../выбор/медовая_вода.png" alt="Медовая вода" class="ingredient-img">
-                </div>
-                <div class="cell-slot grayscale" data-ingredient="mint">
-                    <img src="../выбор/мята.png" alt="Мята" class="ingredient-img">
-                </div>
-                <div class="cell-slot grayscale" data-ingredient="toadstool">
-                    <img src="../выбор/прыгающая_поганка.png" alt="Прыгающая поганка" class="ingredient-img">
-                </div>
-                <div class="cell-slot grayscale" data-ingredient="hellebore">
-                    <img src="../выбор/чемерица.png" alt="Чемерица" class="ingredient-img">
-                </div>
-            </div>
-        </div>
+<!-- ================= ШАПКА ================= -->
+<header class="site-header" role="banner">
+    <button id="toggle-header-btn">▼</button>
 
-        <div class="fail-gif-overlay" id="fail-gif-container"></div>
+    <nav class="header-inner">
+        <a class="header-link" href="https://nracademy.github.io/Villains_Descendants/" target="_blank">НАЗАД</a>
+        <a class="header-link" href="https://nracademy.github.io/Villains_Descendants/" target="_blank">ГЛАВНАЯ</a>
+        <a class="header-link" href="https://vk.com/villains_descendants" target="_blank">ГРУППА</a>
+        <a class="header-link" href="https://vk.com/veneno_bianco" target="_blank">ВОПРОСЫ?</a>
+    </nav>
+</header>
 
-        <div class="menu-section">
-            <div class="ingredients-slots-row">
-                <div class="chosen-slot" id="slot-0" data-index="0"></div>
-                <div class="chosen-slot" id="slot-1" data-index="1"></div>
-                <div class="chosen-slot" id="slot-2" data-index="2"></div>
-                <div class="chosen-slot" id="slot-3" data-index="3"></div>
-                <button id="ready-btn" class="ready-btn"></button>
+<!-- ================= ИГРА ================= -->
+<div class="game-container">
+
+    <!-- АЛХИМИЯ -->
+    <div class="alchemy-section">
+        <div class="orbit-bg"></div>
+        <div class="center-stand"></div>
+
+        <div class="slots-rotator" id="slots-rotator">
+
+            <div class="cell-slot grayscale" data-ingredient="badyan">
+                <img src="../выбор/бадьян.png" class="ingredient-img">
             </div>
 
-            <div class="game-timer" id="game-timer">00:30</div>
+            <div class="cell-slot grayscale" data-ingredient="mandrake">
+                <img src="../выбор/мандрагора.png" class="ingredient-img">
+            </div>
+
+            <div class="cell-slot grayscale" data-ingredient="honey_water">
+                <img src="../выбор/медовая_вода.png" class="ingredient-img">
+            </div>
+
+            <div class="cell-slot grayscale" data-ingredient="mint">
+                <img src="../выбор/мята.png" class="ingredient-img">
+            </div>
+
+            <div class="cell-slot grayscale" data-ingredient="toadstool">
+                <img src="../выбор/прыгающая_поганка.png">
+            </div>
+
+            <div class="cell-slot grayscale" data-ingredient="hellebore">
+                <img src="../выбор/чемерица.png">
+            </div>
+
         </div>
+    </div>
+
+    <!-- МЕНЮ -->
+    <div class="menu-section">
+
+        <div class="ingredients-slots-row">
+
+            <div class="chosen-slot" id="slot-0" data-index="0"></div>
+            <div class="chosen-slot" id="slot-1" data-index="1"></div>
+            <div class="chosen-slot" id="slot-2" data-index="2"></div>
+            <div class="chosen-slot" id="slot-3" data-index="3"></div>
+
+            <button id="ready-btn" class="ready-btn"></button>
+
+        </div>
+
+        <div class="game-timer" id="game-timer">00:30</div>
 
     </div>
 
-    <div class="info-modal-overlay" id="potion-modal">
-        <div class="info-card-body">
-            <button class="info-close-btn" id="modal-tab-close-btn" aria-label="Закрыть"></button>
-        </div>
-    </div>
+    <!-- ПРОВАЛ GIF -->
+    <div class="fail-gif-overlay" id="fail-gif-container"></div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+</div>
+
+<!-- ================= МОДАЛКА ================= -->
+<div class="info-modal-overlay" id="potion-modal">
+    <div class="info-card-body">
+        <button class="info-close-btn" id="modal-close-btn"></button>
+    </div>
+</div>
+
+<!-- ================= FIREBASE ================= -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    
-    <script src="first_potion.js"></script>
+
+<script src="first_potion.js"></script>
+
 </body>
 </html>
