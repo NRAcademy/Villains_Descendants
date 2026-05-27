@@ -293,3 +293,11 @@ document.addEventListener('mousemove', e => {
         window.lastAppleTime = Date.now();
     }
 });
+
+document.getElementById('toggle-header-btn').addEventListener('click', () => {
+    const header = document.querySelector('.site-header');
+    header.classList.toggle('hidden');
+    // Меняем стрелочку
+    document.getElementById('toggle-header-btn').innerText = 
+        header.classList.contains('hidden') ? '▲' : '▼';
+});
