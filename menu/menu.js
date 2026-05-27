@@ -302,3 +302,29 @@ document.getElementById('toggle-header-btn').addEventListener('click', () => {
     document.getElementById('toggle-header-btn').innerText = 
         header.classList.contains('hidden') ? '▲' : '▼';
 });
+
+let startY = 0;
+
+document.addEventListener("touchstart", (e) => {
+    startY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener("touchend", (e) => {
+    const endY = e.changedTouches[0].clientY;
+    const diff = endY - startY;
+
+    const header = document.querySelector(".site-header");
+    const btn = document.getElementById("toggle-header-btn");
+
+    // свайп вверх → скрыть
+    if (diff < -40) {
+        header.classList.add("hidden");
+        btn.innerText = "▲";
+    }
+
+    // свайп вниз → показать
+    if (diff > 40) {
+        header.classList.remove("hidden");
+        btn.innerText = "▼";
+    }
+});
