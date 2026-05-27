@@ -74,66 +74,6 @@ body {
         0 0 20px rgba(255,255,255,0.6);
 }
 
-/* Адаптивность для мобильных телефонов */
-@media (max-width: 768px) {
-    /* Для страницы уроков: перестраиваем сетку в 1 столбец */
-    .lessons-grid {
-        grid-template-columns: 1fr !important;
-        gap: 20px;
-    }
-
-    /* Для страницы меню: если есть flex-контейнеры, переключаем на колонку */
-    .menu-container {
-        flex-direction: column !important;
-        align-items: center;
-    }
-
-    /* Уменьшаем заголовки, чтобы они не вылезали за экран */
-    .main-title {
-        max-width: 90% !important;
-    }
-
-    /* Делаем поля ввода (в анкете) на всю ширину экрана */
-    input {
-        width: 90% !important;
-        box-sizing: border-box;
-    }
-}
-
-/* 1. Сетка занятий: 3 колонки на ПК, 2 на телефоне */
-.lessons-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* По умолчанию 3 */
-    gap: 20px;
-    padding: 20px;
-}
-
-/* Адаптация для мобильных */
-@media (max-width: 850px) {
-    .lessons-grid {
-        grid-template-columns: repeat(2, 1fr); /* Стало 2 */
-    }
-}
-
-/* 2. Сворачиваемая шапка */
-.site-header {
-    transition: transform 0.3s ease;
-}
-
-.header-hidden {
-    transform: translateY(-100%); /* Убирает шапку вверх */
-}
-
-.toggle-btn {
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: white;
-}
-
 /* фон */
 .background {
   position: fixed;
@@ -250,4 +190,120 @@ img:hover,
 .header-link:hover {
 
     cursor: none !important;
+}
+
+/* ===================================================== */
+/* 📱 АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНА */
+/* ===================================================== */
+
+@media (max-width: 768px) {
+
+  /* убираем кастомный курсор на телефоне */
+  html,
+  body,
+  * {
+    cursor: auto !important;
+  }
+
+  #cursor {
+    display: none;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* ================= ШАПКА ================= */
+
+  .site-header {
+    height: auto;
+    padding: 15px 0;
+  }
+
+  .header-inner {
+
+    flex-wrap: wrap;
+
+    gap: 18px;
+
+    padding: 0 20px;
+  }
+
+  .header-link {
+
+    font-size: 16px;
+
+    letter-spacing: 0.5px;
+  }
+
+  /* ================= ФОН ================= */
+
+  .background {
+
+    background:
+      url("../меню/фон.png")
+      no-repeat
+      top center;
+
+    /* 🔥 сохраняем ПК-композицию */
+    background-size: cover;
+
+    position: fixed;
+  }
+
+  /* ================= КОНТЕНТ ================= */
+
+  .content {
+
+    padding-top: 140px;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    padding-bottom: 120px;
+  }
+
+  /* ================= НАЗВАНИЕ ================= */
+
+  .title {
+
+    width: 95%;
+
+    max-width: 650px;
+
+    margin-bottom: 40px;
+
+    transform: translateY(0);
+  }
+
+  /* ================= СЕТКА ================= */
+
+  .lessons-grid {
+
+    grid-template-columns: 1fr;
+
+    gap: 25px;
+
+    width: 100%;
+  }
+
+  /* ================= КАРТОЧКИ ================= */
+
+  .lesson {
+
+    width: 100%;
+
+    max-width: 340px;
+
+    height: auto;
+  }
+
+  /* отключаем hover на телефонах */
+  .lesson:hover {
+
+    transform: none;
+
+    filter: none;
+  }
+
 }
