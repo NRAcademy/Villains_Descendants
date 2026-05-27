@@ -72,7 +72,7 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-}
+    padding-top: 80px;
 }
 
 /* ==== ШАПКА (ИСПРАВЛЕННАЯ) ==== */
@@ -161,9 +161,8 @@ body {
     background: url('фон.png') no-repeat center center;
     background-size: contain;
     filter: contrast(1.05) brightness(1.05);
+    margin-top: 80px;
 }
-
-
 
 /* ================= ЛЕВАЯ ЧАСТЬ: АЛХИМИЧЕСКИЙ КРУГ ================= */
 
@@ -462,14 +461,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 80px;
     z-index: 99999; /* Поверх абсолютно всего на сайте */
     transition: opacity 0.4s ease, transform 0.4s ease;
+    box-sizing: border-box;
 }
 
 /* Главное окно — подложка блок_вход.png */
 .reg-window {
-    width: 560px;  /* Уменьшили ширину окна */
-    height: 480px; /* Уменьшили высоту окна */
+    width: min(560px, 92vw);  /* Уменьшили ширину окна */
+    height: auto; /* Уменьшили высоту окна */
     background: url('../регистрация/блок_вход.png') no-repeat center center;
     background-size: contain;
     position: relative;
@@ -477,6 +478,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    aspect-ratio: 560 / 480;
+    max-height: 85vh;
 }
 
 /* Форма и контейнеры полей */
@@ -484,6 +487,8 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
+    padding: 5%;
+    box-sizing: border-box;
 }
 
 /* Общие контейнеры для инпутов, имитирующие плашки имя.png и профиль.png */
@@ -671,5 +676,20 @@ body {
     .game-container,
     .site-header {
         display: none;
+    }
+}
+@media (max-width: 768px) {
+    .reg-window {
+        width: 95vw;
+        height: auto;
+        aspect-ratio: 4 / 3;
+    }
+
+    .site-header {
+        height: 60px;
+    }
+
+    body {
+        padding-top: 60px;
     }
 }
