@@ -636,6 +636,10 @@ background: none;
   flex-wrap: nowrap; /* 🔥 ВОТ ЭТО ИСПРАВЛЕНИЕ */
 }
 
+.icon-row:nth-child(2) {
+  margin-bottom: 80px;
+}
+
 .icon-wrapper {
   display: flex;
   flex-direction: column;
