@@ -1,4 +1,5 @@
 /* ================= ПОДКЛЮЧЕНИЕ ШРИФТА ================= */
+
 @font-face {
     font-family: 'Anticva';
     src: url('Anticva.otf') format('opentype');
@@ -6,7 +7,8 @@
     font-style: normal;
 }
 
-/* ================= ГЛОБАЛЬНАЯ ФИКСАЦИЯ КУРСОРA ================= */
+/* ================= ГЛОБАЛЬНЫЙ КУРСОР ================= */
+
 html, body, *, 
 a, a:hover, 
 button, button:hover, 
@@ -14,15 +16,17 @@ img, img:hover,
 .cell-slot, .cell-slot:hover,
 .chosen-slot, .chosen-slot:hover,
 .header-link, .header-link:hover {
-    cursor: url('../menu/custom-cursor.png') 0 0, url('/menu/custom-cursor.png') 0 0, url('../custom-cursor.png') 0 0, auto !important;
+    cursor: url('../menu/custom-cursor.png') 0 0, auto !important;
 }
+
+/* ================= ОБЩИЙ ЛЕЙАУТ ================= */
 
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    background-color: #060713; /* Картинку background-image отсюда удаляем */
+    background-color: #060713;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,55 +34,23 @@ html, body {
     overflow: hidden;
 }
 
-/* Базовое состояние шапки */
-.site-header {
-    transition: top 0.4s ease;
-    top: 0;
-    z-index: 10000;
-}
+/* ================= ШАПКА ================= */
 
-/* Свернутая шапка */
-.site-header.hidden {
-    top: -60px; /* Скрываем вверх за пределы экрана */
-}
-
-/* Адаптивность для мобильных телефонов */
-@media (max-width: 768px) {
-    /* Для страницы уроков: перестраиваем сетку в 1 столбец */
-    .lessons-grid {
-        grid-template-columns: 1fr !important;
-        gap: 20px;
-    }
-
-    /* Для страницы меню: если есть flex-контейнеры, переключаем на колонку */
-    .menu-container {
-        flex-direction: column !important;
-        align-items: center;
-    }
-
-    /* Уменьшаем заголовки, чтобы они не вылезали за экран */
-    .main-title {
-        max-width: 90% !important;
-    }
-
-    /* Делаем поля ввода (в анкете) на всю ширину экрана */
-    input {
-        width: 90% !important;
-        box-sizing: border-box;
-    }
-}
-
-/* ==== ШАПКА ==== */
 .site-header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px; 
+    height: 80px;
     background: rgba(1, 1, 1, 0.75);
     display: flex;
     align-items: center;
-    z-index: 1000; 
+    z-index: 10000;
+    transition: transform 0.35s ease;
+}
+
+.site-header.hidden {
+    transform: translateY(-100%);
 }
 
 .header-inner {
@@ -91,18 +63,16 @@ html, body {
 }
 
 .header-link {
-    font-family: 'Anticva', serif; 
+    font-family: 'Anticva', serif;
     font-size: 22px;
-    color: #ffffff; 
-    text-decoration: none; 
-    letter-spacing: 1px; 
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 1px;
     transition: 0.3s ease;
-    white-space: nowrap;
 }
 
 .header-link:hover {
-    color: #ffffff; 
-    text-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6);
+    text-shadow: 0 0 10px #fff;
 }
 
 /* Главный контейнер игры */
