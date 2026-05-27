@@ -78,29 +78,32 @@ html, body {
     top: -60px; /* Скрываем вверх за пределы экрана */
 }
 
-/* Адаптивность для мобильных телефонов */
-@media (max-width: 768px) {
-    /* Для страницы уроков: перестраиваем сетку в 1 столбец */
-    .lessons-grid {
-        grid-template-columns: 1fr !important;
-        gap: 20px;
+#rotate-warning {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #060713;
+    color: white;
+    z-index: 999999;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Anticva', serif;
+    font-size: 20px;
+    padding: 20px;
+}
+
+/* показываем только в портретном режиме */
+@media screen and (orientation: portrait) {
+    #rotate-warning {
+        display: flex;
     }
 
-    /* Для страницы меню: если есть flex-контейнеры, переключаем на колонку */
-    .menu-container {
-        flex-direction: column !important;
-        align-items: center;
-    }
-
-    /* Уменьшаем заголовки, чтобы они не вылезали за экран */
-    .main-title {
-        max-width: 90% !important;
-    }
-
-    /* Делаем поля ввода (в анкете) на всю ширину экрана */
-    input {
-        width: 90% !important;
-        box-sizing: border-box;
+    .game-container,
+    .site-header,
+    .menu-section,
+    .alchemy-section {
+        display: none !important;
     }
 }
 
