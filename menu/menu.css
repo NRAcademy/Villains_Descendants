@@ -14,69 +14,64 @@
 
 
 
-/* ================= ГЛОБАЛЬНАЯ ФИКСАЦИЯ КУРСОРA ================= */
-
-/* Принудительно назначаем кастомный курсор для всего, включая состояния наведения (:hover) */
+/* ================= ГЛОБАЛЬНАЯ ФИКСАЦИЯ КУРСОРА ================= */
 
 html, body, *,
 
 a, a:hover,
-
 button, button:hover,
-
 img, img:hover,
 
 .potion-item, .potion-item *, .potion-item:hover,
-
 .header-link, .header-link:hover,
-
 .header-icon, .header-icon *, .header-icon:hover,
-
 .cell-slot, .cell-slot:hover {
 
     cursor: url('custom-cursor.png') 0 0, auto !important;
-
 }
 
-
-
-/* Общие стили для сброса отступов */
+/* ================= ОСНОВНОЙ СБРОС ================= */
 
 html, body {
-
     margin: 0;
-
     padding: 0;
-
     width: 100%;
-
     height: 100%;
-
     background-color: #060713;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
     font-family: sans-serif;
-
-    overflow: hidden; /* Запрещаем полосы прокрутки */
-
+    overflow: hidden;
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
 }
 
-/* Базовое состояние шапки */
+/* Центровка только через body (без конфликта с html) */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ================= ШАПКА ================= */
+
 .site-header {
-    transition: top 0.4s ease;
+    position: fixed;
     top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: rgba(1, 1, 1, 0.75);
+    display: flex;
+    align-items: center;
     z-index: 10000;
+    transition: top 0.4s ease;
 }
 
-/* Свернутая шапка */
+/* скрытая шапка */
 .site-header.hidden {
-    top: -60px; /* Скрываем вверх за пределы экрана */
+    top: -90px;
 }
+
+/* ================= ПОВОРОТ УСТРОЙСТВА ================= */
 
 #rotate-warning {
     display: none;
@@ -93,8 +88,9 @@ html, body {
     padding: 20px;
 }
 
-/* показываем только в портретном режиме */
+/* Портретный режим → блокируем игру */
 @media screen and (orientation: portrait) {
+
     #rotate-warning {
         display: flex;
     }
@@ -102,10 +98,70 @@ html, body {
     .game-container,
     .site-header,
     .menu-section,
-    .alchemy-section {
+    .alchemy-section,
+    .reg-overlay,
+    .modal-overlay {
         display: none !important;
     }
 }
+
+/* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */
+
+@media (max-width: 1024px) and (orientation: landscape) {
+
+    .game-container {
+        width: 100vw;
+        height: 100vh;
+        background-size: cover;
+    }
+
+    .site-header {
+        height: 60px;
+    }
+
+    .header-inner {
+        gap: 20px;
+        padding: 0 3%;
+        justify-content: space-around;
+    }
+
+    .header-link {
+        font-size: 14px;
+    }
+
+    .alchemy-section {
+        left: 3%;
+        top: 18%;
+        width: 48%;
+        height: 62%;
+    }
+
+    .menu-section {
+        right: 3%;
+        top: 20%;
+        width: 46%;
+        height: 58%;
+    }
+
+    .potions-grid {
+        gap: 1%;
+    }
+
+    .reg-window {
+        transform: scale(0.78);
+    }
+
+    .leaderboard-window {
+        transform: scale(0.75);
+    }
+}
+
+/* ================= ДОПОЛНИТЕЛЬНАЯ ЗАЩИТА ================= */
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
 
 /* ==== ШАПКА (ИСПРАВЛЕННАЯ) ==== */
 
