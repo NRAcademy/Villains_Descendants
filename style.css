@@ -631,10 +631,9 @@ background: none;
 
 .icon-row {
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 40px;
-  flex-wrap: nowrap;
+  justify-content: center;
+  flex-wrap: nowrap; /* 🔥 ВОТ ЭТО ИСПРАВЛЕНИЕ */
 }
 
 .icon-wrapper {
