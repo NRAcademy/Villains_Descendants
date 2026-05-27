@@ -1,0 +1,193 @@
+body {
+  margin: 0;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ================= ШРИФТ ================= */
+
+@font-face {
+    font-family: 'Anticva';
+    src: url('Anticva.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ================= ШАПКА ================= */
+
+.site-header {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 80px;
+
+    background: rgba(1, 1, 1, 0.75);
+
+    display: flex;
+    align-items: center;
+
+    z-index: 10000;
+}
+
+.header-inner {
+
+    width: 100%;
+
+    padding: 0 5%;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 80px;
+
+    align-items: center;
+}
+
+.header-link {
+
+    font-family: 'Anticva', serif;
+
+    font-size: 22px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    letter-spacing: 1px;
+
+    transition: 0.3s ease;
+
+    white-space: nowrap;
+}
+
+.header-link:hover {
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 10px #ffffff,
+        0 0 20px rgba(255,255,255,0.6);
+}
+
+/* фон */
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("../меню/фон.png") no-repeat top center;
+  background-size: 100% auto;
+  z-index: -1;
+}
+
+/* курсор */
+#cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 99999999; /* 🔥 выше шапки */
+  will-change: transform;
+}
+
+/* контент */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 90px; /* ниже старт */
+  padding-bottom: 200px;
+}
+
+/* 🔥 НАЗВАНИЕ В 2 РАЗА БОЛЬШЕ + НИЖЕ */
+.title {
+  width: 700px;       /* было ~350 */
+  margin-bottom: 70px;
+  transform: translateY(20px);
+}
+
+/* сетка */
+.lessons-grid {
+  display: grid;
+
+  /* 🔥 теперь 3 колонки */
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 30px;
+
+  justify-items: center;
+  align-items: center;
+}
+
+/* 🔥 КНОПКИ ЧУТЬ БОЛЬШЕ */
+.lesson {
+  width: 340px; /* было 300 */
+  transition: 0.2s ease;
+  cursor: none;
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* hover тень */
+.lesson:hover {
+  filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
+  transform: scale(1.03);
+}
+
+/* 🔥 СЕРЫЕ БЕЗ ПРОЗРАЧНОСТИ */
+.gray {
+  filter: grayscale(100%);
+  pointer-events: none; /* некликабельны */
+}
+
+/* активная (1 урок) */
+.active {
+  filter: none;
+}
+
+/* 🔥 полностью отключаем выделение */
+body {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+/* 🔥 запрещаем перетаскивание картинок */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  user-select: none;
+}
+
+/* на всякий случай для кнопок */
+.lesson {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* 🔥 полный фикс системного курсора */
+
+html,
+body,
+*,
+a,
+a:hover,
+button,
+button:hover,
+img,
+img:hover,
+.lesson,
+.lesson:hover,
+.header-link,
+.header-link:hover {
+
+    cursor: none !important;
+}
