@@ -332,103 +332,111 @@ function initGame(storageKey) {
     }
 
 
-    // =====================================================
-    // ЗАГРУЗКА РЕЗУЛЬТАТА
-    // =====================================================
+// =====================================================
+// ЗАГРУЗКА РЕЗУЛЬТАТА
+// =====================================================
 
-    function startLoadingSequence() {
+function startLoadingSequence() {
 
-        isGameActive = false;
+    isGameActive = false;
 
-        clearInterval(countdownInterval);
+    clearInterval(countdownInterval);
 
-        if (rotator) {
-            rotator.classList.add("frozen");
-        }
+    if (rotator) {
+        rotator.classList.add("frozen");
+    }
 
-        cellSlots.forEach(slot => {
-            slot.classList.add("frozen");
+    cellSlots.forEach(slot => {
+        slot.classList.add("frozen");
+    });
+
+    loadingOverlay.classList.add("active");
+
+
+    // =================================================
+    // АНИМАЦИЯ ГРОБОВ
+    // =================================================
+
+    let coffinIndex = 0;
+
+    const coffinAnimation = setInterval(() => {
+
+        coffinEls.forEach(coffin => {
+
+            coffin.classList.remove(
+                "active-coffin"
+            );
         });
 
-        loadingOverlay.classList.add("active");
+        coffinEls[coffinIndex]
+            .classList.add(
+                "active-coffin"
+            );
+
+        coffinIndex++;
+
+        if (coffinIndex >= coffinEls.length) {
+
+            coffinIndex = 0;
+        }
+
+    }, 350);
 
 
-        // =================================================
-        // АНИМАЦИЯ ГРОБОВ
-        // =================================================
+    // =================================================
+    // ПЕЧАТАЮЩИЙСЯ ТЕКСТ
+    // =================================================
 
-        let coffinIndex = 0;
+    const fullText =
+        "Загружаем результат...";
 
-        const coffinAnimation = setInterval(() => {
+    let currentIndex = 0;
 
-            coffinEls.forEach(coffin => {
+    loadingTextEl.textContent = "";
 
-                coffin.classList.remove(
-                    "active-coffin"
-                );
-            });
+    const typingAnimation = setInterval(() => {
 
-            coffinEls[coffinIndex]
-                .classList.add(
-                    "active-coffin"
-                );
+        loadingTextEl.textContent =
+            fullText.slice(0, currentIndex);
 
-            coffinIndex++;
+        currentIndex++;
 
-            if (coffinIndex >= coffinEls.length) {
-
-                coffinIndex = 0;
-            }
-
-        }, 350);
-
-
-        // =================================================
-        // ЭФФЕКТ ПЕЧАТАНИЯ
-        // =================================================
-
-        const fullText =
-            "ЗАГРУЖАЕМ РЕЗУЛЬТАТ";
-
-        let currentIndex = 0;
-
-        loadingTextEl.textContent = "";
-
-        const typingAnimation = setInterval(() => {
-
-            loadingTextEl.textContent =
-                fullText.slice(0, currentIndex);
-
-            currentIndex++;
-
-            if (currentIndex > fullText.length) {
-
-                currentIndex = 0;
-
-                loadingTextEl.textContent = "";
-            }
-
-        }, 90);
-
-
-        // =================================================
-        // ЗАВЕРШЕНИЕ ЗАГРУЗКИ
-        // =================================================
-
-        setTimeout(() => {
-
-            clearInterval(coffinAnimation);
+        // Когда текст полностью напечатан —
+        // останавливаем анимацию
+        if (currentIndex > fullText.length) {
 
             clearInterval(typingAnimation);
 
-            loadingOverlay.classList.remove(
-                "active"
+            loadingTextEl.textContent =
+                fullText;
+        }
+
+    }, 90);
+
+
+    // =================================================
+    // ЗАВЕРШЕНИЕ ЗАГРУЗКИ
+    // =================================================
+
+    setTimeout(() => {
+
+        clearInterval(coffinAnimation);
+
+        coffinEls.forEach(coffin => {
+
+            coffin.classList.remove(
+                "active-coffin"
             );
+        });
 
-            showGameResult();
+        loadingOverlay.classList.remove(
+            "active"
+        );
 
-        }, 4000);
-    }
+        showGameResult();
+
+    }, 4000);
+}
 
 
     // =====================================================
