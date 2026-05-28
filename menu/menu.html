@@ -2,27 +2,23 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width,
+                 initial-scale=1.0,
+                 maximum-scale=1.0,
+                 user-scalable=no,
+                 viewport-fit=cover"
+    >
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <title>Зельеварение — Меню</title>
+
     <link rel="stylesheet" href="menu.css">
-
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-
-<script>
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optionalconst firebaseConfig = {  apiKey: "AIzaSyCDqgERmj0eVbwY2O5I1_cL8UtQ-KSlIUY",  authDomain: "villains-descendants.firebaseapp.com",  projectId: "villains-descendants",  storageBucket: "villains-descendants.firebasestorage.app",  messagingSenderId: "984025435773",  appId: "1:984025435773:web:cf34da4c90876229a5eb14",  measurementId: "G-18B62XXSZ5"};
-    const firebaseConfig = {
-        apiKey: "AIzaSyCDqgERmj0eVbwY2O5I1_cL8UtQ-KSlIUY",
-        authDomain: "villains-descendants.firebaseapp.com",
-        databaseURL: "https://villains-descendants.firebaseio.com",
-        projectId: "villains-descendants",
-        storageBucket: "villains-descendants.firebasestorage.app",
-        messagingSenderId: "984025435773",
-        appId: "1:984025435773:web:cf34da4c90876229a5eb14",
-    };
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-</script>
 </head>
 <body>
 
@@ -45,7 +41,34 @@
         </div>
     </div>
 
-    <header class="site-header" role="banner\">\n        <nav class="header-inner" aria-label=\"Главное меню\">\n            <a class="header-link" href="../../Система%20обучения/меню/lessons.html">НАЗАД</a>            <a class="header-link" id="open-leaderboard" href="#">РЕЙТИНГ</a>            <a class="header-link" href="https://vk.com/villains_descendants" target="_blank">ГРУППА</a>            <a class="header-link" href="https://vk.com/veneno_bianco" target="_blank">ПОМОЩЬ</a>        </nav>\n    </header>
+ <header class="site-header" id="site-header" role="banner">
+    <nav class="header-inner" aria-label="Главное меню">
+
+        <a class="header-link"
+           href="../../Система%20обучения/меню/lessons.html">
+           НАЗАД
+        </a>
+
+        <a class="header-link"
+           id="open-leaderboard"
+           href="#">
+           РЕЙТИНГ
+        </a>
+
+        <a class="header-link"
+           href="https://vk.com/villains_descendants"
+           target="_blank">
+           ГРУППА
+        </a>
+
+        <a class="header-link"
+           href="https://vk.com/veneno_bianco"
+           target="_blank">
+           ПОМОЩЬ
+        </a>
+
+    </nav>
+</header>
 
     <div class="game-container">
         
