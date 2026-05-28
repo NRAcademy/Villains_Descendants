@@ -1,135 +1,82 @@
-/* ======================================================
-   RESET
-====================================================== */
-
-html {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-
-    overflow: hidden;
-
-    overscroll-behavior: none;
-    touch-action: manipulation;
-
-    -webkit-text-size-adjust: 100%;
-}
-
-body {
-
-    width: 100%;
-    height: 100dvh;
-
-    margin: 0;
-    padding: 0;
-
-    overflow: hidden;
-
-    position: relative;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: #060713;
-
-    font-family: sans-serif;
-
-    -webkit-user-select: none;
-    user-select: none;
-
-    -webkit-touch-callout: none;
-
-    overscroll-behavior: none;
-
-    transform: translateZ(0);
-    backface-visibility: hidden;
-}
-
-/* ======================================================
-   FONTS
-====================================================== */
-
+/* ================= РџРћР”РљР›Р®Р§Р•РќРР• РЁР РР¤РўРђ ================= */
 @font-face {
     font-family: 'Anticva';
     src: url('Anticva.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
 }
-
 @font-face {
     font-family: 'Constantine';
-    src: url('../регистрация/Constantine.ttf') format('truetype');
+    src: url('СЂРµРіРёСЃС‚СЂР°С†РёСЏ/Constantine.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
-/* ======================================================
-   CURSOR
-====================================================== */
-
-html, body, *, a, button, img,
-.potion-item, .header-link, .header-icon,
-.cell-slot, .reg-overlay, .reg-window,
-.magic-input, .btn-ready {
-
+html, body, *,
+a, a:hover,
+button, button:hover,
+img, img:hover,
+.potion-item, .potion-item *, .potion-item:hover,
+.header-link, .header-link:hover,
+.header-icon, .header-icon *, .header-icon:hover,
+.cell-slot, .cell-slot:hover {
     cursor: url('custom-cursor.png') 0 0, auto !important;
 }
 
-/* ======================================================
-   HEADER
-====================================================== */
-
-.site-header {
-
-    position: fixed;
-    top: 0;
-    left: 0;
-
+html, body {
+    margin: 0;
+    padding: 0;
     width: 100%;
-    height: 80px;
-
+    height: 100%;
+    background-color: #060713;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    background: rgba(1, 1, 1, 0.72);
-    backdrop-filter: blur(10px);
-
-    z-index: 99999;
+    font-family: sans-serif;
+    overflow: hidden;
 }
 
-.header-inner {
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: rgba(1, 1, 1, 0.75);
     display: flex;
     align-items: center;
-    gap: 40px;
+    justify-content: center;
+    z-index: 1000;
 }
-
+.header-inner {
+    width: 100%;
+    padding: 0 5%;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    align-items: center;
+}
 .header-link {
     font-family: 'Anticva', serif;
     font-size: 22px;
-    color: #fff;
+    color: #ffffff;
     text-decoration: none;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+    white-space: nowrap;
 }
-
-/* ======================================================
-   GAME CONTAINER
-====================================================== */
+.header-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6);
+}
 
 .game-container {
-
     position: relative;
-
     width: 100vw;
-    height: 100dvh;
-
-    overflow: hidden;
-
-    background: url('фон.png') no-repeat center center;
-    background-size: cover;
+    height: 75vw;
+    background: url('С„РѕРЅ.png') no-repeat center center;
+    background-size: contain;
 }
-
-/* ======================================================
-   ALCHEMY (DESKTOP FIXED)
-====================================================== */
-
 .alchemy-section {
     position: absolute;
     left: 9.5%;
@@ -137,35 +84,34 @@ html, body, *, a, button, img,
     width: 44%;
     height: 55%;
 }
-
-/* ======================================================
-   ORBIT
-====================================================== */
-
 .orbit-bg {
     position: absolute;
     top: 11%;
     left: 11%;
     width: 78%;
     height: 78%;
-    background: url('круг.png') no-repeat center center;
+    background: url('РєСЂСѓРі.png') no-repeat center center;
     background-size: contain;
 }
-
 .center-stand {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 55%;
     height: 55%;
-    transform: translate(-50%, -50%);
-    background: url('стенд.png') no-repeat center center;
+    background: url('СЃС‚РµРЅРґ.png') no-repeat center center;
     background-size: contain;
+    transform: translate(-50%, -50%);
+    z-index: 2;
 }
-
-/* ======================================================
-   MENU
-====================================================== */
+.slots-rotator { position:absolute; width:100%; height:100%; animation: rotateCircle 25s linear infinite; z-index:3; }
+.cell-slot { position:absolute; width:28%; height:28%; background:url('РїСѓСЃС‚Р°СЏ_СЏС‡РµР№РєР°.png') no-repeat center center; background-size:contain; margin-top:-14%; margin-left:-14%; }
+.cell-slot:nth-child(1) { top: 11%; left: 50%; animation: counterRotate 25s linear infinite; }
+.cell-slot:nth-child(2) { top: 30.5%; left: 84%; animation: counterRotate 25s linear infinite; }
+.cell-slot:nth-child(3) { top: 69.5%; left: 84%; animation: counterRotate 25s linear infinite; }
+.cell-slot:nth-child(4) { top: 89%; left: 50%; animation: counterRotate 25s linear infinite; }
+.cell-slot:nth-child(5) { top: 69.5%; left: 16%; animation: counterRotate 25s linear infinite; }
+.cell-slot:nth-child(6) { top: 30.5%; left: 16%; animation: counterRotate 25s linear infinite; }
 
 .menu-section {
     position: absolute;
@@ -173,225 +119,82 @@ html, body, *, a, button, img,
     top: 33%;
     width: 38%;
     height: 48%;
-    background: url('блок_меню.png') no-repeat center center;
+    background: url('Р±Р»РѕРє_РјРµРЅСЋ.png') no-repeat center center;
     background-size: contain;
 }
-
-/* ======================================================
-   GRID
-====================================================== */
-
 .potions-grid {
     position: absolute;
     top: 38%;
     left: 8%;
     width: 84%;
     height: 54%;
-
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 2%;
 }
+.potion-item { position:relative; transition: transform 0.2s ease, filter 0.2s ease; }
+.potion-item:hover { transform: scale(1.05); filter: brightness(0.65); }
+.potion-item:active { filter: brightness(0.45); }
+.potion-item.locked { background:url('РїСѓСЃС‚РѕРµ_Р·РµР»СЊРµ.png') no-repeat center center; background-size:contain; cursor:default; }
+.potion-item.locked:hover { transform:none; filter:none; }
+.potion-item.active-potion { background:url('РїРµСЂРІРѕРµ_Р·РµР»СЊРµ.png') no-repeat center center; background-size:contain; }
+.potion-ribbon { position:absolute; top:-10%; left:50%; transform:translateX(-50%); width:130%; height:45%; background:url('РїРѕРґРїРёСЃСЊ 1.png') no-repeat center center; background-size:contain; z-index:5; pointer-events:none; }
+.potion-item:hover .potion-ribbon { filter:brightness(1.54); }
+.potion-item:active .potion-ribbon { filter:brightness(2.22); }
 
-/* ======================================================
-   REGISTRATION
-====================================================== */
+.reg-overlay, .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(6, 7, 19, 0.85); backdrop-filter: blur(5px); display:flex; justify-content:center; align-items:center; z-index:99999; }
+.reg-window { width:560px; height:480px; background:url('СЂРµРіРёСЃС‚СЂР°С†РёСЏ/Р±Р»РѕРє_РІС…РѕРґ.png') no-repeat center center; background-size:contain; position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+.reg-form { width:100%; height:100%; position:relative; }
+.input-container { position:absolute; left:50%; transform:translateX(-50%); width:480px; height:90px; background-size:contain; background-repeat:no-repeat; background-position:center; }
+.name-container { top:37%; background-image:url('СЂРµРіРёСЃС‚СЂР°С†РёСЏ/РёРјСЏ.png'); }
+.profile-container { top:57%; background-image:url('СЂРµРіРёСЃС‚СЂР°С†РёСЏ/РїСЂРѕС„РёР»СЊ.png'); }
+.magic-input { width:100%; height:100%; background:transparent; border:none; outline:none; box-sizing:border-box; font-family:'Constantine', serif; font-size:14px; color:#e2cfa7; text-align:center; padding-top:28px; padding-left:20px; padding-right:20px; }
+.magic-input::placeholder { font-family:'Constantine', serif; color:rgba(226, 207, 167, 0.45); font-style:italic; }
+.btn-ready { position:absolute; bottom:9%; left:50%; transform:translateX(-50%); width:210px; height:65px; background:url('СЂРµРіРёСЃС‚СЂР°С†РёСЏ/РіРѕС‚РѕРІРѕ.png') no-repeat center center; background-size:contain; border:none; outline:none; transition:filter 0.2s ease, transform 0.1s ease; }
+.btn-ready:hover { filter:brightness(0.8); }
+.btn-ready:active { transform:translateX(-50%) scale(0.96); }
+.error-text { position:absolute; bottom:24%; left:0; width:100%; text-align:center; font-family:'Constantine', serif; font-size:16px; color:#ff4a4a; text-shadow:1px 1px 2px #000; font-weight:bold; }
+.leaderboard-window { width:600px; height:700px; background:url('СЂРµР№С‚РёРЅРі/Р±Р»РѕРє_СЂРµР№С‚РёРЅРі.png') no-repeat center center; background-size:contain; position:relative; }
+.leaderboard-content { position:absolute; top:15%; bottom:5%; left:10%; right:10%; overflow-y:auto; padding-right:10px; padding-top:50px; display:flex; flex-direction:column; gap:15px; }
+.leaderboard-content::-webkit-scrollbar { width: 6px; }
+.leaderboard-content::-webkit-scrollbar-thumb { background:#555; border-radius:3px; }
+.rank-card { width:100%; height:90px; background-size:contain; background-repeat:no-repeat; background-position:center; display:flex; flex-direction:column; justify-content:center; align-items:center; color:#fff; font-family:'Anticva', serif; margin-bottom:15px; }
+.rank-gold { background-image:url('СЂРµР№С‚РёРЅРі/РїРµСЂРІРѕРµ_РјРµСЃС‚Рѕ.png'); padding-top:10px; }
+.rank-silver { background-image:url('СЂРµР№С‚РёРЅРі/РІС‚РѕСЂРѕРµ_РјРµСЃС‚Рѕ.png'); padding-top:5px; }
+.rank-default { background-image:url('СЂРµР№С‚РёРЅРі/РѕР±С‹С‡РЅРѕРµ_РјРµСЃС‚Рѕ.png'); padding-top:0; }
+.rank-name { font-size:20px; text-shadow:1px 1px 2px #000; }
+.rank-time { font-size:14px; opacity:0.9; text-shadow:1px 1px 2px #000; }
 
-.reg-overlay {
+@keyframes rotateCircle { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes counterRotate { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100dvh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background: rgba(6, 7, 19, 0.85);
-    backdrop-filter: blur(4px);
-
-    z-index: 999999;
+@media (max-width: 900px) {
+    html, body { height: 100dvh; overflow:hidden; }
+    .site-header { height: 64px; }
+    .header-inner { gap: 18px; padding: 0 12px; flex-wrap: wrap; }
+    .header-link { font-size: 14px; }
+    .game-container { width:100vw; height:100dvh; background-size: cover; }
+    .alchemy-section { left: 2%; top: 22%; width: 52%; height: 40%; }
+    .menu-section { right: 2%; top: 24%; width: 44%; height: 52%; }
+    .potions-grid { top: 34%; left: 7%; width: 86%; height: 56%; gap: 3%; }
+    .reg-window { width: 95vw; height: 86vw; max-width: 560px; max-height: 480px; }
+    .input-container { width: 86%; height: 18%; }
+    .magic-input { font-size: 12px; padding-top: 18px; }
+    .btn-ready { width: 34%; height: 12%; }
+    .leaderboard-window { width: 94vw; height: 88vh; }
 }
 
-.reg-window {
-
-    position: relative;
-
-    width: 560px;
-    height: 480px;
-
-    background: url('../регистрация/блок_вход.png') no-repeat center center;
-    background-size: contain;
-}
-
-/* INPUT */
-
-.input-container {
-
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: 480px;
-    height: 90px;
-}
-
-.name-container {
-    top: 37%;
-    background: url('../регистрация/имя.png') no-repeat center center;
-}
-
-.profile-container {
-    top: 57%;
-    background: url('../регистрация/профиль.png') no-repeat center center;
-}
-
-.magic-input {
-
-    width: 100%;
-    height: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-
-    font-family: 'Constantine', serif;
-    font-size: 14px;
-    text-align: center;
-    color: #e2cfa7;
-
-    padding-top: 28px;
-}
-
-/* BUTTON */
-
-.btn-ready {
-
-    position: absolute;
-    bottom: 9%;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: 210px;
-    height: 65px;
-
-    background: url('../регистрация/готово.png') no-repeat center center;
-    background-size: contain;
-}
-
-/* ERROR */
-
-.error-text {
-
-    position: absolute;
-    bottom: 24%;
-    width: 100%;
-    text-align: center;
-
-    font-family: 'Constantine', serif;
-    font-size: 16px;
-    color: #ff4a4a;
-}
-
-/* ======================================================
-   LEADERBOARD
-====================================================== */
-
-.modal-overlay {
-
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100dvh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background: rgba(6, 7, 19, 0.85);
-    backdrop-filter: blur(5px);
-
-    z-index: 99999;
-}
-
-.leaderboard-window {
-
-    width: 600px;
-    height: 700px;
-
-    background: url('../рейтинг/блок_рейтинг.png') no-repeat center center;
-    background-size: contain;
-}
-
-/* ======================================================
-   ANIMATIONS
-====================================================== */
-
-@keyframes rotateCircle {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes counterRotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(-360deg); }
-}
-
-/* ======================================================
-   MOBILE ONLY (SAFE)
-====================================================== */
-
-@media screen and (max-width: 768px) {
-
-    .site-header {
-        height: 58px;
-    }
-
-    .header-inner {
-        gap: 18px;
-    }
-
-    .header-link {
-        font-size: 14px;
-    }
-
-    .reg-window {
-        width: 360px;
-        height: 300px;
-        transform: scale(0.88);
-    }
-
-    .input-container {
-        width: 270px;
-        height: 52px;
-    }
-
-    .name-container { top: 35%; }
-    .profile-container { top: 54%; }
-
-    .magic-input {
-        font-size: 10px;
-        padding-top: 14px;
-    }
-
-    .btn-ready {
-        width: 130px;
-        height: 42px;
-        bottom: 11%;
-    }
-
-    .error-text {
-        font-size: 11px;
-        bottom: 22%;
-    }
-
-    .leaderboard-window {
-        width: 92vw;
-        height: 92dvh;
-    }
+@media (max-width: 600px) {
+    .site-header { height: 56px; }
+    .header-inner { gap: 10px; }
+    .header-link { font-size: 11px; }
+    .alchemy-section { left: 0; top: 16%; width: 56%; height: 34%; }
+    .menu-section { right: 0; top: 18%; width: 48%; height: 44%; }
+    .potions-grid { top: 33%; left: 8%; width: 84%; height: 56%; }
+    .reg-window { width: 98vw; height: 92vw; }
+    .leaderboard-content { left: 7%; right: 7%; }
+    .rank-card { height: 72px; }
+    .rank-name { font-size: 16px; }
+    .rank-time { font-size: 12px; }
 }
