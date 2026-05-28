@@ -31,9 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
  * Перенаправление на страницу приготовления зелья
  */
 function startPotionGame() {
-    // Путь к папке first_potion
-    window.location.href = "../первое_зелье/first_potion.html"; 
-}
+    // Вариант 1 (если переименовали папку в first_potion):
+    window.location.href = "../первое_зелье/first_potion.html";
 
 // =================================================================
 // МАГИЧЕСКИЙ ЭФФЕКТ: ЯБЛОКИ ПРИ КЛИКЕ И ДВИЖЕНИИ
@@ -45,11 +44,16 @@ function createApple(x, y) {
     const apple = document.createElement('div');
     const randomImg = appleImages[Math.floor(Math.random() * appleImages.length)];
     
+    // Задаем размер
+    const size = 40; 
+    
     apple.style.position = 'fixed';
-    apple.style.left = `${x - 12}px`; 
-    apple.style.top = `${y - 12}px`;  
-    apple.style.width = '40px';
-    apple.style.height = '40px';
+    // Центруем: отнимаем половину размера от позиции курсора
+    apple.style.left = `${x - (size / 2)}px`; 
+    apple.style.top = `${y - (size / 2)}px`;  
+    apple.style.width = `${size}px`;
+    apple.style.height = `${size}px`;
+    
     apple.style.backgroundImage = `url('${randomImg}')`;
     apple.style.backgroundSize = 'contain';
     apple.style.backgroundRepeat = 'no-repeat';
@@ -58,6 +62,8 @@ function createApple(x, y) {
     apple.style.transition = 'transform 1.5s ease-out, opacity 1.5s ease-out';
 
     document.body.appendChild(apple);
+    // ... остальной код
+}
 
     const randomX = (Math.random() - 0.5) * 120;
     const randomRotate = (Math.random() - 0.5) * 540;
