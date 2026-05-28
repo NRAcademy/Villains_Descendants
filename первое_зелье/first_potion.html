@@ -9,20 +9,20 @@
 <body>
 
     <video autoplay muted loop playsinline id="bg-video">
-     <source src="фон.mp4" type="video/mp4">
+        <source src="фон.mp4" type="video/mp4">
         Ваш браузер не поддерживает видео в формате HTML5.
     </video>
+
+    <div class="wait-modal-overlay" id="wait-modal" style="display: none;">
+        <div class="wait-modal-content">
+            <img src="../уведомление/ожидание.png" alt="Ожидание" class="wait-bg">
+            <button class="understand-btn" id="understand-btn"></button>
+        </div>
+    </div>
 
     <div class="countdown-overlay" id="countdown-overlay">
         <div class="countdown-number" id="countdown-text">3</div>
     </div>
-
-    <div class="wait-modal-overlay" id="wait-modal" style="display: none;">
-    <div class="wait-modal-content">
-        <img src="../уведомление/ожидание.png" alt="Ожидание" class="wait-bg">
- <button class="understand-btn" id="understand-btn"></button>
-    </div>
-</div>
 
     <div class="loading-overlay" id="loading-overlay">
         <div class="coffins-container">
@@ -83,7 +83,6 @@
 
             <div class="game-timer" id="game-timer">00:30</div>
         </div>
-
     </div>
 
     <div class="info-modal-overlay" id="potion-modal">
