@@ -43,7 +43,7 @@ const appleImages = ['apple 1.png', 'apple 2.png', 'apple 3.png'];
 function createApple(x, y) {
     const apple = document.createElement('div');
     const randomImg = appleImages[Math.floor(Math.random() * appleImages.length)];
-    const size = 40; 
+    const size = 30; 
     
     apple.style.position = 'fixed';
     apple.style.left = `${x - (size / 2)}px`; 
