@@ -35,7 +35,7 @@ function startPotionGame() {
     window.location.href = "../первое_зелье/first_potion.html";
 
 // =================================================================
-// МАГИЧЕСКИЙ ЭФФЕКТ: ЯБЛОКИ
+// 2. МАГИЧЕСКИЙ ЭФФЕКТ: ЯБЛОКИ ПРИ КЛИКЕ И ДВИЖЕНИИ
 // =================================================================
 
 const appleImages = ['apple 1.png', 'apple 2.png', 'apple 3.png'];
@@ -43,14 +43,12 @@ const appleImages = ['apple 1.png', 'apple 2.png', 'apple 3.png'];
 function createApple(x, y) {
     const apple = document.createElement('div');
     const randomImg = appleImages[Math.floor(Math.random() * appleImages.length)];
-    const size = 30; 
     
     apple.style.position = 'fixed';
-    apple.style.left = `${x - (size / 2)}px`; 
-    apple.style.top = `${y - (size / 2)}px`;  
-    apple.style.width = `${size}px`;
-    apple.style.height = `${size}px`;
-    
+    apple.style.left = `${x - 12}px`; 
+    apple.style.top = `${y - 12}px`;  
+    apple.style.width = '30px';
+    apple.style.height = '30px';
     apple.style.backgroundImage = `url('${randomImg}')`;
     apple.style.backgroundSize = 'contain';
     apple.style.backgroundRepeat = 'no-repeat';
@@ -60,36 +58,33 @@ function createApple(x, y) {
 
     document.body.appendChild(apple);
 
-    // Добавляем случайные параметры движения
     const randomX = (Math.random() - 0.5) * 120;
     const randomRotate = (Math.random() - 0.5) * 540;
 
-    // Запускаем анимацию
     requestAnimationFrame(() => {
         apple.style.transform = `translate(${randomX}px, -140px) rotate(${randomRotate}deg)`;
         apple.style.opacity = '0';
     });
 
-    // Удаляем элемент после завершения анимации
     setTimeout(() => {
         apple.remove();
     }, 1500);
 }
 
-// Слушатели событий
 document.addEventListener('click', e => {
     createApple(e.clientX, e.clientY);
 });
 
 let isMouseDown = false;
-document.addEventListener('mousedown', e => { if (e.button === 0) isMouseDown = true; });
-document.addEventListener('mouseup', e => { if (e.button === 0) isMouseDown = false; });
+document.addEventListener('mousedown', e => {
+    if (e.button === 0) { isMouseDown = true; }
+});
+document.addEventListener('mouseup', e => {
+    if (e.button === 0) { isMouseDown = false; }
+});
 document.addEventListener('mousemove', e => {
-    if (isMouseDown) {
-        const now = Date.now();
-        if (!window.lastAppleTime || now - window.lastAppleTime > 60) {
-            createApple(e.clientX, e.clientY);
-            window.lastAppleTime = now;
-        }
+    if (isMouseDown && (!window.lastAppleTime || Date.now() - window.lastAppleTime > 60)) {
+        createApple(e.clientX, e.clientY);
+        window.lastAppleTime = Date.now();
     }
 });
