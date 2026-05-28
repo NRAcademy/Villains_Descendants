@@ -85,10 +85,14 @@ html, body {
 .game-container {
     position: relative;
     width: 100vw;
-    height: 75vw;
+    height: 100vh; /* Занимает всю высоту экрана */
     background: url('фон.png') no-repeat center center;
-    background-size: contain;
+    background-size: contain; /* Картинка будет масштабироваться, сохраняя пропорции */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 10;
+    overflow: hidden; /* Дополнительная защита от выхода за границы */
 }
 
 /* =========================
