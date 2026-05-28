@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (regForm) {
 
-        regForm.addEventListener(
+regForm.addEventListener(
     "submit",
     async (e) => {
 
@@ -195,10 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 .toLowerCase();
 
         errorMessage.textContent = "";
-
-        // =========================================
-        // VALIDATION
-        // =========================================
 
         if (!charName) {
 
@@ -222,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
 
             // =========================================
-            // CHECK NAME
+            // ИЩЕМ ИГРОКА ПО ИМЕНИ
             // =========================================
 
             const nameSnapshot =
@@ -236,16 +232,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     .limit(1)
                     .get();
 
-            if (!nameSnapshot.empty) {
-
-                errorMessage.textContent =
-                    "Это имя уже занято";
-
-                return;
-            }
-
             // =========================================
-            // CHECK VK
+            // ИЩЕМ ИГРОКА ПО VK
             // =========================================
 
             const vkSnapshot =
@@ -259,7 +247,76 @@ document.addEventListener("DOMContentLoaded", () => {
                     .limit(1)
                     .get();
 
-            if (!vkSnapshot.empty) {
+            const hasName =
+                !nameSnapshot.empty;
+
+            const hasVk =
+                !vkSnapshot.empty;
+
+            // =========================================
+            // ЕСЛИ И ИМЯ И VK УЖЕ СУЩЕСТВУЮТ
+            // =========================================
+
+            if (hasName && hasVk) {
+
+                const existingPlayer =
+                    nameSnapshot.docs[0].data();
+
+                // ТОТ ЖЕ САМЫЙ ИГРОК → ПУСКАЕМ
+                if (
+                    existingPlayer.vkLower ===
+                    vkProfile
+                ) {
+
+                    sessionStorage.setItem(
+                        "currentPlayerName",
+                        charName
+                    );
+
+                    sessionStorage.setItem(
+                        "currentPlayerVk",
+                        vkProfile
+                    );
+
+                    overlay.style.pointerEvents =
+                        "none";
+
+                    overlay.style.opacity = "0";
+
+                    setTimeout(() => {
+
+                        overlay.style.display =
+                            "none";
+
+                    }, 350);
+
+                    return;
+                }
+
+                // ИМЯ ЗАНЯТО ДРУГИМ VK
+                errorMessage.textContent =
+                    "Это имя уже занято";
+
+                return;
+            }
+
+            // =========================================
+            // ИМЯ ЗАНЯТО
+            // =========================================
+
+            if (hasName) {
+
+                errorMessage.textContent =
+                    "Это имя уже занято";
+
+                return;
+            }
+
+            // =========================================
+            // VK ЗАНЯТ
+            // =========================================
+
+            if (hasVk) {
 
                 errorMessage.textContent =
                     "Этот VK уже зарегистрирован";
@@ -268,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // =========================================
-            // SAVE PLAYER
+            // СОЗДАЕМ НОВОГО ИГРОКА
             // =========================================
 
             await db
@@ -288,10 +345,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         firebase.firestore.FieldValue.serverTimestamp()
                 });
 
-            // =========================================
-            // SESSION
-            // =========================================
-
             sessionStorage.setItem(
                 "currentPlayerName",
                 charName
@@ -302,16 +355,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 vkProfile
             );
 
-            // =========================================
-            // CLOSE MODAL
-            // =========================================
+            overlay.style.pointerEvents =
+                "none";
 
-            overlay.style.pointerEvents = "none";
             overlay.style.opacity = "0";
 
             setTimeout(() => {
 
-                overlay.style.display = "none";
+                overlay.style.display =
+                    "none";
 
             }, 350);
 
@@ -320,11 +372,10 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error(err);
 
             errorMessage.textContent =
-                "Ошибка Firebase. Проверьте Firestore Rules.";
+                "Ошибка Firebase";
         }
     }
 );
-    }
 
     // ======================================================
     // START GAME
