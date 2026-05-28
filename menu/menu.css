@@ -1,15 +1,41 @@
+html {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: manipulation;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+
+    -webkit-user-select: none;
+    user-select: none;
+
+    -webkit-touch-callout: none;
+
+    background-color: #060713;
+
+    /* УБИРАЕТ ТУСКЛОСТЬ */
+    filter: none !important;
+    opacity: 1 !important;
+
+    /* Делает экран ярче на OLED */
+    color-scheme: dark;
+
+    /* Ускорение рендера */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
 /* ================= ПОДКЛЮЧЕНИЕ ШРИФТА ================= */
 
 @font-face {
-
     font-family: 'Anticva';
-
     src: url('Anticva.otf') format('opentype');
-
     font-weight: normal;
-
     font-style: normal;
-
 }
 
 
@@ -72,45 +98,31 @@ html, body {
 /* ==== ШАПКА (ИСПРАВЛЕННАЯ) ==== */
 
 .site-header {
-
     position: fixed;
-
     top: 0;
-
     left: 0;
 
     width: 100%;
-
     height: 80px;
 
-    background: rgba(1, 1, 1, 0.75);
+    background: rgba(1, 1, 1, 0.72);
+    backdrop-filter: blur(10px);
 
     display: flex;
-
     align-items: center;
+    justify-content: center;
 
-    z-index: 1000;
+    z-index: 9999;
 
+    transition:
+        transform 0.35s ease,
+        opacity 0.35s ease;
 }
 
-
-
-.header-inner {
-
-    width: 100%;
-
-    padding: 0 5%; /* Одинаковый отступ 5% и слева, и справа */
-
-    display: flex;
-
-    justify-content: center; /* Центрирует всю группу ссылок, делая боковые поля симметричными */
-
-    gap: 80px; /* Фиксированное расстояние между элементами меню */
-
-    align-items: center;
-
+.site-header.hidden-header {
+    transform: translateY(-100%);
+    opacity: 0;
 }
-
 
 
 .header-link {
@@ -148,17 +160,15 @@ html, body {
 /* Главный контейнер игры */
 
 .game-container {
-
     position: relative;
 
     width: 100vw;
-
-    height: 75vw; /* Пропорция 4:3 */
+    height: 100vh;
 
     background: url('фон.png') no-repeat center center;
+    background-size: cover;
 
-    background-size: contain;
-
+    overflow: hidden;
 }
 
 
@@ -672,4 +682,86 @@ html, body {
 
 .site-header.header-hidden {
     transform: translateY(-100%);
+}
+
+/* ======================================================
+    }
+
+    .header-link {
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+
+    .game-container {
+        width: 100vw;
+        height: 100dvh;
+    }
+
+    .alchemy-section {
+        left: 2%;
+        top: 17%;
+        width: 48%;
+        height: 70%;
+    }
+
+    .menu-section {
+        right: 2%;
+        top: 20%;
+        width: 45%;
+        height: 65%;
+    }
+
+    .potions-grid {
+        top: 31%;
+        left: 8%;
+        width: 84%;
+        height: 58%;
+    }
+
+    .reg-window {
+        width: 92vw;
+        height: 88vh;
+    }
+
+    .input-container {
+        width: 78vw;
+        max-width: 480px;
+    }
+
+    .leaderboard-window {
+        width: 92vw;
+        height: 92vh;
+    }
+}
+
+/* ======================================================
+   PORTRAIT BLOCKER
+====================================================== */
+
+@media screen and (orientation: portrait) and (max-width: 1024px) {
+
+    body::before {
+        content: 'Пожалуйста, поверните устройство горизонтально';
+
+        position: fixed;
+        inset: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        text-align: center;
+
+        padding: 40px;
+
+        background: #060713;
+
+        color: white;
+
+        font-family: 'Anticva', serif;
+        font-size: 24px;
+        line-height: 1.5;
+
+        z-index: 999999;
+    }
 }
