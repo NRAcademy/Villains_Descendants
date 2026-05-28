@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function startPotionGame() {
     // Вариант 1 (если переименовали папку в first_potion):
     window.location.href = "../первое_зелье/first_potion.html";
+}
 
 // =================================================================
 // 2. МАГИЧЕСКИЙ ЭФФЕКТ: ЯБЛОКИ ПРИ КЛИКЕ И ДВИЖЕНИИ
