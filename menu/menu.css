@@ -1,118 +1,126 @@
+/* ======================================================
+   RESET
+====================================================== */
+
 html {
+    width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
+
     overflow: hidden;
+
     overscroll-behavior: none;
     touch-action: manipulation;
+
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
+
     width: 100%;
-    height: 100%;
+    height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
     overflow: hidden;
-    overscroll-behavior: none;
+
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #060713;
+
+    font-family: sans-serif;
 
     -webkit-user-select: none;
     user-select: none;
 
     -webkit-touch-callout: none;
 
-    background-color: #060713;
+    overscroll-behavior: none;
 
-    /* УБИРАЕТ ТУСКЛОСТЬ */
-    filter: none !important;
-    opacity: 1 !important;
-
-    /* Делает экран ярче на OLED */
-    color-scheme: dark;
-
-    /* Ускорение рендера */
     transform: translateZ(0);
     backface-visibility: hidden;
 }
-/* ================= ПОДКЛЮЧЕНИЕ ШРИФТА ================= */
+
+/* ======================================================
+   FONTS
+====================================================== */
 
 @font-face {
+
     font-family: 'Anticva';
-    src: url('Anticva.otf') format('opentype');
+
+    src: url('Anticva.otf')
+    format('opentype');
+
     font-weight: normal;
     font-style: normal;
 }
 
+@font-face {
 
+    font-family: 'Constantine';
 
-/* ================= ГЛОБАЛЬНАЯ ФИКСАЦИЯ КУРСОРA ================= */
+    src: url('../регистрация/Constantine.ttf')
+    format('truetype');
 
-/* Принудительно назначаем кастомный курсор для всего, включая состояния наведения (:hover) */
-
-html, body, *,
-
-a, a:hover,
-
-button, button:hover,
-
-img, img:hover,
-
-.potion-item, .potion-item *, .potion-item:hover,
-
-.header-link, .header-link:hover,
-
-.header-icon, .header-icon *, .header-icon:hover,
-
-.cell-slot, .cell-slot:hover {
-
-    cursor: url('custom-cursor.png') 0 0, auto !important;
-
+    font-weight: normal;
+    font-style: normal;
 }
 
+/* ======================================================
+   CURSOR
+====================================================== */
 
+html,
+body,
+*,
+a,
+button,
+img,
+.potion-item,
+.header-link,
+.header-icon,
+.cell-slot,
+.reg-overlay,
+.reg-window,
+.magic-input,
+.btn-ready {
 
-/* Общие стили для сброса отступов */
-
-html, body {
-
-    margin: 0;
-
-    padding: 0;
-
-    width: 100%;
-
-    height: 100%;
-
-    background-color: #1a1a2e;
-    filter: brightness(1.2);
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    font-family: sans-serif;
-
-    overflow: hidden; /* Запрещаем полосы прокрутки */
-
+    cursor:
+        url('custom-cursor.png') 0 0,
+        auto !important;
 }
 
-
-
-/* ==== ШАПКА (ИСПРАВЛЕННАЯ) ==== */
+/* ======================================================
+   HEADER
+====================================================== */
 
 .site-header {
+
     position: fixed;
+
     top: 0;
     left: 0;
 
     width: 100%;
     height: 80px;
 
-    background: rgba(1, 1, 1, 0.72);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        rgba(1, 1, 1, 0.72);
+
     backdrop-filter: blur(10px);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    z-index: 9999;
+    z-index: 99999;
 
     transition:
         transform 0.35s ease,
@@ -120,10 +128,17 @@ html, body {
 }
 
 .site-header.hidden-header {
+
     transform: translateY(-100%);
     opacity: 0;
 }
 
+.header-inner {
+
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
 
 .header-link {
 
@@ -137,600 +152,686 @@ html, body {
 
     letter-spacing: 1px;
 
-    transition: 0.3s ease;
+    transition:
+        color 0.3s ease,
+        text-shadow 0.3s ease;
 
-    white-space: nowrap; /* Запрещает тексту переноситься на новую строку */
-
+    white-space: nowrap;
 }
-
-
-
-/* ФИКС СВЕЧЕНИЯ: цвет текста остаётся белым, усиливается только белое неоновое свечение */
 
 .header-link:hover {
 
     color: #ffffff;
 
-    text-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6);
-
+    text-shadow:
+        0 0 10px #ffffff,
+        0 0 20px rgba(255,255,255,0.6);
 }
 
-
-
-/* Главный контейнер игры */
+/* ======================================================
+   GAME CONTAINER
+====================================================== */
 
 .game-container {
+
     position: relative;
 
     width: 100vw;
-    height: 100vh;
-
-    background: url('фон.png') no-repeat center center;
-    background-size: cover;
+    height: 100dvh;
 
     overflow: hidden;
+
+    background:
+        url('фон.png')
+        no-repeat center center;
+
+    background-size: cover;
 }
 
-
-
-/* ================= ЛЕВАЯ ЧАСТЬ: АЛХИМИЧЕСКИЙ КРУГ ================= */
-
-
-
-/* Отодвинули секцию совсем немного левее (с left: 12% изменили на left: 9.5%)
-
-   Центр по горизонтали со свитком меню по-прежнему идеально сохранен */
+/* ======================================================
+   ALCHEMY SECTION
+====================================================== */
 
 .alchemy-section {
 
     position: absolute;
 
     left: 9.5%;
-
     top: 30%;
 
     width: 44%;
-
     height: 55%;
-
 }
 
-
-
-/* Фоновый неподвижный круг (орбита) */
+/* ======================================================
+   ORBIT
+====================================================== */
 
 .orbit-bg {
 
     position: absolute;
 
     top: 11%;
-
     left: 11%;
 
     width: 78%;
-
     height: 78%;
 
-    background: url('круг.png') no-repeat center center;
+    background:
+        url('круг.png')
+        no-repeat center center;
 
     background-size: contain;
-
 }
-
-
-
-/* Неподвижный стенд строго по центру круга */
 
 .center-stand {
 
     position: absolute;
 
     top: 50%;
-
     left: 50%;
 
-    width: 55%; /* Было 45% — стенд стал крупнее */
+    width: 55%;
+    height: 55%;
 
-    height: 55%; /* Было 45% */
+    transform:
+        translate(-50%, -50%);
 
-    background: url('стенд.png') no-repeat center center;
+    background:
+        url('стенд.png')
+        no-repeat center center;
 
     background-size: contain;
 
-    transform: translate(-50%, -50%); /* Было translate(-50%, -40%) — теперь центрирование идеальное */
-
     z-index: 2;
-
 }
 
-
-
-/* Вращающийся контейнер для ячеек */
+/* ======================================================
+   ROTATOR
+====================================================== */
 
 .slots-rotator {
 
     position: absolute;
 
     width: 100%;
-
     height: 100%;
 
-    animation: rotateCircle 25s linear infinite;
+    animation:
+        rotateCircle 25s linear infinite;
 
     z-index: 3;
-
 }
 
-
-
-/* Базовый класс для пустой ячейки */
+/* ======================================================
+   CELL
+====================================================== */
 
 .cell-slot {
 
     position: absolute;
 
-    width: 28%;  
-
+    width: 28%;
     height: 28%;
 
-    background: url('пустая_ячейка.png') no-repeat center center;
-
-    background-size: contain;
-
     margin-top: -14%;
-
     margin-left: -14%;
 
+    background:
+        url('пустая_ячейка.png')
+        no-repeat center center;
+
+    background-size: contain;
 }
 
+/* ======================================================
+   CELL POSITIONS
+====================================================== */
 
+.cell-slot:nth-child(1) {
 
-/* Расстановка 6 увеличенных ячеек по внешней грани орбиты */
+    top: 11%;
+    left: 50%;
 
-.cell-slot:nth-child(1) { top: 11%; left: 50%; animation: counterRotate 25s linear infinite; }
+    animation:
+        counterRotate 25s linear infinite;
+}
 
-.cell-slot:nth-child(2) { top: 30.5%; left: 84%; animation: counterRotate 25s linear infinite; }
+.cell-slot:nth-child(2) {
 
-.cell-slot:nth-child(3) { top: 69.5%; left: 84%; animation: counterRotate 25s linear infinite; }
+    top: 30.5%;
+    left: 84%;
 
-.cell-slot:nth-child(4) { top: 89%; left: 50%; animation: counterRotate 25s linear infinite; }
+    animation:
+        counterRotate 25s linear infinite;
+}
 
-.cell-slot:nth-child(5) { top: 69.5%; left: 16%; animation: counterRotate 25s linear infinite; }
+.cell-slot:nth-child(3) {
 
-.cell-slot:nth-child(6) { top: 30.5%; left: 16%; animation: counterRotate 25s linear infinite; }
+    top: 69.5%;
+    left: 84%;
 
+    animation:
+        counterRotate 25s linear infinite;
+}
 
+.cell-slot:nth-child(4) {
 
-/* ================= ПРАВАЯ ЧАСТЬ: МЕНЮ ЗЕЛЬЕВАРЕНИЯ ================= */
+    top: 89%;
+    left: 50%;
 
+    animation:
+        counterRotate 25s linear infinite;
+}
 
+.cell-slot:nth-child(5) {
+
+    top: 69.5%;
+    left: 16%;
+
+    animation:
+        counterRotate 25s linear infinite;
+}
+
+.cell-slot:nth-child(6) {
+
+    top: 30.5%;
+    left: 16%;
+
+    animation:
+        counterRotate 25s linear infinite;
+}
+
+/* ======================================================
+   MENU SECTION
+====================================================== */
 
 .menu-section {
 
     position: absolute;
 
     right: 7%;
-
     top: 33%;
 
     width: 38%;
-
     height: 48%;
 
-    background: url('блок_меню.png') no-repeat center center;
+    background:
+        url('блок_меню.png')
+        no-repeat center center;
 
     background-size: contain;
-
 }
 
-
-
-/* Сетка для зелий 4 на 3 */
+/* ======================================================
+   GRID
+====================================================== */
 
 .potions-grid {
 
     position: absolute;
 
     top: 38%;
-
     left: 8%;
 
     width: 84%;
-
     height: 54%;
 
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows:
+        repeat(3, 1fr);
 
     gap: 2%;
-
 }
 
-
-
-/* Стили карточек зелий */
+/* ======================================================
+   POTIONS
+====================================================== */
 
 .potion-item {
 
     position: relative;
 
-    cursor: pointer;
-
-    transition: transform 0.2s ease, filter 0.2s ease;
-
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
 }
-
-
-
-/* Эффект легкого приближения при наведении */
 
 .potion-item:hover {
 
     transform: scale(1.05);
 
-}
-
-
-
-/* Эффект тускнения самого изображения */
-
-.potion-item:hover {
-
     filter: brightness(0.65);
-
 }
 
 .potion-item:active {
 
     filter: brightness(0.45);
-
 }
 
-
-
-/* Заблокированное зелье */
+/* ======================================================
+   LOCKED
+====================================================== */
 
 .potion-item.locked {
-    background: url('пустое_зелье.png') no-repeat center center;
-    background-size: contain;
-    cursor: default;
 
+    background:
+        url('пустое_зелье.png')
+        no-repeat center center;
+
+    background-size: contain;
+
+    cursor: default;
 }
 
 .potion-item.locked:hover {
+
     transform: none;
     filter: none;
 }
 
-/* Первое доступное зелье */
+/* ======================================================
+   ACTIVE POTION
+====================================================== */
+
 .potion-item.active-potion {
-    background: url('первое_зелье.png') no-repeat center center;
+
+    background:
+        url('первое_зелье.png')
+        no-repeat center center;
+
     background-size: contain;
 }
 
-/* Лента над первым зельем — УВЕЛИЧИЛИ размер (width: 130%) и ОПУСТИЛИ ниже (с top: -20% до top: -5%) */
+/* ======================================================
+   RIBBON
+====================================================== */
+
 .potion-ribbon {
+
     position: absolute;
-    top: -10%; /* Было -5% — теперь лента находится чуть выше */
+
+    top: -10%;
     left: 50%;
+
     transform: translateX(-50%);
+
     width: 130%;
     height: 45%;
-    background: url('подпись 1.png') no-repeat center center;
+
+    background:
+        url('подпись 1.png')
+        no-repeat center center;
+
     background-size: contain;
+
     z-index: 5;
+
     pointer-events: none;
 }
 
-/* Компенсация, чтобы лента НЕ тускнела вместе с зельем */
 .potion-item:hover .potion-ribbon {
+
     filter: brightness(1.54);
 }
+
 .potion-item:active .potion-ribbon {
+
     filter: brightness(2.22);
 }
 
-/* ================= АНИМАЦИИ ================= */
+/* ======================================================
+   REGISTRATION OVERLAY
+====================================================== */
 
-@keyframes rotateCircle {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes counterRotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(-360deg); }
-}
-
-/* ================= ПОДКЛЮЧЕНИЕ ШРИФТА CONSTANTINE ================= */
-@font-face {
-    font-family: 'Constantine';
-    src: url('регистрация/Constantine.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* Принудительный курсор на элементы регистрации */
-.reg-overlay, .reg-window, .magic-input, .btn-ready {
-    cursor: url('custom-cursor.png') 0 0, auto !important;
-}
-
-/* Полноэкранный темный оверлей (блокирует задний план) */
 .reg-overlay {
+
     position: fixed;
+
     top: 0;
     left: 0;
+
     width: 100%;
-    height: 100%;
-    background-color: rgba(6, 7, 19, 0.85); /* Затемнение в стиле сайта */
-    backdrop-filter: blur(4px); /* Лёгкое магическое размытие */
+    height: 100dvh;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 99999; /* Поверх абсолютно всего на сайте */
-    transition: opacity 0.4s ease, transform 0.4s ease;
+
+    background:
+        rgba(6, 7, 19, 0.85);
+
+    backdrop-filter: blur(4px);
+
+    z-index: 999999;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
 }
 
-/* Главное окно — подложка блок_вход.png */
+/* ======================================================
+   REG WINDOW
+====================================================== */
+
 .reg-window {
-    width: 560px;  /* Уменьшили ширину окна */
-    height: 480px; /* Уменьшили высоту окна */
-    background: url('../регистрация/блок_вход.png') no-repeat center center;
-    background-size: contain;
+
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+    width: 560px;
+    height: 480px;
+
+    background:
+        url('../регистрация/блок_вход.png')
+        no-repeat center center;
+
+    background-size: contain;
 }
 
-/* Форма и контейнеры полей */
+/* ======================================================
+   REG FORM
+====================================================== */
+
 .reg-form {
+
     width: 100%;
     height: 100%;
+
     position: relative;
 }
 
-/* Общие контейнеры для инпутов, имитирующие плашки имя.png и профиль.png */
+/* ======================================================
+   INPUT CONTAINER
+====================================================== */
+
 .input-container {
+
     position: absolute;
+
     left: 50%;
+
     transform: translateX(-50%);
-    width: 480px;  /* УВЕЛИЧИЛИ ширину (было 420px) */
-    height: 90px;  
-    background-size: contain; /* ВОЗВРАЩАЕМ CONTAIN: убирает искажение и сжатие */
+
+    width: 480px;
+    height: 90px;
+
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-} 
+}
 
-/* Позиционирование контейнера Имени поверх блок_вход */
 .name-container {
-    top: 37%; /* Настройте вертикальное положение под дизайн блок_вход.png */
-    background-image: url('../регистрация/имя.png');
+
+    top: 37%;
+
+    background-image:
+        url('../регистрация/имя.png');
 }
 
-/* Позиционирование контейнера Профиля */
 .profile-container {
-    top: 57%; /* Настройте вертикальное положение */
-    background-image: url('../регистрация/профиль.png');
+
+    top: 57%;
+
+    background-image:
+        url('../регистрация/профиль.png');
 }
 
-/* Стилизация невидимого инпута для ввода текста */
+/* ======================================================
+   INPUT
+====================================================== */
+
 .magic-input {
+
     width: 100%;
     height: 100%;
-    background: transparent;
+
+    box-sizing: border-box;
+
     border: none;
     outline: none;
-    box-sizing: border-box;
+
+    background: transparent;
+
     font-family: 'Constantine', serif;
+
     font-size: 14px;
-    color: #e2cfa7; 
-    
-    /* НОВЫЕ СТРОКИ ДЛЯ ТЕКСТА: */
-    text-align: center;    /* Ставит текст ровно посередине плашки */
-    padding-top: 28px;     /* Опускает текст ниже, чтобы он не лез на верхние слова */
-    padding-left: 20px;    /* Боковые отступы на всякий случай */
+
+    color: #e2cfa7;
+
+    text-align: center;
+
+    padding-top: 28px;
+
+    padding-left: 20px;
     padding-right: 20px;
 }
 
-/* Настройка блеклого текста подсказки (placeholder) по умолчанию */
 .magic-input::placeholder {
+
     font-family: 'Constantine', serif;
-    color: rgba(226, 207, 167, 0.45); /* Полупрозрачный цвет, пока не нажали */
+
+    color:
+        rgba(226, 207, 167, 0.45);
+
     font-style: italic;
 }
 
-/* Кнопка готово.png */
+/* ======================================================
+   READY BUTTON
+====================================================== */
+
 .btn-ready {
+
     position: absolute;
-    bottom: 9%; 
+
+    bottom: 9%;
     left: 50%;
+
     transform: translateX(-50%);
-    width: 210px;  
-    height: 65px;  
-    background: url('../регистрация/готово.png') no-repeat center center;
-    background-size: contain; /* Убирает сплющивание кнопки */
+
+    width: 210px;
+    height: 65px;
+
     border: none;
     outline: none;
-    transition: filter 0.2s ease, transform 0.1s ease;
+
+    background:
+        url('../регистрация/готово.png')
+        no-repeat center center;
+
+    background-size: contain;
+
+    transition:
+        filter 0.2s ease,
+        transform 0.1s ease;
 }
 
-/* Эффекты интерактива для кнопки Готово */
 .btn-ready:hover {
-    filter: brightness(0.8); /* Слегка темнеет при наведении */
+
+    filter: brightness(0.8);
 }
 
 .btn-ready:active {
-    transform: translateX(-50%) scale(0.96); /* Визуальный отклик нажатия */
+
+    transform:
+        translateX(-50%)
+        scale(0.96);
 }
 
-/* Красный текст ошибки валидации под полями */
+/* ======================================================
+   ERROR
+====================================================== */
+
 .error-text {
+
     position: absolute;
+
     bottom: 24%;
     left: 0;
+
     width: 100%;
+
     text-align: center;
+
     font-family: 'Constantine', serif;
+
     font-size: 16px;
+
     color: #ff4a4a;
-    text-shadow: 1px 1px 2px #000;
+
+    text-shadow:
+        1px 1px 2px #000;
+
     font-weight: bold;
 }
 
-/* Стили для модального окна */
+/* ======================================================
+   LEADERBOARD
+====================================================== */
+
 .modal-overlay {
+
     position: fixed;
+
     top: 0;
     left: 0;
+
     width: 100%;
-    height: 100%;
-    background: rgba(6, 7, 19, 0.85);
-    backdrop-filter: blur(5px);
+    height: 100dvh;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background:
+        rgba(6, 7, 19, 0.85);
+
+    backdrop-filter: blur(5px);
+
     z-index: 99999;
 }
 
 .leaderboard-window {
-    width: 600px; /* Настройте под размер вашего блок_рейтинг.png */
-    height: 700px; /* Настройте под размер вашего блок_рейтинг.png */
-    background: url('../рейтинг/блок_рейтинг.png') no-repeat center center;
-    background-size: contain;
+
     position: relative;
+
+    width: 600px;
+    height: 700px;
+
+    background:
+        url('../рейтинг/блок_рейтинг.png')
+        no-repeat center center;
+
+    background-size: contain;
 }
 
-/* Контейнер для прокрутки */
 .leaderboard-content {
+
     position: absolute;
-    top: 15%; 
+
+    top: 15%;
     bottom: 5%;
     left: 10%;
     right: 10%;
+
     overflow-y: auto;
+
+    padding-top: 50px;
     padding-right: 10px;
-    
-    /* ДОБАВЬТЕ ЭТУ СТРОКУ */
-    padding-top: 50px; /* Это создаст "воздух" для первой карточки */
-    
+
     display: flex;
     flex-direction: column;
+
     gap: 15px;
 }
 
-/* Стилизация скроллбара (опционально) */
-.leaderboard-content::-webkit-scrollbar { width: 6px; }
-.leaderboard-content::-webkit-scrollbar-thumb { background: #555; border-radius: 3px; }
+/* ======================================================
+   SCROLLBAR
+====================================================== */
 
-/* карточка игрока */
-.rank-card {
-    width: 100%;
-    height: 90px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Центрирует текст внутри */
-    align-items: center;
-    color: #ffffff;
-    font-family: 'Anticva', serif;
-    margin-bottom: 15px;
+.leaderboard-content::-webkit-scrollbar {
+
+    width: 6px;
 }
 
-/* 2. Специфичные настройки для фона каждой карточки */
-.rank-gold { background-image: url('первое_место.png'); padding-top: 10px; }
-.rank-silver { background-image: url('второе_место.png'); padding-top: 5px; }
-.rank-default { background-image: url('обычное_место.png'); padding-top: 0px; }
+.leaderboard-content::-webkit-scrollbar-thumb {
 
-/* 3. Стили текста (НЕ УДАЛЯТЬ) */
-.rank-name { 
-    font-size: 20px; 
-    text-shadow: 1px 1px 2px #000; /* Рекомендую добавить для читаемости */
-}
-.rank-time { 
-    font-size: 14px; 
-    opacity: 0.9; 
-    text-shadow: 1px 1px 2px #000; /* Рекомендую добавить для читаемости */
-}
+    background: #555;
 
-@media (orientation: portrait) {
-    body::before {
-        content: "Пожалуйста, поверните устройство в горизонтальное положение";
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: #060713;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        font-family: 'Anticva', serif;
-    }
-}
-
-/* Скрытие шапки */
-.site-header {
-    transition: transform 0.3s ease-in-out;
-}
-
-.site-header.header-hidden {
-    transform: translateY(-100%);
+    border-radius: 3px;
 }
 
 /* ======================================================
+   RANK CARD
+====================================================== */
+
+.rank-card {
+
+    width: 100%;
+    height: 90px;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    color: #ffffff;
+
+    font-family: 'Anticva', serif;
+
+    margin-bottom: 15px;
+}
+
+.rank-name {
+
+    font-size: 20px;
+
+    text-shadow:
+        1px 1px 2px #000;
+}
+
+.rank-time {
+
+    font-size: 14px;
+
+    opacity: 0.9;
+
+    text-shadow:
+        1px 1px 2px #000;
+}
+
+/* ======================================================
+   ANIMATIONS
+====================================================== */
+
+@keyframes rotateCircle {
+
+    from {
+        transform: rotate(0deg);
     }
 
-    .header-link {
-        font-size: 14px;
-        letter-spacing: 0.5px;
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes counterRotate {
+
+    from {
+        transform: rotate(0deg);
     }
 
-    .game-container {
-        width: 100vw;
-        height: 100dvh;
-    }
-
-    .alchemy-section {
-        left: 2%;
-        top: 17%;
-        width: 48%;
-        height: 70%;
-    }
-
-    .menu-section {
-        right: 2%;
-        top: 20%;
-        width: 45%;
-        height: 65%;
-    }
-
-    .potions-grid {
-        top: 31%;
-        left: 8%;
-        width: 84%;
-        height: 58%;
-    }
-
-    .reg-window {
-        width: 92vw;
-        height: 88vh;
-    }
-
-    .input-container {
-        width: 78vw;
-        max-width: 480px;
-    }
-
-    .leaderboard-window {
-        width: 92vw;
-        height: 92vh;
+    to {
+        transform: rotate(-360deg);
     }
 }
 
@@ -738,39 +839,157 @@ html, body {
    PORTRAIT BLOCKER
 ====================================================== */
 
-.reg-window {
+@media (orientation: portrait) {
 
-    width: 72vw;
-    height: 72vh;
+    body::before {
 
-    max-width: 420px;
-    max-height: 520px;
+        content:
+        "Пожалуйста, поверните устройство в горизонтальное положение";
 
-    background-size: contain;
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background: #060713;
+
+        color: white;
+
+        z-index: 999999;
+
+        font-family: 'Anticva', serif;
+
+        text-align: center;
+
+        padding: 20px;
+
+        box-sizing: border-box;
+    }
 }
 
-.input-container {
+/* ======================================================
+   MOBILE
+====================================================== */
 
-    width: 62vw;
-    max-width: 340px;
+@media screen and (max-width: 1024px) {
 
-    height: 70px;
-}
+    .site-header {
 
-.magic-input {
+        height: 58px;
+    }
 
-    font-size: 12px;
+    .header-inner {
 
-    padding-top: 22px;
-}
+        gap: 18px;
+    }
 
-.btn-ready {
+    .header-link {
 
-    width: 170px;
-    height: 52px;
-}
+        font-size: 14px;
 
-.error-text {
+        letter-spacing: 0.5px;
+    }
 
-    font-size: 13px;
+    .alchemy-section {
+
+        left: 3%;
+        top: 18%;
+
+        width: 47%;
+        height: 66%;
+    }
+
+    .menu-section {
+
+        right: 3%;
+        top: 20%;
+
+        width: 44%;
+        height: 60%;
+    }
+
+    .potions-grid {
+
+        top: 31%;
+        left: 8%;
+
+        width: 84%;
+        height: 58%;
+    }
+
+    /* ================= REGISTRATION ================= */
+
+    .reg-window {
+
+        width: 360px;
+        height: 300px;
+
+        transform: scale(0.88);
+    }
+
+    .input-container {
+
+        width: 270px;
+        height: 52px;
+    }
+
+    .name-container {
+
+        top: 35%;
+    }
+
+    .profile-container {
+
+        top: 54%;
+    }
+
+    .magic-input {
+
+        font-size: 10px;
+
+        padding-top: 14px;
+
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .btn-ready {
+
+        width: 130px;
+        height: 42px;
+
+        bottom: 11%;
+    }
+
+    .error-text {
+
+        font-size: 11px;
+
+        bottom: 22%;
+    }
+
+    /* ================= LEADERBOARD ================= */
+
+    .leaderboard-window {
+
+        width: 92vw;
+        height: 92dvh;
+    }
+
+    .rank-name {
+
+        font-size: 16px;
+    }
+
+    .rank-time {
+
+        font-size: 11px;
+    }
 }
