@@ -27,13 +27,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =====================================================
-    // ПРОВЕРКА: ПРОХОДИЛ ЛИ ИГРОК ИГРУ
+    // ПРОВЕРКА ПОВТОРНОГО ПРОХОЖДЕНИЯ
     // =====================================================
 
     const lastPlayed =
         localStorage.getItem(storageKey);
 
     if (lastPlayed === today) {
+
+        const countdownOverlay =
+            document.getElementById("countdown-overlay");
+
+        if (countdownOverlay) {
+            countdownOverlay.style.display = "none";
+        }
 
         showReplayWarning();
 
@@ -42,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =====================================================
-    // МОДАЛЬНОЕ ОКНО ПОВТОРНОГО ПРОХОЖДЕНИЯ
+    // МОДАЛЬНОЕ ОКНО ОЖИДАНИЯ
     // =====================================================
 
     function showReplayWarning() {
@@ -74,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ЗАПУСК ИГРЫ
     // =====================================================
 
-    initGame(vkID, potionID, storageKey);
+    initGame(storageKey);
 });
 
 
@@ -82,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ОСНОВНАЯ ИГРА
 // =====================================================
 
-function initGame(vkID, potionID, storageKey) {
+function initGame(storageKey) {
 
     // =====================================================
     // АУДИО
@@ -189,11 +196,26 @@ function initGame(vkID, potionID, storageKey) {
     const chosenSlotElements =
         document.querySelectorAll(".chosen-slot");
 
+    const readyBtn =
+        document.getElementById("ready-btn");
+
     const rotator =
         document.getElementById("slots-rotator");
 
     const loadingOverlay =
         document.getElementById("loading-overlay");
+
+    const coffinEls = [
+
+        document.getElementById("coffin-1"),
+
+        document.getElementById("coffin-2"),
+
+        document.getElementById("coffin-3")
+    ];
+
+    const loadingTextEl =
+        document.getElementById("loading-text");
 
     const failGifContainer =
         document.getElementById("fail-gif-container");
@@ -292,14 +314,37 @@ function initGame(vkID, potionID, storageKey) {
 
 
     // =====================================================
-    // ЭКРАН ЗАГРУЗКИ
+    // КНОПКА ГОТОВО
+    // =====================================================
+
+    if (readyBtn) {
+
+        readyBtn.addEventListener("click", () => {
+
+            if (!isGameActive) return;
+
+            isGameActive = false;
+
+            clearInterval(countdownInterval);
+
+            startLoadingSequence();
+        });
+    }
+
+
+    // =====================================================
+    // ЗАГРУЗКА РЕЗУЛЬТАТА
     // =====================================================
 
     function startLoadingSequence() {
 
         isGameActive = false;
 
-        rotator.classList.add("frozen");
+        clearInterval(countdownInterval);
+
+        if (rotator) {
+            rotator.classList.add("frozen");
+        }
 
         cellSlots.forEach(slot => {
             slot.classList.add("frozen");
@@ -307,9 +352,78 @@ function initGame(vkID, potionID, storageKey) {
 
         loadingOverlay.classList.add("active");
 
+
+        // =================================================
+        // АНИМАЦИЯ ГРОБОВ
+        // =================================================
+
+        let coffinIndex = 0;
+
+        const coffinAnimation = setInterval(() => {
+
+            coffinEls.forEach(coffin => {
+
+                coffin.classList.remove(
+                    "active-coffin"
+                );
+            });
+
+            coffinEls[coffinIndex]
+                .classList.add(
+                    "active-coffin"
+                );
+
+            coffinIndex++;
+
+            if (coffinIndex >= coffinEls.length) {
+
+                coffinIndex = 0;
+            }
+
+        }, 350);
+
+
+        // =================================================
+        // ЭФФЕКТ ПЕЧАТАНИЯ
+        // =================================================
+
+        const fullText =
+            "ЗАГРУЖАЕМ РЕЗУЛЬТАТ";
+
+        let currentIndex = 0;
+
+        loadingTextEl.textContent = "";
+
+        const typingAnimation = setInterval(() => {
+
+            loadingTextEl.textContent =
+                fullText.slice(0, currentIndex);
+
+            currentIndex++;
+
+            if (currentIndex > fullText.length) {
+
+                currentIndex = 0;
+
+                loadingTextEl.textContent = "";
+            }
+
+        }, 90);
+
+
+        // =================================================
+        // ЗАВЕРШЕНИЕ ЗАГРУЗКИ
+        // =================================================
+
         setTimeout(() => {
 
-            loadingOverlay.classList.remove("active");
+            clearInterval(coffinAnimation);
+
+            clearInterval(typingAnimation);
+
+            loadingOverlay.classList.remove(
+                "active"
+            );
 
             showGameResult();
 
@@ -356,7 +470,7 @@ function initGame(vkID, potionID, storageKey) {
                 "game-timer win-status";
 
 
-            // СОХРАНЯЕМ ФАКТ ПРОХОЖДЕНИЯ
+            // СОХРАНЕНИЕ ПРОХОЖДЕНИЯ
             localStorage.setItem(
                 storageKey,
                 new Date().toDateString()
@@ -405,7 +519,6 @@ function initGame(vkID, potionID, storageKey) {
                 );
             }
 
-
             setTimeout(() => {
 
                 if (failGifContainer) {
@@ -439,9 +552,13 @@ function initGame(vkID, potionID, storageKey) {
             }
 
             const type =
-                slot.getAttribute("data-ingredient");
+                slot.getAttribute(
+                    "data-ingredient"
+                );
 
-            if (chosenSlots.includes(type)) return;
+            if (chosenSlots.includes(type)) {
+                return;
+            }
 
             const freeIndex =
                 chosenSlots.findIndex(
@@ -465,7 +582,10 @@ function initGame(vkID, potionID, storageKey) {
                         `slot-${freeIndex}`
                     );
 
-                if (targetSlot && ingredientData[type]) {
+                if (
+                    targetSlot &&
+                    ingredientData[type]
+                ) {
 
                     targetSlot.style.background =
                         `url('${ingredientData[type].img}') no-repeat center center`;
@@ -479,7 +599,7 @@ function initGame(vkID, potionID, storageKey) {
 
 
     // =====================================================
-    // УДАЛЕНИЕ ИНГРЕДИЕНТОВ
+    // ОЧИСТКА СЛОТОВ
     // =====================================================
 
     chosenSlotElements.forEach(slotElement => {
@@ -489,7 +609,9 @@ function initGame(vkID, potionID, storageKey) {
             if (!isGameActive) return;
 
             const index = parseInt(
-                slotElement.getAttribute("data-index")
+                slotElement.getAttribute(
+                    "data-index"
+                )
             );
 
             const currentIngredient =
