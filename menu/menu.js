@@ -181,138 +181,149 @@ document.addEventListener("DOMContentLoaded", () => {
     if (regForm) {
 
         regForm.addEventListener(
-            "submit",
-            async (e) => {
+    "submit",
+    async (e) => {
 
-                e.preventDefault();
+        e.preventDefault();
 
-                const charName =
-                    charNameInput.value.trim();
+        const charName =
+            charNameInput.value.trim();
 
-                const vkProfile =
-                    vkProfileInput.value
-                        .trim()
-                        .toLowerCase();
+        const vkProfile =
+            vkProfileInput.value
+                .trim()
+                .toLowerCase();
 
-                errorMessage.textContent = "";
+        errorMessage.textContent = "";
 
-                // ======================================================
-                // ПРОВЕРКА VK
-                // ======================================================
+        // =========================================
+        // VALIDATION
+        // =========================================
 
-                const vkRegex =
-                    /^(https?:\/\/vk\.com\/)?@?[a-zA-Z0-9_]+$/;
+        if (!charName) {
 
-                if (!vkRegex.test(vkProfile)) {
+            errorMessage.textContent =
+                "Введите имя";
 
-                    errorMessage.textContent =
-                        "Некорректный VK профиль";
+            return;
+        }
 
-                    return;
-                }
+        const vkRegex =
+            /^(https?:\/\/vk\.com\/)?@?[a-zA-Z0-9_]+$/;
 
-                try {
+        if (!vkRegex.test(vkProfile)) {
 
-                    // ======================================================
-                    // ПРОВЕРКА ИМЕНИ
-                    // ======================================================
+            errorMessage.textContent =
+                "Некорректный VK профиль";
 
-                    const nameSnapshot =
-                        await db
-                            .collection("players")
-                            .where(
-                                "nameLower",
-                                "==",
-                                charName.toLowerCase()
-                            )
-                            .get();
+            return;
+        }
 
-                    if (!nameSnapshot.empty) {
+        try {
 
-                        errorMessage.textContent =
-                            "Это имя уже занято";
+            // =========================================
+            // CHECK NAME
+            // =========================================
 
-                        return;
-                    }
+            const nameSnapshot =
+                await db
+                    .collection("players")
+                    .where(
+                        "nameLower",
+                        "==",
+                        charName.toLowerCase()
+                    )
+                    .limit(1)
+                    .get();
 
-                    // ======================================================
-                    // ПРОВЕРКА VK
-                    // ======================================================
+            if (!nameSnapshot.empty) {
 
-                    const vkSnapshot =
-                        await db
-                            .collection("players")
-                            .where(
-                                "vkLower",
-                                "==",
-                                vkProfile
-                            )
-                            .get();
+                errorMessage.textContent =
+                    "Это имя уже занято";
 
-                    if (!vkSnapshot.empty) {
-
-                        errorMessage.textContent =
-                            "Этот VK уже зарегистрирован";
-
-                        return;
-                    }
-
-                    // ======================================================
-                    // СОХРАНЕНИЕ ИГРОКА
-                    // ======================================================
-
-                    await db
-                        .collection("players")
-                        .add({
-
-                            name: charName,
-
-                            nameLower:
-                                charName.toLowerCase(),
-
-                            vk: vkProfile,
-
-                            vkLower: vkProfile,
-
-                            createdAt: Date.now()
-                        });
-
-                    // ======================================================
-                    // SESSION
-                    // ======================================================
-
-                    sessionStorage.setItem(
-                        "currentPlayerName",
-                        charName
-                    );
-
-                    sessionStorage.setItem(
-                        "currentPlayerVk",
-                        vkProfile
-                    );
-
-                    // ======================================================
-                    // CLOSE MODAL
-                    // ======================================================
-
-                    overlay.style.opacity = "0";
-
-                    setTimeout(() => {
-
-                        overlay.style.display =
-                            "none";
-
-                    }, 400);
-
-                } catch (err) {
-
-                    console.error(err);
-
-                    errorMessage.textContent =
-                        "Ошибка соединения с Firebase";
-                }
+                return;
             }
-        );
+
+            // =========================================
+            // CHECK VK
+            // =========================================
+
+            const vkSnapshot =
+                await db
+                    .collection("players")
+                    .where(
+                        "vkLower",
+                        "==",
+                        vkProfile
+                    )
+                    .limit(1)
+                    .get();
+
+            if (!vkSnapshot.empty) {
+
+                errorMessage.textContent =
+                    "Этот VK уже зарегистрирован";
+
+                return;
+            }
+
+            // =========================================
+            // SAVE PLAYER
+            // =========================================
+
+            await db
+                .collection("players")
+                .add({
+
+                    name: charName,
+
+                    nameLower:
+                        charName.toLowerCase(),
+
+                    vk: vkProfile,
+
+                    vkLower: vkProfile,
+
+                    createdAt:
+                        firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+            // =========================================
+            // SESSION
+            // =========================================
+
+            sessionStorage.setItem(
+                "currentPlayerName",
+                charName
+            );
+
+            sessionStorage.setItem(
+                "currentPlayerVk",
+                vkProfile
+            );
+
+            // =========================================
+            // CLOSE MODAL
+            // =========================================
+
+            overlay.style.pointerEvents = "none";
+            overlay.style.opacity = "0";
+
+            setTimeout(() => {
+
+                overlay.style.display = "none";
+
+            }, 350);
+
+        } catch (err) {
+
+            console.error(err);
+
+            errorMessage.textContent =
+                "Ошибка Firebase. Проверьте Firestore Rules.";
+        }
+    }
+);
     }
 
     // ======================================================
