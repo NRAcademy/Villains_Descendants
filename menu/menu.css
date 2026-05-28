@@ -20,10 +20,18 @@ a, button, img,
 html, body {
     margin: 0;
     padding: 0;
+
     width: 100%;
-    min-height: 100vh; /* Используем vh вместо % для высоты */
+    height: 100%;
+
     background-color: #060713;
-    overflow-x: hidden;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: sans-serif;
 }
 
 /* ================= ШАПКА ================= */
@@ -71,9 +79,7 @@ html, body {
 /* ================= СЦЕНА (ФИКСИРОВАННЫЙ ЭКРАН) ================= */
 .game-container {
     position: relative;
-    /* Убираем абсолютное позиционирование, если оно мешает центрированию */
-    margin: 100px auto 0 auto; /* 100px - отступ от шапки, auto - горизонтальное центрирование */
-    transform-origin: top center;
+
     width: 1350px;
     height: 900px;
 
