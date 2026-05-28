@@ -22,9 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==============================
     // ПЕРЕХОД В ИГРУ
     // ==============================
-    function startPotionGame() {
-        window.location.href = "../первое_зелье/first_potion.html";
-    }
+   function startPotionGame() {
+    // Поднимаемся из /menu в /potions_head, затем заходим в /first_potion
+    window.location.href = "../первое_зелье/first_potion.html";
+}
 
     // ==============================
     // МАГИЧЕСКИЙ ЭФФЕКТ (яблоки)
