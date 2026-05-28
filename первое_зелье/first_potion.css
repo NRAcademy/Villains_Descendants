@@ -67,14 +67,33 @@ html, body {
     text-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6);
 }
 
-/* Главный контейнер игры */
 .game-container {
     position: relative;
     width: 100vw;
-    height: 75vw;
+    height: 100vh;
+    max-width: 1920px;
+    max-height: 1080px;
+    aspect-ratio: 16 / 9;
+    margin: auto;
+    overflow: hidden;
     z-index: 10;
     background: transparent !important;
-    background-size: contain;
+}
+
+/* ======================================================
+   АДАПТАЦИЯ ПОД РАЗНЫЕ НОУТБУКИ
+====================================================== */
+@media (max-aspect-ratio: 16/9) {
+    .game-container {
+        width: 100vw;
+        height: calc(100vw * 9 / 16);
+    }
+}
+@media (min-aspect-ratio: 16/9) {
+    .game-container {
+        height: 100vh;
+        width: calc(100vh * 16 / 9);
+    }
 }
 
 /* ================= ЛЕВАЯ ЧАСТЬ: АЛХИМИЧЕСКИЙ КРУГ ================= */
@@ -353,8 +372,9 @@ html, body {
 }
 
 .info-card-body {
-    width: 62vw;
-    height: 44vw;
+    width: min(62vw, 1100px);
+    aspect-ratio: 62 / 44;
+    height: auto;
     background: url('информация.png') no-repeat center center;
     background-size: contain;
     position: relative;
@@ -393,10 +413,11 @@ html, body {
 
 #bg-video {
     position: fixed;
+    inset: 0;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     pointer-events: none;
     z-index: 1;
