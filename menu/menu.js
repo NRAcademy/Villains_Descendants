@@ -121,6 +121,28 @@ const vkRegex = /^(https?:\/\/vk\.com\/)?@?[a-zA-Z0-9_]+$/;
                 }
             }
 
+           regForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = charNameInput.value.trim();
+    const vk = vkProfileInput.value.trim();
+    
+    // Получаем список игроков
+    const users = JSON.parse(localStorage.getItem('users_database')) || [];
+    
+    // Проверка на совпадение
+    const isDuplicate = users.some(u => u.name === name || u.vk === vk);
+    
+    if (isDuplicate) {
+        errorMessage.textContent = "Ошибка: Игрок с таким именем или профилем уже зарегистрирован!";
+        return; // Прерываем выполнение
+    }
+    
+    // Если всё ок - сохраняем
+    users.push({ name, vk });
+    localStorage.setItem('users_database', JSON.stringify(users));
+    // ... ваш код закрытия модалки
+});
+
             // УСПЕШНАЯ АВТОРИЗАЦИЯ
             // Сохраняем сессию текущего игрока для передачи на игровую страницу
             sessionStorage.setItem("currentPlayerName", charName);
