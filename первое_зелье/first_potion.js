@@ -69,3 +69,18 @@
         width: 42%;
     }
 }
+
+let lastScrollTop = 0;
+const header = document.querySelector('.site-header');
+
+window.addEventListener('scroll', () => {
+    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    if (currentScroll > lastScrollTop) {
+        // Скролл вниз - скрываем
+        header.classList.add('header-hidden');
+    } else {
+        // Скролл вверх - показываем
+        header.classList.remove('header-hidden');
+    }
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+}, false);
