@@ -738,30 +738,39 @@ html, body {
    PORTRAIT BLOCKER
 ====================================================== */
 
-@media screen and (orientation: portrait) and (max-width: 1024px) {
+.reg-window {
 
-    body::before {
-        content: 'Пожалуйста, поверните устройство горизонтально';
+    width: 72vw;
+    height: 72vh;
 
-        position: fixed;
-        inset: 0;
+    max-width: 420px;
+    max-height: 520px;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    background-size: contain;
+}
 
-        text-align: center;
+.input-container {
 
-        padding: 40px;
+    width: 62vw;
+    max-width: 340px;
 
-        background: #060713;
+    height: 70px;
+}
 
-        color: white;
+.magic-input {
 
-        font-family: 'Anticva', serif;
-        font-size: 24px;
-        line-height: 1.5;
+    font-size: 12px;
 
-        z-index: 999999;
-    }
+    padding-top: 22px;
+}
+
+.btn-ready {
+
+    width: 170px;
+    height: 52px;
+}
+
+.error-text {
+
+    font-size: 13px;
 }
