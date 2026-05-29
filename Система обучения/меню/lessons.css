@@ -427,13 +427,13 @@ img:hover,
 .rules-controls {
   position: absolute;
 
-  bottom: 25px;
-  left: 50%;
+  bottom: 10px; /* ниже */
 
+  left: 50%;
   transform: translateX(-50%);
 
   display: flex;
-  gap: 25px;
+  gap: 18px;
 
   justify-content: center;
   align-items: center;
@@ -441,26 +441,26 @@ img:hover,
 
 /* кнопки */
 .rules-btn {
-  width: 70px;
+  width: 52px; /* меньше */
 
   transition:
     transform 0.2s ease,
     filter 0.2s ease;
 
-  /* перекраска в коричневый */
+  /* рыжевато-коричневый */
   filter:
     sepia(1)
-    saturate(4)
-    hue-rotate(340deg)
-    brightness(0.7);
+    saturate(6)
+    hue-rotate(345deg)
+    brightness(0.9);
 }
 
 .rules-btn:hover {
-  transform: scale(1.06);
+  transform: scale(1.05);
 
   filter:
     sepia(1)
-    saturate(4)
-    hue-rotate(340deg)
-    brightness(0.85);
+    saturate(6)
+    hue-rotate(345deg)
+    brightness(1);
 }
