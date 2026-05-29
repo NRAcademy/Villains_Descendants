@@ -22,23 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const potionID = "first_potion";
     const today = new Date().toDateString();
 
-    const lastPlayed = localStorage.getItem(`lastPlayed_${vkID}_${potionID}`);
+    const lastPlayed =
+        localStorage.getItem(`lastPlayed_${vkID}_${potionID}`);
 
-    // ================= БЛОК ДОСТУПА =================
+    // ================= ПОВТОРНАЯ ИГРА ЗА ДЕНЬ =================
     if (lastPlayed === today) {
 
         const waitModal = document.getElementById('wait-modal');
 
         if (waitModal) {
             waitModal.style.display = 'flex';
-        }
-
-        const btn = document.getElementById('understand-btn');
-
-        if (btn) {
-            btn.addEventListener('click', () => {
-                window.location.href = '../menu/menu.html';
-            });
         }
 
         return;
@@ -51,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // =====================================================
 // ОСНОВНАЯ ИГРА
 // =====================================================
+
 function initGame(vkID, potionID) {
 
     // ================= АУДИО =================
@@ -61,7 +55,10 @@ function initGame(vkID, potionID) {
     const successSound = new Audio('успех.mp3');
     const failSound = new Audio('провал.mp3');
 
-    // ================= ДАННЫЕ ИГРЫ =================
+    successSound.volume = 1.0;
+    failSound.volume = 0.3;
+
+    // ================= ИНГРЕДИЕНТЫ =================
     const ingredientData = {
         badyan: { img: '../ингредиенты/ингредиент_бадьян.png' },
         mandrake: { img: '../ингредиенты/ингредиент_мандрагора.png' },
@@ -71,6 +68,7 @@ function initGame(vkID, potionID) {
         hellebore: { img: '../ингредиенты/ингредиент_чемерица.png' }
     };
 
+    // ================= НАСТРОЙКИ =================
     const winRecipe = [
         'hellebore',
         'mint',
@@ -90,46 +88,44 @@ function initGame(vkID, potionID) {
     const countdownText = document.getElementById("countdown-text");
 
     const timerDisplay = document.getElementById("game-timer");
-
     const cellSlots = document.querySelectorAll(".cell-slot");
     const chosenSlotElements = document.querySelectorAll(".chosen-slot");
-
     const rotator = document.getElementById("slots-rotator");
 
     const loadingOverlay = document.getElementById("loading-overlay");
+    const loadingTextEl = document.getElementById("loading-text");
+
     const coffinEls = [
         document.getElementById("coffin-1"),
         document.getElementById("coffin-2"),
         document.getElementById("coffin-3")
     ];
 
-    const loadingTextEl = document.getElementById("loading-text");
     const centerStand = document.querySelector(".center-stand");
-
     const failGifContainer = document.getElementById("fail-gif-container");
 
     const potionModal = document.getElementById("potion-modal");
-    const modalCloseBtn = document.getElementById("modal-tab-close-btn");
 
-    const readyBtn = document.getElementById("ready-btn");
+    const understandBtn = document.getElementById('understand-btn');
 
-    // ================= ЗВУК =================
-    bgMusic.play().catch(() => {});
+    const readyBtn = document.getElementById('ready-btn');
 
-    // ================= КНОПКА ГОТОВО =================
+    // ================= READY BUTTON =================
     if (readyBtn) {
         readyBtn.addEventListener('click', () => {
-
             if (!isGameActive) return;
 
             if (chosenSlots.includes(null)) {
-                alert("Выберите все ингредиенты!");
+                alert("Вы не выбрали все ингредиенты!");
                 return;
             }
 
             startLoadingSequence();
         });
     }
+
+    // ================= МУЗЫКА =================
+    bgMusic.play().catch(() => {});
 
     // ================= СТАРТ =================
     runCountdown();
@@ -145,28 +141,23 @@ function initGame(vkID, potionID) {
 
             if (count > 0) {
                 countdownText.textContent = count;
-            }
-
-            else if (count === 0) {
+            } else if (count === 0) {
                 countdownText.textContent = "СТАРТ!";
-            }
-
-            else {
+            } else {
                 clearInterval(interval);
 
-                overlay.style.opacity = "0";
-
-                setTimeout(() => {
+                if (overlay) {
                     overlay.style.display = "none";
-                    startTimer();
-                }, 500);
+                }
+
+                startGameTimer();
             }
 
         }, 1000);
     }
 
     // ================= ТАЙМЕР =================
-    function startTimer() {
+    function startGameTimer() {
 
         isGameActive = true;
         timerDisplay.textContent = `00:${timeLeft}`;
@@ -177,12 +168,10 @@ function initGame(vkID, potionID) {
 
             if (timeLeft > 9) {
                 timerDisplay.textContent = `00:${timeLeft}`;
-            }
-            else if (timeLeft > 0) {
+            } else if (timeLeft > 0) {
                 timerDisplay.textContent = `00:0${timeLeft}`;
-            }
-            else {
-                timerDisplay.textContent = `00:00`;
+            } else {
+                timerDisplay.textContent = "00:00";
                 clearInterval(countdownInterval);
                 startLoadingSequence();
             }
@@ -196,50 +185,57 @@ function initGame(vkID, potionID) {
         isGameActive = false;
         clearInterval(countdownInterval);
 
-        rotator?.classList.add("frozen");
+        if (rotator) rotator.classList.add("frozen");
         cellSlots.forEach(s => s.classList.add("frozen"));
 
         loadingOverlay?.classList.add("active");
 
-        let index = 0;
+        let step = 0;
 
-        const interval = setInterval(() => {
+        const coffinInterval = setInterval(() => {
 
             coffinEls.forEach(c => c?.classList.remove("active-coffin"));
 
-            coffinEls[index]?.classList.add("active-coffin");
+            if (coffinEls[step]) {
+                coffinEls[step].classList.add("active-coffin");
+            }
 
-            index = (index + 1) % 3;
+            step = (step + 1) % 3;
 
         }, 500);
 
         setTimeout(() => {
-
-            clearInterval(interval);
+            clearInterval(coffinInterval);
             loadingOverlay?.classList.remove("active");
-
             showResult();
-
-        }, 3500);
+        }, 4000);
     }
 
     // ================= РЕЗУЛЬТАТ =================
     function showResult() {
 
         const isSuccess =
-            JSON.stringify([...chosenSlots].sort()) ===
-            JSON.stringify([...winRecipe].sort());
+            winRecipe.every(i => chosenSlots.includes(i)) &&
+            chosenSlots.every(i => winRecipe.includes(i));
 
         if (isSuccess) {
 
             successSound.play();
+
+            const timeSpent = startTime - timeLeft;
+
+            saveResultToLeaderboard(
+                userData?.name || "Гость",
+                timeSpent
+            );
 
             localStorage.setItem(
                 `lastPlayed_${vkID}_${potionID}`,
                 new Date().toDateString()
             );
 
-            timerDisplay.textContent = "Успех!";
+            timerDisplay.textContent = "УСПЕХ!";
+            timerDisplay.className = "game-timer win-status";
 
             if (centerStand) {
                 const el = document.createElement("div");
@@ -247,18 +243,20 @@ function initGame(vkID, potionID) {
                 centerStand.appendChild(el);
             }
 
-            setTimeout(() => {
-                potionModal?.classList.add("active");
-            }, 1000);
+        } else {
+
+            failSound.play();
+
+            timerDisplay.textContent = "ПРОВАЛ";
+            timerDisplay.className = "game-timer lose-status";
         }
 
-        else {
-            failSound.play();
-            timerDisplay.textContent = "Провал";
-        }
+        setTimeout(() => {
+            document.getElementById('wait-modal')?.style.display = 'flex';
+        }, 2500);
     }
 
-    // ================= ВЫБОР ИНГРЕДИЕНТОВ =================
+    // ================= ВЫБОР =================
     cellSlots.forEach(slot => {
 
         slot.addEventListener("click", () => {
@@ -269,27 +267,27 @@ function initGame(vkID, potionID) {
 
             if (chosenSlots.includes(type)) return;
 
-            const free = chosenSlots.indexOf(null);
+            const index = chosenSlots.findIndex(v => v === null);
 
-            if (free !== -1) {
+            if (index !== -1) {
 
-                chosenSlots[free] = type;
+                chosenSlots[index] = type;
 
-                const img = ingredientData[type]?.img;
+                const target = document.getElementById(`slot-${index}`);
 
-                const target = document.getElementById(`slot-${free}`);
-
-                if (target && img) {
+                if (target && ingredientData[type]) {
                     target.style.background =
-                        `url('${img}') center/contain no-repeat`;
+                        `url('${ingredientData[type].img}') no-repeat center`;
+                    target.style.backgroundSize = "contain";
                 }
 
                 slot.classList.add("active-selected");
+                slot.classList.remove("grayscale");
             }
         });
     });
 
-    // ================= ОЧИСТКА СЛОТОВ =================
+    // ================= ОЧИСТКА =================
     chosenSlotElements.forEach(slot => {
 
         slot.addEventListener("click", () => {
@@ -298,47 +296,29 @@ function initGame(vkID, potionID) {
 
             const index = +slot.dataset.index;
 
-            const val = chosenSlots[index];
+            const ingredient = chosenSlots[index];
 
-            if (!val) return;
+            if (!ingredient) return;
 
             chosenSlots[index] = null;
 
             slot.style.background =
-                "url('../ингредиенты/ингредиент_пустой.png') center/contain no-repeat";
+                "url('../ингредиенты/ингредиент_пустой.png') no-repeat center";
 
-            const cell =
-                document.querySelector(`[data-ingredient="${val}"]`);
+            slot.style.backgroundSize = "contain";
 
-            cell?.classList.remove("active-selected");
+            document
+                .querySelector(`[data-ingredient="${ingredient}"]`)
+                ?.classList.add("grayscale");
         });
     });
-
-    // ================= MAGIC EFFECT =================
-    document.addEventListener("click", e => {
-
-        const img = document.createElement("img");
-
-        img.src = '../menu/apple 1.png';
-
-        img.style.position = "fixed";
-        img.style.left = e.clientX + "px";
-        img.style.top = e.clientY + "px";
-        img.style.width = "30px";
-        img.style.pointerEvents = "none";
-
-        document.body.appendChild(img);
-
-        setTimeout(() => img.remove(), 1200);
-    });
-
 }
+
 
 // ================= LEADERBOARD =================
 function saveResultToLeaderboard(name, time) {
 
-    let board =
-        JSON.parse(localStorage.getItem("potion_leaderboard")) || [];
+    let board = JSON.parse(localStorage.getItem("potion_leaderboard")) || [];
 
     board.push({
         name,
