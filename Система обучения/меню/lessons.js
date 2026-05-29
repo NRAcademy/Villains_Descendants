@@ -108,3 +108,74 @@ scheduleModal.addEventListener("click", (e) => {
 scheduleContent.addEventListener("click", (e) => {
   e.stopPropagation();
 });
+
+/* ================= МОДАЛКА ПРАВИЛ ================= */
+
+const rulesModal = document.getElementById("rulesModal");
+
+const rulesBtn = document.getElementById("open-rules");
+
+const rulesImage = document.getElementById("rulesImage");
+
+const rulesPrev = document.getElementById("rulesPrev");
+const rulesNext = document.getElementById("rulesNext");
+
+const rulesContent = document.querySelector(".rules-content");
+
+/* список страниц */
+const rulesPages = [
+  "../правила/правила 1.png",
+  "../правила/правила 2.png",
+  "../правила/правила 3.png",
+  "../правила/правила 4.png",
+  "../правила/правила 5.png"
+];
+
+let currentRulePage = 0;
+
+/* открыть */
+rulesBtn.addEventListener("click", (e) => {
+
+  e.preventDefault();
+
+  rulesModal.classList.add("active");
+
+  rulesImage.src = rulesPages[currentRulePage];
+});
+
+/* вперед */
+rulesNext.addEventListener("click", () => {
+
+  currentRulePage++;
+
+  if (currentRulePage >= rulesPages.length) {
+    currentRulePage = 0;
+  }
+
+  rulesImage.src = rulesPages[currentRulePage];
+});
+
+/* назад */
+rulesPrev.addEventListener("click", () => {
+
+  currentRulePage--;
+
+  if (currentRulePage < 0) {
+    currentRulePage = rulesPages.length - 1;
+  }
+
+  rulesImage.src = rulesPages[currentRulePage];
+});
+
+/* закрытие вне окна */
+rulesModal.addEventListener("click", (e) => {
+
+  if (!rulesContent.contains(e.target)) {
+    rulesModal.classList.remove("active");
+  }
+});
+
+/* защита от закрытия */
+rulesContent.addEventListener("click", (e) => {
+  e.stopPropagation();
+});
