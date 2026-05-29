@@ -24,22 +24,19 @@ document.addEventListener("DOMContentLoaded", () => {
    2. FULLSCREEN + СКРЫТИЕ ЗАГРУЗКИ
    ================================================================= */
 
-document.addEventListener("touchstart", handleFirstTouch, { once: true });
+document.addEventListener("click", enterFullscreenOnce, { once: true });
 
-function handleFirstTouch() {
+function enterFullscreenOnce() {
+    const elem = document.documentElement;
 
-    const root = document.documentElement;
+    const requestFull =
+        elem.requestFullscreen ||
+        elem.webkitRequestFullscreen ||
+        elem.mozRequestFullScreen ||
+        elem.msRequestFullscreen;
 
-    const requestFullscreen =
-        root.requestFullscreen ||
-        root.webkitRequestFullscreen ||
-        root.mozRequestFullScreen ||
-        root.msRequestFullscreen;
-
-    if (requestFullscreen) {
-        try {
-            requestFullscreen.call(root);
-        } catch (e) {}
+    if (requestFull) {
+        requestFull.call(elem).catch(() => {});
     }
 
     hideLoader();
