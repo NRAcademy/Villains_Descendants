@@ -1,168 +1,144 @@
-/* =================================================================
-   1. ИНИЦИАЛИЗАЦИЯ
-   ================================================================= */
+// =================================================================
+// 1. ИНИЦИАЛИЗАЦИЯ И ОСНОВНЫЕ НАСТРОЙКИ
+// =================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Принудительная установка курсора
+    document.documentElement.style.cursor = "url('custom-cursor.png') 0 0, auto";
+    document.body.style.cursor = "url('custom-cursor.png') 0 0, auto";
 
-    // кастомный курсор
-    document.documentElement.style.cursor =
-        "url('custom-cursor.png') 0 0, auto";
-
-    document.body.style.cursor =
-        "url('custom-cursor.png') 0 0, auto";
-
-    // проверка блокировки (если используется)
-    const block = localStorage.getItem("potion_daily_block");
-    if (block && Date.now() < parseInt(block)) return;
-
-    // запуск логики
-    initSwipeHeader();
-    initPotionClick();
-});
-
-/* =================================================================
-   2. FULLSCREEN + СКРЫТИЕ ЗАГРУЗКИ
-   ================================================================= */
-
-document.addEventListener("click", enterFullscreenOnce, { once: true });
-
-function enterFullscreenOnce() {
-    const elem = document.documentElement;
-
-    const requestFull =
-        elem.requestFullscreen ||
-        elem.webkitRequestFullscreen ||
-        elem.mozRequestFullScreen ||
-        elem.msRequestFullscreen;
-
-    if (requestFull) {
-        requestFull.call(elem).catch(() => {});
+    // Проверка блокировки доступа (по localStorage)
+    const globalBlockExpiry = localStorage.getItem("potion_daily_block");
+    if (globalBlockExpiry) {
+        const now = new Date().getTime();
+        if (now < parseInt(globalBlockExpiry)) {
+            console.log("Доступ заблокирован.");
+            return;
+        } else {
+            localStorage.removeItem("potion_daily_block");
+        }
     }
 
-    hideLoader();
-}
+    // Событие клика на зелье
+    const talkativePotion = document.getElementById("potion-talkative");
+    if (talkativePotion) {
+        talkativePotion.addEventListener("click", () => {
+            startPotionGame();
+        });
+    }
 
-/* =================================================================
-   3. СКРЫТИЕ ЭКРАНА ЗАГРУЗКИ
-   ================================================================= */
+    // Инициализация системы свайпов для шапки
+    initSwipeLogic();
+});
 
-function hideLoader() {
-    const loader = document.getElementById("loading-screen");
+// =================================================================
+// 2. ЗАГРУЗКА, ФУЛСКРИН И ОБРАБОТКА СВАЙПОВ
+// =================================================================
 
-    if (!loader) return;
+// Логика первого касания: включает Fullscreen и убирает экран загрузки
+document.addEventListener('touchstart', function handleFirstTouch(e) {
+    const elem = document.documentElement;
 
-    loader.style.opacity = "0";
+    // Попытка развернуть на весь экран (требует действия пользователя)
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen().catch(err => console.log("Фулскрин недоступен"));
+    } else if (elem.webkitRequestFullscreen) { // Safari
+        elem.webkitRequestFullscreen().catch(err => console.log("Фулскрин недоступен"));
+    }
 
-    setTimeout(() => {
-        loader.style.display = "none";
-    }, 1000);
-}
+    // Скрываем экран загрузки
+    const loader = document.getElementById('loading-screen');
+    if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => { loader.style.display = 'none'; }, 1000);
+    }
 
-/* =================================================================
-   4. ЗЕЛЬЕ (ПЕРЕХОД В ИГРУ)
-   ================================================================= */
+    // Удаляем слушатель, чтобы не срабатывало повторно
+    document.removeEventListener('touchstart', handleFirstTouch);
+}, { once: true });
 
-function initPotionClick() {
-    const potion = document.getElementById("potion-talkative");
+// Логика свайпов (скрытие/показ шапки)
+function initSwipeLogic() {
+    let touchStartY = 0;
+    const header = document.querySelector('.site-header');
 
-    if (!potion) return;
-
-    potion.addEventListener("click", () => {
-        window.location.href = "../первое_зелье/first_potion.html";
-    });
-}
-
-/* =================================================================
-   5. СВАЙП ШАПКИ (ПОКАЗ / СКРЫТИЕ)
-   ================================================================= */
-
-function initSwipeHeader() {
-    const header = document.querySelector(".site-header");
     if (!header) return;
 
-    let startY = 0;
-
-    document.addEventListener("touchstart", (e) => {
-        startY = e.touches[0].clientY;
+    document.addEventListener('touchstart', e => {
+        touchStartY = e.touches[0].clientY;
     }, { passive: true });
 
-    document.addEventListener("touchend", (e) => {
-        const endY = e.changedTouches[0].clientY;
-        const diff = endY - startY;
+    document.addEventListener('touchend', e => {
+        const touchEndY = e.changedTouches[0].clientY;
+        const diff = touchEndY - touchStartY;
 
-        if (Math.abs(diff) < 50) return;
-
-        if (diff > 0) {
-            header.classList.remove("hidden");
-        } else {
-            header.classList.add("hidden");
+        // Если свайп вертикальный и длинный
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                // Свайп вниз — показываем шапку
+                header.classList.remove('hidden');
+            } else {
+                // Свайп вверх — скрываем шапку
+                header.classList.add('hidden');
+            }
         }
     }, { passive: true });
 }
 
-/* =================================================================
-   6. ЭФФЕКТ "МАГИЧЕСКИХ ЯБЛОК"
-   ================================================================= */
-
-const appleImages = [
-    "apple 1.png",
-    "apple 2.png",
-    "apple 3.png"
-];
-
-document.addEventListener("click", (e) => {
-    createApple(e.clientX, e.clientY);
-});
-
-let lastAppleTime = 0;
-
-document.addEventListener("mousemove", (e) => {
-    if (!isMouseDown()) return;
-
-    if (Date.now() - lastAppleTime < 60) return;
-
-    createApple(e.clientX, e.clientY);
-    lastAppleTime = Date.now();
-});
-
-function isMouseDown() {
-    return window.__mouseDown === true;
+/**
+ * Перенаправление на страницу приготовления зелья
+ */
+function startPotionGame() {
+    window.location.href = "../первое_зелье/first_potion.html";
 }
 
-document.addEventListener("mousedown", (e) => {
-    if (e.button === 0) window.__mouseDown = true;
-});
+// =================================================================
+// 3. ЭФФЕКТ "МАГИЧЕСКИЕ ЯБЛОКИ"
+// =================================================================
 
-document.addEventListener("mouseup", (e) => {
-    if (e.button === 0) window.__mouseDown = false;
-});
+const appleImages = ['apple 1.png', 'apple 2.png', 'apple 3.png'];
 
 function createApple(x, y) {
+    const apple = document.createElement('div');
+    const randomImg = appleImages[Math.floor(Math.random() * appleImages.length)];
 
-    const apple = document.createElement("div");
-    const img = appleImages[Math.floor(Math.random() * appleImages.length)];
-
-    apple.style.position = "fixed";
-    apple.style.left = (x - 12) + "px";
-    apple.style.top = (y - 12) + "px";
-    apple.style.width = "30px";
-    apple.style.height = "30px";
-    apple.style.backgroundImage = `url('${img}')`;
-    apple.style.backgroundSize = "contain";
-    apple.style.backgroundRepeat = "no-repeat";
-    apple.style.pointerEvents = "none";
-    apple.style.zIndex = "999999";
-    apple.style.transition = "transform 1.5s ease-out, opacity 1.5s ease-out";
+    apple.style.position = 'fixed';
+    apple.style.left = `${x - 12}px`; 
+    apple.style.top = `${y - 12}px`;  
+    apple.style.width = '30px';
+    apple.style.height = '30px';
+    apple.style.backgroundImage = `url('${randomImg}')`;
+    apple.style.backgroundSize = 'contain';
+    apple.style.backgroundRepeat = 'no-repeat';
+    apple.style.pointerEvents = 'none'; 
+    apple.style.zIndex = '999999'; 
+    apple.style.transition = 'transform 1.5s ease-out, opacity 1.5s ease-out';
 
     document.body.appendChild(apple);
 
-    const dx = (Math.random() - 0.5) * 120;
-    const rot = (Math.random() - 0.5) * 540;
+    const randomX = (Math.random() - 0.5) * 120;
+    const randomRotate = (Math.random() - 0.5) * 540;
 
     requestAnimationFrame(() => {
-        apple.style.transform = `translate(${dx}px, -140px) rotate(${rot}deg)`;
-        apple.style.opacity = "0";
+        apple.style.transform = `translate(${randomX}px, -140px) rotate(${randomRotate}deg)`;
+        apple.style.opacity = '0';
     });
 
-    setTimeout(() => apple.remove(), 1500);
+    setTimeout(() => {
+        apple.remove();
+    }, 1500);
 }
+
+document.addEventListener('click', e => {
+    createApple(e.clientX, e.clientY);
+});
+
+let isMouseDown = false;
+document.addEventListener('mousedown', e => { if (e.button === 0) isMouseDown = true; });
+document.addEventListener('mouseup', e => { if (e.button === 0) isMouseDown = false; });
+document.addEventListener('mousemove', e => {
+    if (isMouseDown && (!window.lastAppleTime || Date.now() - window.lastAppleTime > 60)) {
+        createApple(e.clientX, e.clientY);
+        window.lastAppleTime = Date.now();
+    }
+});
