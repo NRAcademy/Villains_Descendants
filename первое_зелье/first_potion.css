@@ -186,26 +186,22 @@ body {
 
     position: absolute;
 
-    left: 9.5%;
+    left: 12%;
+    top: 34%;
 
-    top: 30%;
-
-    width: 44%;
-
-    height: 55%;
+    width: 34%;
+    height: 42%;
 }
 
 .orbit-bg {
 
     position: absolute;
 
-    top: 11%;
+    top: 16%;
+    left: 16%;
 
-    left: 11%;
-
-    width: 78%;
-
-    height: 78%;
+    width: 68%;
+    height: 68%;
 
     background:
         url('круг.png')
@@ -306,18 +302,15 @@ body {
 
     position: absolute;
 
-    width: 28%;
+    width: 20%;
+    height: 20%;
 
-    height: 28%;
-
-    margin-top: -14%;
-
-    margin-left: -14%;
+    margin-top: -10%;
+    margin-left: -10%;
 
     display: flex;
 
     justify-content: center;
-
     align-items: center;
 
     transition: transform 0.2s ease;
@@ -359,9 +352,8 @@ body {
 
 .ingredient-img {
 
-    width: 75%;
-
-    height: 75%;
+    width: 62%;
+    height: 62%;
 
     object-fit: contain;
 
@@ -405,44 +397,38 @@ body {
 
 .cell-slot:nth-child(1) {
 
-    top: 11%;
-
+    top: 18%;
     left: 50%;
 }
 
 .cell-slot:nth-child(2) {
 
-    top: 30.5%;
-
-    left: 84%;
+    top: 34%;
+    left: 77%;
 }
 
 .cell-slot:nth-child(3) {
 
-    top: 69.5%;
-
-    left: 84%;
+    top: 66%;
+    left: 77%;
 }
 
 .cell-slot:nth-child(4) {
 
-    top: 89%;
-
+    top: 82%;
     left: 50%;
 }
 
 .cell-slot:nth-child(5) {
 
-    top: 69.5%;
-
-    left: 16%;
+    top: 66%;
+    left: 23%;
 }
 
 .cell-slot:nth-child(6) {
 
-    top: 30.5%;
-
-    left: 16%;
+    top: 34%;
+    left: 23%;
 }
 
 
@@ -454,13 +440,11 @@ body {
 
     position: absolute;
 
-    right: 7%;
+    right: 11%;
+    top: 37%;
 
-    top: 33%;
-
-    width: 38%;
-
-    height: 48%;
+    width: 29%;
+    height: 37%;
 
     background:
         url('блок_первое_зелье.png')
@@ -479,13 +463,11 @@ body {
 
     position: absolute;
 
-    top: 57%;
+    top: 56%;
+    left: 12%;
 
-    left: 10%;
-
-    width: 80%;
-
-    height: 18%;
+    width: 76%;
+    height: 14%;
 
     display: flex;
 
@@ -524,7 +506,7 @@ body {
 
     position: absolute;
 
-    bottom: 6%;
+    bottom: 8%;
 
     left: 50%;
 
@@ -532,7 +514,7 @@ body {
 
     font-family: 'Anticva', serif;
 
-    font-size: 54px;
+    font-size: 34px;
 
     color: #ffffff;
 
@@ -1065,15 +1047,15 @@ body {
 
     position: absolute;
 
-    bottom: -158px;
+    bottom: -108px;
 
     left: 50%;
 
     transform: translateX(-50%);
 
-    width: 200px;
+    width: 145px;
 
-    height: 60px;
+    height: 45px;
 
     background:
         url('../первое_зелье/готово.png')
