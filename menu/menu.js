@@ -36,7 +36,7 @@ window.addEventListener("load", () => {
 
     // Печатающийся текст
 
-    const text = "Пожалуйста, поверните экран";
+    const text = "Поверни телефон";
     const loadingText = document.getElementById("loading-text");
 
     let i = 0;
