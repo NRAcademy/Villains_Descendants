@@ -394,11 +394,12 @@ img:hover,
   opacity: 1;
   pointer-events: auto;
 }
-
 /* контейнер */
 .rules-content {
+  position: relative;
+
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 
   transform: scale(0.92);
@@ -418,11 +419,18 @@ img:hover,
 #rulesImage {
   max-width: 90vw;
   max-height: 80vh;
+
+  display: block;
 }
 
-/* кнопки */
+/* кнопки поверх картинки */
 .rules-controls {
-  margin-top: 18px;
+  position: absolute;
+
+  bottom: 25px;
+  left: 50%;
+
+  transform: translateX(-50%);
 
   display: flex;
   gap: 25px;
@@ -431,12 +439,28 @@ img:hover,
   align-items: center;
 }
 
-/* кнопки вперед/назад */
+/* кнопки */
 .rules-btn {
   width: 70px;
-  transition: transform 0.2s ease;
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+
+  /* перекраска в коричневый */
+  filter:
+    sepia(1)
+    saturate(4)
+    hue-rotate(340deg)
+    brightness(0.7);
 }
 
 .rules-btn:hover {
   transform: scale(1.06);
+
+  filter:
+    sepia(1)
+    saturate(4)
+    hue-rotate(340deg)
+    brightness(0.85);
 }
