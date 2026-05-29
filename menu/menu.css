@@ -43,29 +43,13 @@ img, img:hover,
 /* Общие стили для сброса отступов */
 
 html, body {
-
     margin: 0;
-
     padding: 0;
-
     width: 100%;
-
     height: 100%;
-
     background-color: #060713;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    font-family: sans-serif;
-
-    overflow: hidden; /* Запрещаем полосы прокрутки */
-
+    overflow: hidden;
 }
-
 
 
 /* ==== ШАПКА (ИСПРАВЛЕННАЯ) ==== */
@@ -147,17 +131,10 @@ html, body {
 /* Главный контейнер игры */
 
 .game-container {
-
+    width: 1350px;
+    height: 1012px; /* или твоя точная пропорция */
+    margin: 0 auto;
     position: relative;
-
-    width: 100vw;
-
-    height: 75vw; /* Пропорция 4:3 */
-
-    background: url('фон.png') no-repeat center center;
-
-    background-size: contain;
-
 }
 
 
