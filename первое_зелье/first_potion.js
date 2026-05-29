@@ -2,160 +2,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const understandBtn = document.getElementById('understand-btn');
 
-if (understandBtn) {
-    understandBtn.addEventListener('click', () => {
-window.location.href = '../menu/menu.html';
-    });
-}
-    // =====================================================
-    // ПРИНУДИТЕЛЬНЫЙ КУРСОР
-    // =====================================================
+    if (understandBtn) {
+        understandBtn.addEventListener('click', () => {
+            window.location.href = '../menu/menu.html';
+        });
+    }
 
+    // ================= КУРСОР =================
     document.documentElement.style.cursor =
         "url('../menu/custom-cursor.png') 0 0, auto";
 
     document.body.style.cursor =
         "url('../menu/custom-cursor.png') 0 0, auto";
 
-
-    // =====================================================
-    // ДАННЫЕ ИГРОКА
-    // =====================================================
-
-    const userData =
-        JSON.parse(localStorage.getItem('userProfile'));
-
-    const vkID =
-        userData ? userData.vkID : 'guest';
+    // ================= ДАННЫЕ ИГРОКА =================
+    const userData = JSON.parse(localStorage.getItem('userProfile'));
+    const vkID = userData ? userData.vkID : 'guest';
 
     const potionID = "first_potion";
+    const today = new Date().toDateString();
 
-    const today =
-        new Date().toDateString();
+    const lastPlayed = localStorage.getItem(`lastPlayed_${vkID}_${potionID}`);
 
-    const lastPlayed =
-        localStorage.getItem(
-            `lastPlayed_${vkID}_${potionID}`
-        );
-
-
-    // =====================================================
-    // ПРОВЕРКА: ИГРАЛ ЛИ СЕГОДНЯ
-    // =====================================================
-
+    // ================= БЛОК ДОСТУПА =================
     if (lastPlayed === today) {
 
-        const waitModal =
-            document.getElementById('wait-modal');
+        const waitModal = document.getElementById('wait-modal');
 
         if (waitModal) {
-
             waitModal.style.display = 'flex';
-
-            const understandBtn =
-                document.getElementById('understand-btn');
-
-            if (understandBtn) {
-
-                understandBtn.addEventListener('click', () => {
-
-window.location.href = '../menu/menu.html';
-                });
-            }
-
-            // ПОЛНОСТЬЮ ОСТАНАВЛИВАЕМ ИГРУ
-            return;
         }
+
+        const btn = document.getElementById('understand-btn');
+
+        if (btn) {
+            btn.addEventListener('click', () => {
+                window.location.href = '../menu/menu.html';
+            });
+        }
+
+        return;
     }
 
-
-    // =====================================================
-    // ЕСЛИ НЕ ИГРАЛ — ЗАПУСКАЕМ ИГРУ
-    // =====================================================
-
     initGame(vkID, potionID);
-
 });
 
 
-// =========================================================
+// =====================================================
 // ОСНОВНАЯ ИГРА
-// =========================================================
-
+// =====================================================
 function initGame(vkID, potionID) {
 
-    // =====================================================
-    // АУДИО
-    // =====================================================
-
+    // ================= АУДИО =================
     const bgMusic = new Audio('фоновая_мелодия.mp3');
     bgMusic.loop = true;
     bgMusic.volume = 0.3;
 
     const successSound = new Audio('успех.mp3');
-    successSound.volume = 1.0;
-
     const failSound = new Audio('провал.mp3');
-    failSound.volume = 0.3;
 
-
-    // =====================================================
-    // ИНГРЕДИЕНТЫ
-    // =====================================================
-
+    // ================= ДАННЫЕ ИГРЫ =================
     const ingredientData = {
-
-        'badyan': {
-            name: 'бадьян',
-            img: '../ингредиенты/ингредиент_бадьян.png'
-        },
-
-        'mandrake': {
-            name: 'мандрагора',
-            img: '../ингредиенты/ингредиент_мандрагора.png'
-        },
-
-        'honey_water': {
-            name: 'медовая_вода',
-            img: '../ингредиенты/ингредиент_медовая_вода.png'
-        },
-
-        'mint': {
-            name: 'мята',
-            img: '../ингредиенты/ингредиент_мята.png'
-        },
-
-        'toadstool': {
-            name: 'прыгающая_поганка',
-            img: '../ингредиенты/ингредиент_прыгающая_поганка.png'
-        },
-
-        'hellebore': {
-            name: 'чемерица',
-            img: '../ингредиенты/ингредиент_чемерица.png'
-        }
+        badyan: { img: '../ингредиенты/ингредиент_бадьян.png' },
+        mandrake: { img: '../ингредиенты/ингредиент_мандрагора.png' },
+        honey_water: { img: '../ингредиенты/ингредиент_медовая_вода.png' },
+        mint: { img: '../ингредиенты/ингредиент_мята.png' },
+        toadstool: { img: '../ингредиенты/ингредиент_прыгающая_поганка.png' },
+        hellebore: { img: '../ингредиенты/ингредиент_чемерица.png' }
     };
-
-const readyBtn = document.getElementById('ready-btn');
-
-if (readyBtn) {
-    readyBtn.addEventListener('click', () => {
-        if (!isGameActive) return; // Если игра закончилась, ничего не делаем
-        
-        // Проверяем, выбраны ли все ингредиенты (необязательно, но полезно)
-        if (chosenSlots.includes(null)) {
-            alert("Вы выбрали не все ингредиенты!");
-            return;
-        }
-
-        // Вызываем функцию проверки и показа результата
-        startLoadingSequence();
-    });
-}
-
-    // =====================================================
-    // НАСТРОЙКИ ИГРЫ
-    // =====================================================
 
     const winRecipe = [
         'hellebore',
@@ -165,632 +79,274 @@ if (readyBtn) {
     ];
 
     let chosenSlots = [null, null, null, null];
-
     let isGameActive = false;
 
-const startTime = 30;
-let timeLeft = startTime;
-
+    const startTime = 30;
+    let timeLeft = startTime;
     let countdownInterval = null;
 
+    // ================= DOM =================
+    const overlay = document.getElementById("countdown-overlay");
+    const countdownText = document.getElementById("countdown-text");
 
-    // =====================================================
-    // DOM ЭЛЕМЕНТЫ
-    // =====================================================
+    const timerDisplay = document.getElementById("game-timer");
 
-    const overlay =
-        document.getElementById("countdown-overlay");
+    const cellSlots = document.querySelectorAll(".cell-slot");
+    const chosenSlotElements = document.querySelectorAll(".chosen-slot");
 
-    const countdownText =
-        document.getElementById("countdown-text");
+    const rotator = document.getElementById("slots-rotator");
 
-    const timerDisplay =
-        document.getElementById("game-timer");
-
-    const cellSlots =
-        document.querySelectorAll(".cell-slot");
-
-    const chosenSlotElements =
-        document.querySelectorAll(".chosen-slot");
-
-    const rotator =
-        document.getElementById("slots-rotator");
-
-
-    // =====================================================
-    // ЭЛЕМЕНТЫ ЗАГРУЗКИ
-    // =====================================================
-
-    const loadingOverlay =
-        document.getElementById("loading-overlay");
-
+    const loadingOverlay = document.getElementById("loading-overlay");
     const coffinEls = [
         document.getElementById("coffin-1"),
         document.getElementById("coffin-2"),
         document.getElementById("coffin-3")
     ];
 
-    const loadingTextEl =
-        document.getElementById("loading-text");
+    const loadingTextEl = document.getElementById("loading-text");
+    const centerStand = document.querySelector(".center-stand");
 
-    const centerStand =
-        document.querySelector(".center-stand");
+    const failGifContainer = document.getElementById("fail-gif-container");
 
-    const failGifContainer =
-        document.getElementById("fail-gif-container");
+    const potionModal = document.getElementById("potion-modal");
+    const modalCloseBtn = document.getElementById("modal-tab-close-btn");
 
+    const readyBtn = document.getElementById("ready-btn");
 
-    // =====================================================
-    // МОДАЛЬНОЕ ОКНО
-    // =====================================================
+    // ================= ЗВУК =================
+    bgMusic.play().catch(() => {});
 
-    const potionModal =
-        document.getElementById("potion-modal");
+    // ================= КНОПКА ГОТОВО =================
+    if (readyBtn) {
+        readyBtn.addEventListener('click', () => {
 
-    const modalCloseBtn =
-        document.getElementById("modal-close-btn");
+            if (!isGameActive) return;
 
+            if (chosenSlots.includes(null)) {
+                alert("Выберите все ингредиенты!");
+                return;
+            }
 
-    // =====================================================
-    // ЗАПУСК МУЗЫКИ
-    // =====================================================
+            startLoadingSequence();
+        });
+    }
 
-    bgMusic.play().catch(() => {
-        console.log("Автоплей заблокирован");
-    });
+    // ================= СТАРТ =================
+    runCountdown();
 
-
-    // =====================================================
-    // СТАРТ ОТСЧЕТА
-    // =====================================================
-
-    runPreloadCountdown();
-
-
-    function runPreloadCountdown() {
+    function runCountdown() {
 
         let count = 3;
-
         countdownText.textContent = count;
 
-        const stageInterval = setInterval(() => {
-
-            bgMusic.play().catch(() => {});
+        const interval = setInterval(() => {
 
             count--;
 
             if (count > 0) {
-
                 countdownText.textContent = count;
+            }
 
-            } else if (count === 0) {
-
+            else if (count === 0) {
                 countdownText.textContent = "СТАРТ!";
+            }
 
-            } else {
+            else {
+                clearInterval(interval);
 
-                clearInterval(stageInterval);
+                overlay.style.opacity = "0";
 
-                if (overlay) {
-
-                    overlay.style.opacity = "0";
-
-                    setTimeout(() => {
-
-                        overlay.style.display = "none";
-
-                        startGameTimer();
-
-                    }, 500);
-
-                } else {
-
-                    startGameTimer();
-                }
+                setTimeout(() => {
+                    overlay.style.display = "none";
+                    startTimer();
+                }, 500);
             }
 
         }, 1000);
     }
 
-
-    // =====================================================
-    // ТАЙМЕР ИГРЫ
-    // =====================================================
-
-    function startGameTimer() {
+    // ================= ТАЙМЕР =================
+    function startTimer() {
 
         isGameActive = true;
-
         timerDisplay.textContent = `00:${timeLeft}`;
 
         countdownInterval = setInterval(() => {
 
             timeLeft--;
 
-            if (timeLeft >= 10) {
-
+            if (timeLeft > 9) {
                 timerDisplay.textContent = `00:${timeLeft}`;
-
-            } else if (timeLeft > 0) {
-
+            }
+            else if (timeLeft > 0) {
                 timerDisplay.textContent = `00:0${timeLeft}`;
-
-            } else {
-
+            }
+            else {
                 timerDisplay.textContent = `00:00`;
-
                 clearInterval(countdownInterval);
-
                 startLoadingSequence();
             }
 
         }, 1000);
     }
 
-
-    // =====================================================
-    // ЭКРАН ЗАГРУЗКИ
-    // =====================================================
-
+    // ================= ЗАГРУЗКА =================
     function startLoadingSequence() {
 
         isGameActive = false;
+        clearInterval(countdownInterval);
 
-        if (countdownInterval) {
-            clearInterval(countdownInterval);
-        }
+        rotator?.classList.add("frozen");
+        cellSlots.forEach(s => s.classList.add("frozen"));
 
-        if (rotator) {
-            rotator.classList.add("frozen");
-        }
+        loadingOverlay?.classList.add("active");
 
-        cellSlots.forEach(slot => {
-            slot.classList.add("frozen");
-        });
+        let index = 0;
 
-        if (loadingOverlay) {
-            loadingOverlay.classList.add("active");
-        }
+        const interval = setInterval(() => {
 
-        const hasCoffins = coffinEls.every(el => el !== null);
+            coffinEls.forEach(c => c?.classList.remove("active-coffin"));
 
-        let coffinInterval = null;
+            coffinEls[index]?.classList.add("active-coffin");
 
-        let currentStep = 0;
+            index = (index + 1) % 3;
 
-        if (hasCoffins) {
-
-            coffinEls.forEach(el => {
-                el.classList.remove("active-coffin");
-            });
-
-            coffinEls[0].classList.add("active-coffin");
-
-            coffinInterval = setInterval(() => {
-
-                coffinEls[currentStep]
-                    .classList.remove("active-coffin");
-
-                currentStep = (currentStep + 1) % 3;
-
-                coffinEls[currentStep]
-                    .classList.add("active-coffin");
-
-            }, 500);
-        }
-
-        const fullText = "Загружаем результат...";
-
-        if (loadingTextEl) {
-
-            loadingTextEl.textContent = "";
-
-            let charIndex = 0;
-
-            const typeInterval = setInterval(() => {
-
-                if (charIndex < fullText.length) {
-
-                    loadingTextEl.textContent +=
-                        fullText.charAt(charIndex);
-
-                    charIndex++;
-
-                } else {
-
-                    clearInterval(typeInterval);
-                }
-
-            }, 900 / fullText.length);
-        }
+        }, 500);
 
         setTimeout(() => {
 
-            if (coffinInterval) {
-                clearInterval(coffinInterval);
-            }
+            clearInterval(interval);
+            loadingOverlay?.classList.remove("active");
 
-            if (loadingOverlay) {
-                loadingOverlay.classList.remove("active");
-            }
+            showResult();
 
-            showGameResult();
-
-        }, 4000);
+        }, 3500);
     }
 
-
-    // =====================================================
-    // РЕЗУЛЬТАТ ИГРЫ
-    // =====================================================
-
-    function showGameResult() {
+    // ================= РЕЗУЛЬТАТ =================
+    function showResult() {
 
         const isSuccess =
-            winRecipe.every(ingredient =>
-                chosenSlots.includes(ingredient)
-            ) &&
-            chosenSlots.every(slot =>
-                slot !== null &&
-                winRecipe.includes(slot)
-            );
-
-        if (failGifContainer) {
-
-            failGifContainer.classList.remove("run-animation");
-
-            void failGifContainer.offsetWidth;
-
-            const uniqueGifPath =
-                'провал_гиф.gif?t=' + Date.now();
-
-            failGifContainer.style.backgroundImage =
-                `url('${uniqueGifPath}')`;
-        }
-
-
-// =================================================
-        // УСПЕХ
-        // =================================================
+            JSON.stringify([...chosenSlots].sort()) ===
+            JSON.stringify([...winRecipe].sort());
 
         if (isSuccess) {
 
             successSound.play();
 
-            // --- ВСТАВИТЬ СЮДА ---
-let userData = null;
-
-try {
-    userData = JSON.parse(localStorage.getItem('userProfile'));
-} catch (e) {
-    userData = null;
-}
-
-const playerName =
-    userData?.name ||
-    userData?.username ||
-    "Гость";
-            
-            // Если вы хотите сохранять время, которое реально осталось на таймере:
-            // подставьте переменную timeLeft, если она доступна в этой области видимости
-            const timeSpent = startTime - timeLeft;
-saveResultToLeaderboard(playerName, timeSpent);
-            // ---------------------
-
-            // СОХРАНЯЕМ ПРОХОЖДЕНИЕ
             localStorage.setItem(
                 `lastPlayed_${vkID}_${potionID}`,
                 new Date().toDateString()
             );
 
-            // ОСТАНАВЛИВАЕМ ИГРУ
-            isGameActive = false;
-
-            if (countdownInterval) {
-                clearInterval(countdownInterval);
-            }
-
-            bgMusic.pause();
-            bgMusic.currentTime = 0;
-
             timerDisplay.textContent = "Успех!";
-            timerDisplay.className = "game-timer win-status";
 
-
-            // ФИНАЛЬНОЕ ЗЕЛЬЕ
             if (centerStand) {
-
-                const finalPotion =
-                    document.createElement("div");
-
-                finalPotion.className =
-                    "final-potion-result";
-
-                centerStand.appendChild(finalPotion);
+                const el = document.createElement("div");
+                el.className = "final-potion-result";
+                centerStand.appendChild(el);
             }
 
-
-            // =============================================
-            // ПОЯВЛЕНИЕ СВИТКА
-            // =============================================
-
             setTimeout(() => {
-
-                if (potionModal) {
-
-                    potionModal.classList.add("active");
-
-                    const closeButton =
-                        modalCloseBtn ||
-                        potionModal.querySelector("button");
-
-                    if (closeButton) {
-
-                        closeButton.onclick = (e) => {
-
-                            e.preventDefault();
-
-                            potionModal.classList.remove("active");
-
-                            potionModal.style.display = "none";
-
-                            console.log("Окно закрыто");
-
-
-                            // =================================
-                            // ПОКАЗЫВАЕМ WAIT MODAL
-                            // =================================
-
-                            const waitModal =
-                                document.getElementById('wait-modal');
-
-                            if (waitModal) {
-
-                                waitModal.style.display = 'flex';
-
-                                if (understandBtn) {
-
-                                    understandBtn.onclick = () => {
-
-window.location.href = '../menu/menu.html';
-                                    };
-                                }
-                            };
-                        };
-                    }
-                }
-
+                potionModal?.classList.add("active");
             }, 1000);
-
-
-// =================================================
-        // ПРОВАЛ
-        // =================================================
-        } else {
-            failSound.play();
-
-            timerDisplay.textContent = "Провал";
-            timerDisplay.className = "game-timer lose-status";
-
-            if (failGifContainer) {
-                failGifContainer.classList.add("run-animation");
-            }
-
-            setTimeout(() => {
-                if (failGifContainer) {
-                    failGifContainer.classList.remove("run-animation");
-                    failGifContainer.style.backgroundImage = "none";
-                }
-
-                const waitModal = document.getElementById('wait-modal');
-                if (waitModal) {
-                    waitModal.style.display = 'flex';
-                }
-            }, 2500);
         }
-} // 👈 ВОТ ЭТОЙ СКОБКИ НЕ ХВАТАЕТ
 
-// =====================================================
-// ВЫБОР ИНГРЕДИЕНТОВ
-// ============================================
+        else {
+            failSound.play();
+            timerDisplay.textContent = "Провал";
+        }
+    }
 
+    // ================= ВЫБОР ИНГРЕДИЕНТОВ =================
     cellSlots.forEach(slot => {
 
         slot.addEventListener("click", () => {
 
-            if (bgMusic.paused) {
-                bgMusic.play().catch(() => {});
-            }
-
             if (!isGameActive) return;
 
-            const type =
-                slot.getAttribute("data-ingredient");
+            const type = slot.dataset.ingredient;
 
             if (chosenSlots.includes(type)) return;
 
-            const freeIndex =
-                chosenSlots.findIndex(item => item === null);
+            const free = chosenSlots.indexOf(null);
 
-            if (freeIndex !== -1) {
+            if (free !== -1) {
 
-                chosenSlots[freeIndex] = type;
+                chosenSlots[free] = type;
 
-                slot.classList.remove("grayscale");
+                const img = ingredientData[type]?.img;
+
+                const target = document.getElementById(`slot-${free}`);
+
+                if (target && img) {
+                    target.style.background =
+                        `url('${img}') center/contain no-repeat`;
+                }
 
                 slot.classList.add("active-selected");
-
-                const targetSlot =
-                    document.getElementById(`slot-${freeIndex}`);
-
-                if (targetSlot && ingredientData[type]) {
-
-                    targetSlot.style.background =
-                        `url('${ingredientData[type].img}') no-repeat center center`;
-
-                    targetSlot.style.backgroundSize =
-                        "contain";
-                }
             }
         });
     });
 
+    // ================= ОЧИСТКА СЛОТОВ =================
+    chosenSlotElements.forEach(slot => {
 
-    // =====================================================
-    // ОЧИСТКА СЛОТОВ
-    // =====================================================
-
-    chosenSlotElements.forEach(slotElement => {
-
-        slotElement.addEventListener("click", () => {
+        slot.addEventListener("click", () => {
 
             if (!isGameActive) return;
 
-            const index = parseInt(
-                slotElement.getAttribute("data-index")
-            );
+            const index = +slot.dataset.index;
 
-            const currentIngredient =
-                chosenSlots[index];
+            const val = chosenSlots[index];
 
-            if (currentIngredient) {
+            if (!val) return;
 
-                chosenSlots[index] = null;
+            chosenSlots[index] = null;
 
-                slotElement.style.background =
-                    "url('../ингредиенты/ингредиент_пустой.png') no-repeat center center";
+            slot.style.background =
+                "url('../ингредиенты/ингредиент_пустой.png') center/contain no-repeat";
 
-                slotElement.style.backgroundSize =
-                    "contain";
+            const cell =
+                document.querySelector(`[data-ingredient="${val}"]`);
 
-                const matchingCell =
-                    document.querySelector(
-                        `.cell-slot[data-ingredient="${currentIngredient}"]`
-                    );
-
-                if (matchingCell) {
-
-                    matchingCell.classList.remove(
-                        "active-selected"
-                    );
-
-                    matchingCell.classList.add("grayscale");
-                }
-            }
+            cell?.classList.remove("active-selected");
         });
     });
 
+    // ================= MAGIC EFFECT =================
+    document.addEventListener("click", e => {
 
-    // =====================================================
-    // МАГИЧЕСКИЙ ШЛЕЙФ
-    // =====================================================
+        const img = document.createElement("img");
 
-    const appleImages = [
-        '../menu/apple 1.png',
-        '../menu/apple 2.png'
-    ];
+        img.src = '../menu/apple 1.png';
 
+        img.style.position = "fixed";
+        img.style.left = e.clientX + "px";
+        img.style.top = e.clientY + "px";
+        img.style.width = "30px";
+        img.style.pointerEvents = "none";
 
-    function createApple(x, y) {
+        document.body.appendChild(img);
 
-        const apple = document.createElement('img');
-
-        apple.src =
-            appleImages[
-                Math.floor(Math.random() * appleImages.length)
-            ];
-
-        apple.style.position = 'fixed';
-
-        apple.style.left = (x - 20) + 'px';
-
-        apple.style.top = (y - 20) + 'px';
-
-        apple.style.width =
-            (25 + Math.random() * 25) + 'px';
-
-        apple.style.pointerEvents = 'none';
-
-        apple.style.opacity = '1';
-
-        apple.style.zIndex = '999999';
-
-        apple.style.transition =
-            'transform 1.5s ease-out, opacity 1.5s ease-out';
-
-        document.body.appendChild(apple);
-
-        const randomX =
-            (Math.random() - 0.5) * 120;
-
-        const randomRotate =
-            (Math.random() - 0.5) * 540;
-
-        requestAnimationFrame(() => {
-
-            apple.style.transform =
-                `translate(${randomX}px, -140px) rotate(${randomRotate}deg)`;
-
-            apple.style.opacity = '0';
-        });
-
-        setTimeout(() => {
-            apple.remove();
-        }, 1500);
-    }
-
-
-    document.addEventListener('click', e => {
-        createApple(e.clientX, e.clientY);
+        setTimeout(() => img.remove(), 1200);
     });
 
-    let isMouseDown = false;
-
-    document.addEventListener('mousedown', e => {
-
-        if (e.button === 0) {
-            isMouseDown = true;
-        }
-    });
-
-    document.addEventListener('mouseup', e => {
-
-        if (e.button === 0) {
-            isMouseDown = false;
-        }
-    });
-
-    let lastAppleTime = 0;
-
-    document.addEventListener('mousemove', e => {
-
-        if (
-            isMouseDown &&
-            Date.now() - lastAppleTime > 60
-        ) {
-
-            createApple(e.clientX, e.clientY);
-
-            lastAppleTime = Date.now();
-        }
-    });
 }
 
-// Функция для записи результата в LocalStorage
+// ================= LEADERBOARD =================
 function saveResultToLeaderboard(name, time) {
-    // Получаем текущие данные или создаем пустой массив
-    let leaderboard = JSON.parse(localStorage.getItem("potion_leaderboard")) || [];
 
-    // Добавляем новый результат
-    leaderboard.push({
-        name: name,
+    let board =
+        JSON.parse(localStorage.getItem("potion_leaderboard")) || [];
+
+    board.push({
+        name,
         timeSpent: time,
         date: new Date().toLocaleDateString()
     });
 
-    // Сортируем (по времени: чем меньше, тем лучше)
-    leaderboard.sort((a, b) => a.timeSpent - b.timeSpent);
+    board.sort((a, b) => a.timeSpent - b.timeSpent);
 
-    // Сохраняем обратно
-    localStorage.setItem("potion_leaderboard", JSON.stringify(leaderboard));
+    localStorage.setItem("potion_leaderboard", JSON.stringify(board));
 }
