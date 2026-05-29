@@ -2,6 +2,7 @@ body {
   margin: 0;
   overflow-x: hidden;
   cursor: none;
+  font-family: 'Anticva', serif;
 }
 
 /* ================= ШРИФТ ================= */
@@ -64,11 +65,11 @@ body {
 }
 
 .header-link {
-
+    font-family: 'Anticva', serif;
+    color: #ffffff;
+    text-decoration: none;
     font-size: 14px;
-
     white-space: nowrap;
-
     flex-shrink: 0;
 }
 
