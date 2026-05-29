@@ -1,3 +1,142 @@
+// ======================================================
+// ЗАГРУЗОЧНЫЙ ЭКРАН
+// ======================================================
+
+window.addEventListener("load", () => {
+
+    const loadingScreen = document.getElementById("loading-screen");
+
+    const coffins = [
+        document.getElementById("coffin-1"),
+        document.getElementById("coffin-2"),
+        document.getElementById("coffin-3")
+    ];
+
+    let activeIndex = 0;
+
+    // Анимация гробов
+
+    const coffinInterval = setInterval(() => {
+
+        coffins.forEach(coffin => {
+            coffin.classList.remove("active");
+            coffin.classList.add("dark");
+        });
+
+        coffins[activeIndex].classList.remove("dark");
+        coffins[activeIndex].classList.add("active");
+
+        activeIndex++;
+
+        if (activeIndex >= coffins.length) {
+            activeIndex = 0;
+        }
+
+    }, 550);
+
+    // Печатающийся текст
+
+    const text = "Пожалуйста, поверните экран";
+    const loadingText = document.getElementById("loading-text");
+
+    let i = 0;
+
+    const typeInterval = setInterval(() => {
+
+        loadingText.textContent += text.charAt(i);
+
+        i++;
+
+        if (i >= text.length) {
+            clearInterval(typeInterval);
+        }
+
+    }, 70);
+
+    // Скрытие экрана
+
+    setTimeout(() => {
+
+        clearInterval(coffinInterval);
+
+        loadingScreen.classList.add("hide");
+
+        setTimeout(() => {
+            loadingScreen.remove();
+        }, 1000);
+
+    }, 4200);
+
+});
+
+// ======================================================
+// СКРЫТИЕ ШАПКИ СВАЙПОМ
+// ======================================================
+
+const header = document.querySelector(".site-header");
+
+let startY = 0;
+let endY = 0;
+
+document.addEventListener("touchstart", e => {
+
+    startY = e.touches[0].clientY;
+
+}, { passive: true });
+
+document.addEventListener("touchmove", e => {
+
+    endY = e.touches[0].clientY;
+
+}, { passive: true });
+
+document.addEventListener("touchend", () => {
+
+    const diff = startY - endY;
+
+    // Свайп вверх
+
+    if (diff > 50) {
+
+        header.classList.add("hidden-header");
+
+    }
+
+    // Свайп вниз
+
+    if (diff < -50) {
+
+        header.classList.remove("hidden-header");
+
+    }
+
+});
+
+// ======================================================
+// FULLSCREEN MOBILE
+// ======================================================
+
+function openFullscreen() {
+
+    const doc = document.documentElement;
+
+    if (doc.requestFullscreen) {
+        doc.requestFullscreen();
+    }
+    else if (doc.webkitRequestFullscreen) {
+        doc.webkitRequestFullscreen();
+    }
+
+}
+
+// Android требует действие пользователя
+
+document.addEventListener("touchstart", () => {
+
+    openFullscreen();
+
+}, { once: true });
+
 // Ждем, пока вся структура страницы полностью загрузится
 document.addEventListener("DOMContentLoaded", () => {
    
