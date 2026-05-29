@@ -20,14 +20,17 @@ img, img:hover,
 html, body {
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #060713; /* Картинку background-image отсюда удаляем */
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: sans-serif;
-    overflow: hidden;
+    background: #060713;
+}
+
+body {
+    touch-action: manipulation;
 }
 
 /* ==== ШАПКА ==== */
@@ -70,12 +73,16 @@ html, body {
 /* Главный контейнер игры */
 .game-container {
     position: relative;
-    width: 100vw;
-    height: 75vw;
-    /* background: url('фон.png') no-repeat center center; <-- ЭТУ СТРОКУ НУЖНО УДАЛИТЬ */
-  z-index: 10; /* Видео с z-index: 1 окажется ровно ПОД игрой */
-    background: transparent !important; /* Делаем прозрачным, чтобы видеть видео под ним */
-    background-size: contain;
+
+    width: 1920px;
+    height: 1080px;
+
+    flex-shrink: 0;
+
+    z-index: 10;
+
+    background: transparent !important;
+    overflow: hidden;
 }
 
 /* ================= ЛЕВАЯ ЧАСТЬ: АЛХИМИЧЕСКИЙ КРУГ ================= */
@@ -358,8 +365,8 @@ html, body {
 
 /* Карточка свитком/информацией */
 .info-card-body {
-    width: 62vw;                     /* Пропорциональный размер под экраны */
-    height: 44vw;
+    width: 1200px;
+    height: 850px;
     background: url('информация.png') no-repeat center center;
     background-size: contain;
     position: relative;              /* ОБЯЗАТЕЛЬНО: чтобы кнопка позиционировалась от углов карточки */
@@ -374,10 +381,11 @@ html, body {
 /* Кнопка закрытия справа на свитке */
 .info-close-btn {
     position: absolute;
-    top: 2vw;                        /* Отступ от верхнего края карточки */
-    right: 2vw;                      /* Отступ от правого края карточки */
-    width: 12vw;
-    height: 4vw;
+    top: 40px;
+    right: 40px;
+
+    width: 230px;
+    height: 75px;
     background: url('кнопка.png') no-repeat center center;
     background-size: contain;
     cursor: pointer;
