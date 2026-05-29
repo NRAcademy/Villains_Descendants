@@ -1,4 +1,4 @@
-body {
+Оуbody {
   margin: 0;
   overflow-x: hidden;
   cursor: none;
@@ -364,4 +364,79 @@ img:hover,
 .schedule-content img {
   max-width: 90vw;
   max-height: 90vh;
+}
+
+/* ================= МОДАЛКА ПРАВИЛ ================= */
+
+.rules-modal {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    background 0.25s ease,
+    opacity 0.25s ease;
+
+  z-index: 25000;
+}
+
+.rules-modal.active {
+  background: rgba(0, 0, 0, 0.45);
+
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* контейнер */
+.rules-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transform: scale(0.92);
+  opacity: 0;
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.rules-modal.active .rules-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* картинка правил */
+#rulesImage {
+  max-width: 90vw;
+  max-height: 80vh;
+}
+
+/* кнопки */
+.rules-controls {
+  margin-top: 18px;
+
+  display: flex;
+  gap: 25px;
+
+  justify-content: center;
+  align-items: center;
+}
+
+/* кнопки вперед/назад */
+.rules-btn {
+  width: 70px;
+  transition: transform 0.2s ease;
+}
+
+.rules-btn:hover {
+  transform: scale(1.06);
 }
