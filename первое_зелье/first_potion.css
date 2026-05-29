@@ -97,6 +97,25 @@ body {
     z-index: 1000;
 }
 
+/* ======================================================
+   МОБИЛЬНАЯ ШАПКА
+====================================================== */
+
+.site-header {
+
+    transition: transform 0.4s ease;
+
+    touch-action: pan-y;
+}
+
+/* СКРЫТАЯ ШАПКА */
+
+.site-header.hidden-header {
+
+    transform: translateY(-100%);
+}
+
+
 .header-inner {
 
     width: 100%;
@@ -1078,4 +1097,32 @@ body {
         translateX(-50%)
         scale(0.95);
 }
-```
+
+/* ======================================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+====================================================== */
+
+@media (max-width: 1000px) {
+
+    .game-container {
+
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .header-inner {
+
+        gap: 25px;
+    }
+
+    .header-link {
+
+        font-size: 15px;
+    }
+
+    .site-header {
+
+        height: 65px;
+    }
+
+}
