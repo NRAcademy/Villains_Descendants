@@ -1,25 +1,25 @@
 // =================================================================
-// 1. ИНИЦИАЛИЗАЦИЯ И СИСТЕМНЫЕ ФУНКЦИИ
+// 1. ИНИЦИАЛИЗАЦИЯ И ОСНОВНЫЕ НАСТРОЙКИ
 // =================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Принудительный курсор
+    // Принудительная установка курсора
     document.documentElement.style.cursor = "url('custom-cursor.png') 0 0, auto";
     document.body.style.cursor = "url('custom-cursor.png') 0 0, auto";
 
-    // Проверка блокировки доступа
+    // Проверка блокировки доступа (по localStorage)
     const globalBlockExpiry = localStorage.getItem("potion_daily_block");
     if (globalBlockExpiry) {
         const now = new Date().getTime();
         if (now < parseInt(globalBlockExpiry)) {
-            console.log("Доступ заблокирован до следующего дня.");
+            console.log("Доступ заблокирован.");
             return;
         } else {
             localStorage.removeItem("potion_daily_block");
         }
     }
 
-    // Инициализация событий (клик по зелью)
+    // Событие клика на зелье
     const talkativePotion = document.getElementById("potion-talkative");
     if (talkativePotion) {
         talkativePotion.addEventListener("click", () => {
@@ -27,27 +27,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Инициализация системы свайпов
+    // Инициализация системы свайпов для шапки
     initSwipeLogic();
 });
 
-/**
- * Перенаправление на страницу приготовления зелья
- */
-function startPotionGame() {
-    window.location.href = "../первое_зелье/first_potion.html";
-}
-
 // =================================================================
-// 2. ЗАГРУЗКА, ПОЛНОЭКРАННЫЙ РЕЖИМ И СВАЙПЫ
+// 2. ЗАГРУЗКА, ФУЛСКРИН И ОБРАБОТКА СВАЙПОВ
 // =================================================================
 
-// Логика первого касания (полноэкранный режим + убрать экран загрузки)
+// Логика первого касания: включает Fullscreen и убирает экран загрузки
 document.addEventListener('touchstart', function handleFirstTouch(e) {
-    // Включаем полноэкранный режим
     const elem = document.documentElement;
+
+    // Попытка развернуть на весь экран (требует действия пользователя)
     if (elem.requestFullscreen) {
         elem.requestFullscreen().catch(err => console.log("Фулскрин недоступен"));
+    } else if (elem.webkitRequestFullscreen) { // Safari
+        elem.webkitRequestFullscreen().catch(err => console.log("Фулскрин недоступен"));
     }
 
     // Скрываем экран загрузки
@@ -61,7 +57,7 @@ document.addEventListener('touchstart', function handleFirstTouch(e) {
     document.removeEventListener('touchstart', handleFirstTouch);
 }, { once: true });
 
-// Логика управления шапкой (свайпы)
+// Логика свайпов (скрытие/показ шапки)
 function initSwipeLogic() {
     let touchStartY = 0;
     const header = document.querySelector('.site-header');
@@ -76,21 +72,28 @@ function initSwipeLogic() {
         const touchEndY = e.changedTouches[0].clientY;
         const diff = touchEndY - touchStartY;
 
-        // Если свайп значительный (более 50px)
+        // Если свайп вертикальный и длинный
         if (Math.abs(diff) > 50) {
             if (diff > 0) {
-                // Свайп вниз - показать шапку
+                // Свайп вниз — показываем шапку
                 header.classList.remove('hidden');
             } else {
-                // Свайп вверх - скрыть шапку
+                // Свайп вверх — скрываем шапку
                 header.classList.add('hidden');
             }
         }
     }, { passive: true });
 }
 
+/**
+ * Перенаправление на страницу приготовления зелья
+ */
+function startPotionGame() {
+    window.location.href = "../первое_зелье/first_potion.html";
+}
+
 // =================================================================
-// 3. МАГИЧЕСКИЙ ЭФФЕКТ: ЯБЛОКИ
+// 3. ЭФФЕКТ "МАГИЧЕСКИЕ ЯБЛОКИ"
 // =================================================================
 
 const appleImages = ['apple 1.png', 'apple 2.png', 'apple 3.png'];
@@ -131,12 +134,8 @@ document.addEventListener('click', e => {
 });
 
 let isMouseDown = false;
-document.addEventListener('mousedown', e => {
-    if (e.button === 0) { isMouseDown = true; }
-});
-document.addEventListener('mouseup', e => {
-    if (e.button === 0) { isMouseDown = false; }
-});
+document.addEventListener('mousedown', e => { if (e.button === 0) isMouseDown = true; });
+document.addEventListener('mouseup', e => { if (e.button === 0) isMouseDown = false; });
 document.addEventListener('mousemove', e => {
     if (isMouseDown && (!window.lastAppleTime || Date.now() - window.lastAppleTime > 60)) {
         createApple(e.clientX, e.clientY);
