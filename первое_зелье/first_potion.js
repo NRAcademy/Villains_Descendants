@@ -773,3 +773,44 @@ function startLoadingSequence() {
         }
     });
 }
+
+// ======================================================
+// СКРЫТИЕ ШАПКИ СВАЙПОМ
+// ======================================================
+
+const header = document.querySelector(".site-header");
+
+let startY = 0;
+let endY = 0;
+
+document.addEventListener("touchstart", e => {
+
+    startY = e.touches[0].clientY;
+
+}, { passive: true });
+
+document.addEventListener("touchmove", e => {
+
+    endY = e.touches[0].clientY;
+
+}, { passive: true });
+
+document.addEventListener("touchend", () => {
+
+    const diff = startY - endY;
+
+    // Свайп вверх
+
+    if (diff > 50) {
+
+        header.classList.add("hidden-header");
+    }
+
+    // Свайп вниз
+
+    if (diff < -50) {
+
+        header.classList.remove("hidden-header");
+    }
+
+});
