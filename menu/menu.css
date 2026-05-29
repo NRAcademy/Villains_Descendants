@@ -829,3 +829,21 @@ html, body {
     }
 
 }
+
+#fs-hint {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,0.6);
+    color: white;
+
+    font-family: 'Anticva', serif;
+    font-size: 22px;
+
+    z-index: 99999999;
+
+    cursor: pointer;
+}
