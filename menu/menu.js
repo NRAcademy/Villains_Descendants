@@ -228,3 +228,33 @@ document.addEventListener('mousemove', e => {
         window.lastAppleTime = Date.now();
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const fsHint = document.getElementById("fs-hint");
+
+    function goFullscreen() {
+
+        const el = document.documentElement;
+
+        if (el.requestFullscreen) {
+            el.requestFullscreen().catch(err => console.log(err));
+        }
+        else if (el.webkitRequestFullscreen) {
+            el.webkitRequestFullscreen();
+        }
+        else if (el.msRequestFullscreen) {
+            el.msRequestFullscreen();
+        }
+    }
+
+    // ОБЯЗАТЕЛЬНО pointerdown (лучше чем click на телефонах)
+    fsHint.addEventListener("pointerdown", () => {
+
+        goFullscreen();
+
+        fsHint.style.display = "none";
+
+    });
+
+}); 
