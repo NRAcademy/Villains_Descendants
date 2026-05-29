@@ -1,44 +1,82 @@
 /* =================================================================
-   1. ОБЩИЕ СТИЛИ, ШРИФТЫ И КУРСОР
+   ШРИФТЫ
    ================================================================= */
 
-@font-face { font-family: 'Anticva'; src: url('Anticva.otf') format('opentype'); }
-@font-face { font-family: 'Constantine'; src: url('регистрация/Constantine.ttf') format('truetype'); }
-
-html, body, *, a, a:hover, button, button:hover, img, img:hover, 
-.potion-item, .potion-item *, .potion-item:hover,
-.header-link, .header-link:hover, .header-icon, .header-icon *, 
-.header-icon:hover, .cell-slot, .cell-slot:hover {
-    cursor: url('custom-cursor.png') 0 0, auto !important;
+@font-face {
+    font-family: 'Anticva';
+    src: url('Anticva.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
-html, body {
-    margin: 0; padding: 0; width: 100%; height: 100%;
-    background-color: #060713;
-    display: flex; justify-content: center; align-items: center;
-    font-family: sans-serif; overflow: hidden;
+@font-face {
+    font-family: 'Constantine';
+    src: url('регистрация/Constantine.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 /* =================================================================
-   2. ЭКРАН ЗАГРУЗКИ (НОВОЕ)
+   ГЛОБАЛЬНОЕ
+   ================================================================= */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #060713;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* кастомный курсор */
+html, body, *, a, button, img {
+    cursor: url('custom-cursor.png') 0 0, auto !important;
+}
+
+/* =================================================================
+   ЭКРАН ЗАГРУЗКИ
    ================================================================= */
 
 #loading-screen {
-    position: fixed; top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
     background-color: #060713;
     z-index: 999999;
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     transition: opacity 1s ease;
+
+    /* ВАЖНО: шрифт загрузки */
+    font-family: 'Anticva', serif;
 }
 
-.coffins-container { display: flex; gap: 20px; margin-bottom: 30px; }
-.coffin { width: 100px; animation: blink-coffin 1.5s infinite; filter: brightness(0.3); }
+.coffins-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.coffin {
+    width: 100px;
+    filter: brightness(0.3);
+    animation: blink-coffin 1.5s infinite;
+}
 
 .c1 { animation-delay: 0s; }
 .c2 { animation-delay: 0.5s; }
-.c3 { animation-delay: 1.0s; }
+.c3 { animation-delay: 1s; }
 
 @keyframes blink-coffin {
     0%, 33% { filter: brightness(1); }
@@ -46,26 +84,42 @@ html, body {
 }
 
 .loading-text {
-    font-family: 'Constantine', serif;
-    color: #e2cfa7; font-size: 24px;
-    overflow: hidden; border-right: 2px solid #e2cfa7;
-    white-space: nowrap; width: 0;
+    font-family: 'Anticva', serif;
+    color: #e2cfa7;
+    font-size: 24px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid #e2cfa7;
+
+    width: 0;
     animation: typing 2s steps(30, end) forwards;
 }
 
-@keyframes typing { from { width: 0; } to { width: 330px; } }
+@keyframes typing {
+    from { width: 0; }
+    to { width: 330px; }
+}
 
 /* =================================================================
-   3. ШАПКА (С УЧЕТОМ СКРЫТИЯ)
+   ШАПКА
    ================================================================= */
 
 .site-header {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+
     background: rgba(1, 1, 1, 0.75);
-    display: flex; align-items: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     z-index: 1000;
-    transition: transform 0.5s ease; /* Плавное скрытие */
+    transition: transform 0.5s ease;
 }
 
 .site-header.hidden {
@@ -73,67 +127,90 @@ html, body {
 }
 
 .header-inner {
-    width: 100%; padding: 0 5%;
-    display: flex; justify-content: center;
-    gap: 80px; align-items: center;
+    width: 100%;
+    padding: 0 5%;
+
+    display: flex;
+    justify-content: center;
+    gap: 80px;
 }
 
 .header-link {
-    font-family: 'Anticva', serif; font-size: 22px;
-    color: #ffffff; text-decoration: none;
-    letter-spacing: 1px; transition: 0.3s ease;
-    white-space: nowrap;
+    font-family: 'Anticva', serif;
+    font-size: 22px;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 1px;
 }
 
+/* hover эффект */
 .header-link:hover {
-    color: #ffffff;
-    text-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6);
+    text-shadow: 0 0 10px #ffffff;
 }
 
 /* =================================================================
-   4. ОСНОВНОЙ ИНТЕРФЕЙС ИГРЫ
+   ОСНОВНОЙ КОНТЕЙНЕР ИГРЫ
    ================================================================= */
 
 .game-container {
     position: relative;
-    width: 100vw; height: 75vw;
+    width: 100vw;
+    height: 75vw;
     background: url('фон.png') no-repeat center center;
     background-size: contain;
 }
 
+/* =================================================================
+   АЛХИМИЯ (ЛЕВАЯ ЧАСТЬ)
+   ================================================================= */
+
 .alchemy-section {
-    position: absolute; left: 9.5%; top: 30%;
-    width: 44%; height: 55%;
+    position: absolute;
+    left: 9.5%;
+    top: 30%;
+    width: 44%;
+    height: 55%;
 }
 
 .orbit-bg {
-    position: absolute; top: 11%; left: 11%;
-    width: 78%; height: 78%;
+    position: absolute;
+    top: 11%;
+    left: 11%;
+    width: 78%;
+    height: 78%;
     background: url('круг.png') no-repeat center center;
     background-size: contain;
 }
 
 .center-stand {
-    position: absolute; top: 50%; left: 50%;
-    width: 55%; height: 55%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 55%;
+    height: 55%;
+    transform: translate(-50%, -50%);
     background: url('стенд.png') no-repeat center center;
     background-size: contain;
-    transform: translate(-50%, -50%); z-index: 2;
 }
 
+/* вращение */
 .slots-rotator {
-    position: absolute; width: 100%; height: 100%;
-    animation: rotateCircle 25s linear infinite; z-index: 3;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rotateCircle 25s linear infinite;
 }
 
 .cell-slot {
-    position: absolute; width: 28%; height: 28%;
+    position: absolute;
+    width: 28%;
+    height: 28%;
     background: url('пустая_ячейка.png') no-repeat center center;
     background-size: contain;
-    margin-top: -14%; margin-left: -14%;
+    margin-top: -14%;
+    margin-left: -14%;
 }
 
-/* Расстановка слотов */
 .cell-slot:nth-child(1) { top: 11%; left: 50%; animation: counterRotate 25s linear infinite; }
 .cell-slot:nth-child(2) { top: 30.5%; left: 84%; animation: counterRotate 25s linear infinite; }
 .cell-slot:nth-child(3) { top: 69.5%; left: 84%; animation: counterRotate 25s linear infinite; }
@@ -141,107 +218,92 @@ html, body {
 .cell-slot:nth-child(5) { top: 69.5%; left: 16%; animation: counterRotate 25s linear infinite; }
 .cell-slot:nth-child(6) { top: 30.5%; left: 16%; animation: counterRotate 25s linear infinite; }
 
+/* =================================================================
+   МЕНЮ СПРАВА
+   ================================================================= */
+
 .menu-section {
-    position: absolute; right: 7%; top: 33%;
-    width: 38%; height: 48%;
+    position: absolute;
+    right: 7%;
+    top: 33%;
+    width: 38%;
+    height: 48%;
     background: url('блок_меню.png') no-repeat center center;
     background-size: contain;
 }
 
 .potions-grid {
-    position: absolute; top: 38%; left: 8%;
-    width: 84%; height: 54%;
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr); gap: 2%;
+    position: absolute;
+    top: 38%;
+    left: 8%;
+    width: 84%;
+    height: 54%;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2%;
 }
 
-.potion-item { position: relative; cursor: pointer; transition: transform 0.2s ease, filter 0.2s ease; }
-.potion-item:hover { transform: scale(1.05); filter: brightness(0.65); }
-.potion-item:active { filter: brightness(0.45); }
-.potion-item.locked { background: url('пустое_зелье.png') no-repeat center center; background-size: contain; cursor: default; }
-.potion-item.locked:hover { transform: none; filter: none; }
-.potion-item.active-potion { background: url('первое_зелье.png') no-repeat center center; background-size: contain; }
+.potion-item {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
 
+.potion-item:hover {
+    transform: scale(1.05);
+    filter: brightness(0.65);
+}
+
+.potion-item.locked {
+    background: url('пустое_зелье.png') no-repeat center center;
+    background-size: contain;
+    cursor: default;
+}
+
+.potion-item.locked:hover {
+    transform: none;
+    filter: none;
+}
+
+.potion-item.active-potion {
+    background: url('первое_зелье.png') no-repeat center center;
+    background-size: contain;
+}
+
+/* ленточка */
 .potion-ribbon {
-    position: absolute; top: -10%; left: 50%;
-    transform: translateX(-50%); width: 130%; height: 45%;
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130%;
+    height: 45%;
     background: url('подпись 1.png') no-repeat center center;
-    background-size: contain; z-index: 5; pointer-events: none;
+    background-size: contain;
 }
-.potion-item:hover .potion-ribbon { filter: brightness(1.54); }
-.potion-item:active .potion-ribbon { filter: brightness(2.22); }
 
 /* =================================================================
-   5. АНИМАЦИИ И МОДАЛЬНЫЕ ОКНА
+   АНИМАЦИИ
    ================================================================= */
 
-@keyframes rotateCircle { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes counterRotate { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-
-.reg-overlay, .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(6, 7, 19, 0.85);
-    backdrop-filter: blur(4px); display: flex;
-    justify-content: center; align-items: center;
-    z-index: 99999;
+@keyframes rotateCircle {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
-.reg-window {
-    width: 560px; height: 480px;
-    background: url('../регистрация/блок_вход.png') no-repeat center center;
-    background-size: contain; position: relative;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
+@keyframes counterRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
 }
 
-.input-container {
-    position: absolute; left: 50%; transform: translateX(-50%);
-    width: 480px; height: 90px;
-    background-size: contain; background-repeat: no-repeat;
-    background-position: center;
-}
-.name-container { top: 37%; background-image: url('../регистрация/имя.png'); }
-.profile-container { top: 57%; background-image: url('../регистрация/профиль.png'); }
+/* =================================================================
+   FULLSCREEN СОВМЕСТИМОСТЬ
+   ================================================================= */
 
-.magic-input {
-    width: 100%; height: 100%; background: transparent; border: none; outline: none;
-    font-family: 'Constantine', serif; font-size: 14px; color: #e2cfa7;
-    text-align: center; padding-top: 28px; padding-left: 20px; padding-right: 20px;
+body {
+    overscroll-behavior: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
-.magic-input::placeholder { font-family: 'Constantine', serif; color: rgba(226, 207, 167, 0.45); font-style: italic; }
-
-.btn-ready {
-    position: absolute; bottom: 9%; left: 50%;
-    transform: translateX(-50%); width: 210px; height: 65px;
-    background: url('../регистрация/готово.png') no-repeat center center;
-    background-size: contain; border: none; outline: none;
-    transition: filter 0.2s ease, transform 0.1s ease;
-}
-.btn-ready:hover { filter: brightness(0.8); }
-.btn-ready:active { transform: translateX(-50%) scale(0.96); }
-
-.leaderboard-window {
-    width: 600px; height: 700px;
-    background: url('../рейтинг/блок_рейтинг.png') no-repeat center center;
-    background-size: contain; position: relative;
-}
-
-.leaderboard-content {
-    position: absolute; top: 15%; bottom: 5%; left: 10%; right: 10%;
-    overflow-y: auto; padding-right: 10px; padding-top: 50px;
-    display: flex; flex-direction: column; gap: 15px;
-}
-.leaderboard-content::-webkit-scrollbar { width: 6px; }
-.leaderboard-content::-webkit-scrollbar-thumb { background: #555; border-radius: 3px; }
-
-.rank-card {
-    width: 100%; height: 90px; background-size: contain;
-    background-repeat: no-repeat; background-position: center;
-    display: flex; flex-direction: column; justify-content: center;
-    align-items: center; color: #ffffff; font-family: 'Anticva', serif;
-    margin-bottom: 15px;
-}
-.rank-gold { background-image: url('первое_место.png'); padding-top: 10px; }
-.rank-silver { background-image: url('второе_место.png'); padding-top: 5px; }
-.rank-default { background-image: url('обычное_место.png'); padding-top: 0px; }
-.rank-name { font-size: 20px; text-shadow: 1px 1px 2px #000; }
-.rank-time { font-size: 14px; opacity: 0.9; text-shadow: 1px 1px 2px #000; }
