@@ -84,3 +84,27 @@ function createLeaf(x, y) {
     leaf.remove();
   }, 1000);
 }
+
+/* ================= РАСПИСАНИЕ МОДАЛКА ================= */
+
+const scheduleBtn = document.getElementById("open-leaderboard");
+const scheduleModal = document.getElementById("scheduleModal");
+const scheduleContent = document.querySelector(".schedule-content");
+
+/* открыть */
+scheduleBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  scheduleModal.classList.add("active");
+});
+
+/* закрытие по клику вне картинки */
+scheduleModal.addEventListener("click", (e) => {
+  if (!scheduleContent.contains(e.target)) {
+    scheduleModal.classList.remove("active");
+  }
+});
+
+/* защита от закрытия при клике по изображению */
+scheduleContent.addEventListener("click", (e) => {
+  e.stopPropagation();
+});
