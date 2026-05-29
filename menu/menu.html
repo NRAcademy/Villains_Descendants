@@ -2,129 +2,68 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-
-    <!-- =================================================================
-         MOBILE / FULLSCREEN НАСТРОЙКИ
-         ================================================================= -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#060713">
-
+<meta name="viewport" content="width=1350, user-scalable=no">
     <title>Зельеварение — Меню</title>
-
     <link rel="stylesheet" href="menu.css">
 </head>
-
 <body>
+<!-- ================= ЗАГРУЗОЧНЫЙ ЭКРАН ================= -->
 
-<!-- =================================================================
-     ЭКРАН ЗАГРУЗКИ
-     ================================================================= -->
 <div id="loading-screen">
-
-    <div class="coffins-container">
-        <img src="../загрузка/первый_гроб.png" class="coffin c1" alt="coffin1">
-        <img src="../загрузка/второй_гроб.png" class="coffin c2" alt="coffin2">
-        <img src="../загрузка/третий_гроб.png" class="coffin c3" alt="coffin3">
+    <div class="coffins-wrapper">
+        <img src="../загрузка/первый_гроб.png" class="coffin active" id="coffin-1">
+        <img src="../загрузка/второй_гроб.png" class="coffin dark" id="coffin-2">
+        <img src="../загрузка/третий_гроб.png" class="coffin dark" id="coffin-3">
     </div>
-
-    <div class="loading-text">
-        Поверни телефон
-    </div>
-
+    <div id="loading-text"></div>
 </div>
 
-<!-- =================================================================
-     ШАПКА
-     ================================================================= -->
-<header class="site-header" role="banner">
+    <header class="site-header" role="banner">
+        <nav class="header-inner" aria-label="Главное меню">
+            <a class="header-link" href="https://nracademy.github.io/Villains_Descendants/Система%20обучения/меню/lessons.html">НАЗАД</a>
+            <a class="header-link" id="open-leaderboard" href="#">РАСПИСАНИЕ</a>
+            <a class="header-link" href="https://vk.com/villains_descendants" target="_blank" rel="noopener noreferrer">ПРАВИЛА</a>
+            <a class="header-link" href="https://vk.com/veneno_bianco" target="_blank" rel="noopener noreferrer">ПОМОЩЬ</a>
+        </nav>
+    </header>
 
-    <nav class="header-inner" aria-label="Главное меню">
-
-        <a class="header-link"
-           href="../../Система%20обучения/меню/lessons.html">
-            НАЗАД
-        </a>
-
-        <a class="header-link" href="#" id="open-schedule">
-            РАСПИСАНИЕ
-        </a>
-
-        <a class="header-link"
-           href="https://vk.com/villains_descendants"
-           target="_blank">
-            ПРАВИЛА
-        </a>
-
-        <a class="header-link"
-           href="https://vk.com/veneno_bianco"
-           target="_blank">
-            ПОМОЩЬ
-        </a>
-
-    </nav>
-
-</header>
-
-<!-- =================================================================
-     ОСНОВНОЙ КОНТЕНТ
-     ================================================================= -->
-<div class="game-container">
-
-    <!-- АЛХИМИЯ -->
-    <div class="alchemy-section">
-
-        <div class="orbit-bg"></div>
-        <div class="center-stand"></div>
-
-        <div class="slots-rotator">
-
-            <div class="cell-slot"></div>
-            <div class="cell-slot"></div>
-            <div class="cell-slot"></div>
-            <div class="cell-slot"></div>
-            <div class="cell-slot"></div>
-            <div class="cell-slot"></div>
-
-        </div>
-
-    </div>
-
-    <!-- МЕНЮ ЗЕЛИЙ -->
-    <div class="menu-section">
-
-        <div class="potions-grid">
-
-            <div class="potion-item active-potion"
-                 id="potion-talkative">
-                <div class="potion-ribbon"></div>
+    <main class="game-container">
+        <section class="alchemy-section" aria-label="Зона алхимии">
+            <div class="orbit-bg"></div>
+            <div class="center-stand"></div>
+            
+            <div class="slots-rotator">
+                <!-- Лучше использовать цикл в JS для генерации, но если верстка статична: -->
+                <div class="cell-slot"></div>
+                <div class="cell-slot"></div>
+                <div class="cell-slot"></div>
+                <div class="cell-slot"></div>
+                <div class="cell-slot"></div>
+                <div class="cell-slot"></div>
             </div>
+        </section>
 
-            <div class="potion-item locked"></div>
-            <div class="potion-item locked"></div>
-            <div class="potion-item locked"></div>
-            <div class="potion-item locked"></div>
-            <div class="potion-item locked"></div>
-            <div class="potion-item locked"></div>
-            <div class="potion-item locked"></div>
-            <div class="potion-item locked"></div>
-            <div class="potion-item locked"></div>
-            <div class="potion-item locked"></div>
-            <div class="potion-item locked"></div>
+        <section class="menu-section" aria-label="Список зелий">
+            <div class="potions-grid">
+                <div class="potion-item active-potion" id="potion-talkative">
+                    <div class="potion-ribbon"></div>
+                </div>
+                <!-- Можно сократить повторения, если использовать JS -->
+                <div class="potion-item locked"></div>
+                <div class="potion-item locked"></div>
+                <div class="potion-item locked"></div>
+                <div class="potion-item locked"></div>
+                <div class="potion-item locked"></div>
+                <div class="potion-item locked"></div>
+                <div class="potion-item locked"></div>
+                <div class="potion-item locked"></div>
+                <div class="potion-item locked"></div>
+                <div class="potion-item locked"></div>
+                <div class="potion-item locked"></div>
+            </div>
+        </section>
+    </main>
 
-        </div>
-
-    </div>
-
-</div>
-
-<!-- =================================================================
-     JS
-     ================================================================= -->
-<script src="menu.js"></script>
-
+    <script src="menu.js"></script>
 </body>
 </html>
