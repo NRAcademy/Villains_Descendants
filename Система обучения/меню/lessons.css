@@ -441,26 +441,26 @@ img:hover,
 
 /* кнопки */
 .rules-btn {
-  width: 52px; /* меньше */
+  width: 40px; /* меньше */
 
   transition:
     transform 0.2s ease,
     filter 0.2s ease;
 
-  /* рыжевато-коричневый */
+  /* перекраска в коричневый */
   filter:
     sepia(1)
-    saturate(6)
-    hue-rotate(345deg)
-    brightness(0.9);
+    saturate(4)
+    hue-rotate(340deg)
+    brightness(0.7);
 }
 
 .rules-btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.06);
 
   filter:
     sepia(1)
-    saturate(6)
-    hue-rotate(345deg)
-    brightness(1);
+    saturate(4)
+    hue-rotate(340deg)
+    brightness(0.85);
 }
