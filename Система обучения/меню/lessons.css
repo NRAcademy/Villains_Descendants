@@ -320,12 +320,14 @@ img:hover,
 .schedule-modal {
   position: fixed;
   inset: 0;
+
   display: none;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.75);
+
+  background: rgba(0, 0, 0, 0.45);
+
   z-index: 20000;
-  overflow: hidden;
 }
 
 .schedule-modal.active {
@@ -333,17 +335,9 @@ img:hover,
 }
 
 /* картинка */
-.schedule-content {
-  position: relative;
-  z-index: 2;
-  animation: schedulePop 0.25s ease-out;
-}
-
 .schedule-content img {
   max-width: 90vw;
-  max-height: 85vh;
-  border-radius: 12px;
-  box-shadow: 0 0 40px rgba(170, 120, 255, 0.45);
+  max-height: 90vh;
 }
 
 /* анимация появления */
@@ -355,44 +349,5 @@ img:hover,
   to {
     transform: scale(1);
     opacity: 1;
-  }
-}
-
-/* ================= ЗВЁЗДНЫЙ КЛАСТЕР ================= */
-
-.schedule-stars {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.schedule-stars::before,
-.schedule-stars::after {
-  content: "";
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  background-image:
-    radial-gradient(#ffffff 1px, transparent 1px),
-    radial-gradient(rgba(160, 120, 255, 0.7) 1px, transparent 1px);
-
-  background-size: 60px 60px, 90px 90px;
-  animation: starsMove 25s linear infinite;
-  opacity: 0.35;
-}
-
-.schedule-stars::after {
-  transform: rotate(45deg);
-  opacity: 0.2;
-  animation-duration: 40s;
-}
-
-@keyframes starsMove {
-  from {
-    transform: translate(0, 0);
-  }
-  to {
-    transform: translate(-220px, -220px);
   }
 }
