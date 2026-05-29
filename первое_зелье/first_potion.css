@@ -1,4 +1,5 @@
 /* ================= ПОДКЛЮЧЕНИЕ ШРИФТА ================= */
+
 @font-face {
     font-family: 'Anticva';
     src: url('Anticva.otf') format('opentype');
@@ -6,72 +7,143 @@
     font-style: normal;
 }
 
-/* ================= ГЛОБАЛЬНАЯ ФИКСАЦИЯ КУРСОРA ================= */
-html, body, *, 
-a, a:hover, 
-button, button:hover, 
-img, img:hover, 
-.cell-slot, .cell-slot:hover,
-.chosen-slot, .chosen-slot:hover,
-.header-link, .header-link:hover {
-    cursor: url('../menu/custom-cursor.png') 0 0, url('/menu/custom-cursor.png') 0 0, url('../custom-cursor.png') 0 0, auto !important;
+
+/* ================= ГЛОБАЛЬНЫЙ КУРСОР ================= */
+
+html,
+body,
+*,
+a,
+a:hover,
+button,
+button:hover,
+img,
+img:hover,
+.cell-slot,
+.cell-slot:hover,
+.chosen-slot,
+.chosen-slot:hover,
+.header-link,
+.header-link:hover {
+
+    cursor:
+        url('../menu/custom-cursor.png') 0 0,
+        url('/menu/custom-cursor.png') 0 0,
+        url('../custom-cursor.png') 0 0,
+        auto !important;
 }
 
-html, body {
+
+/* ================= ОСНОВА ================= */
+
+html,
+body {
+
     margin: 0;
     padding: 0;
+
     width: 100vw;
     height: 100vh;
+
     overflow: hidden;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     background: #060713;
 }
 
 body {
     touch-action: manipulation;
+    font-family: sans-serif;
 }
 
-/* ==== ШАПКА ==== */
-.site-header {
+
+/* ================= ВИДЕО ================= */
+
+#bg-video {
+
     position: fixed;
+
     top: 0;
     left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    object-fit: cover;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+/* ================= ШАПКА ================= */
+
+.site-header {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
     width: 100%;
-    height: 80px; 
+    height: 80px;
+
     background: rgba(1, 1, 1, 0.75);
+
     display: flex;
     align-items: center;
-    z-index: 1000; 
+
+    z-index: 1000;
 }
 
 .header-inner {
+
     width: 100%;
+
     padding: 0 5%;
+
     display: flex;
     justify-content: center;
-    gap: 80px;
     align-items: center;
+
+    gap: 80px;
 }
 
 .header-link {
-    font-family: 'Anticva', serif; 
+
+    font-family: 'Anticva', serif;
+
     font-size: 22px;
-    color: #ffffff; 
-    text-decoration: none; 
-    letter-spacing: 1px; 
-    transition: 0.3s ease;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    letter-spacing: 1px;
+
     white-space: nowrap;
+
+    transition: 0.3s ease;
 }
 
 .header-link:hover {
-    color: #ffffff; 
-    text-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6);
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 10px #ffffff,
+        0 0 20px rgba(255,255,255,0.6);
 }
 
-/* Главный контейнер игры */
+
+/* ================= ГЛАВНЫЙ КОНТЕЙНЕР ================= */
+
 .game-container {
+
     position: relative;
 
     width: 1920px;
@@ -79,62 +151,97 @@ body {
 
     flex-shrink: 0;
 
-    z-index: 10;
+    overflow: hidden;
 
     background: transparent !important;
-    overflow: hidden;
+
+    z-index: 10;
 }
 
-/* ================= ЛЕВАЯ ЧАСТЬ: АЛХИМИЧЕСКИЙ КРУГ ================= */
+
+/* ================= ЛЕВАЯ ЧАСТЬ ================= */
+
 .alchemy-section {
+
     position: absolute;
+
     left: 9.5%;
     top: 30%;
+
     width: 44%;
     height: 55%;
 }
 
+
 .orbit-bg {
+
     position: absolute;
+
     top: 11%;
     left: 11%;
+
     width: 78%;
     height: 78%;
+
     background: url('круг.png') no-repeat center center;
     background-size: contain;
 }
 
+
 .center-stand {
+
     position: absolute;
+
     top: 50%;
     left: 50%;
+
     width: 55%;
     height: 55%;
+
+    transform: translate(-50%, -50%);
+
     background: url('стенд.png') no-repeat center center;
     background-size: contain;
-    transform: translate(-50%, -50%);
+
     z-index: 2;
 }
 
-/* Финальный флакон зелья при Успехе */
+
+/* ================= ФИНАЛЬНОЕ ЗЕЛЬЕ ================= */
+
 .final-potion-result {
+
     position: absolute;
+
     top: 50%;
     left: 50%;
+
     width: 50%;
     height: 70%;
+
+    transform: translate(-50%, -60%);
+
     background: url('../зелье/первое_зелье.png') no-repeat center center;
     background-size: contain;
-    transform: translate(-50%, -60%);
+
     z-index: 10;
-    animation: potionBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+
+    animation:
+        potionBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
+
+/* ================= ВРАЩЕНИЕ ================= */
+
 .slots-rotator {
+
     position: absolute;
+
     width: 100%;
     height: 100%;
+
     animation: rotateCircle 25s linear infinite;
+
     z-index: 3;
 }
 
@@ -142,317 +249,555 @@ body {
     animation-play-state: paused !important;
 }
 
+
+/* ================= ЯЧЕЙКИ ================= */
+
 .cell-slot {
+
     position: absolute;
-    width: 28%;  
+
+    width: 28%;
     height: 28%;
-    margin-top: -14%; 
-    margin-left: -14%; 
+
+    margin-top: -14%;
+    margin-left: -14%;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     transition: transform 0.2s ease;
+
+    animation: counterRotate 25s linear infinite;
 }
 
+.cell-slot.frozen {
+    animation-play-state: paused !important;
+}
+
+
 .cell-slot::before {
+
     content: '';
+
     position: absolute;
+
     top: 0;
     left: 0;
+
     width: 100%;
     height: 100%;
+
     background: url('ячейка.png') no-repeat center center;
     background-size: contain;
+
     z-index: 1;
+
     transition: filter 0.2s ease;
 }
 
+
 .ingredient-img {
+
     width: 75%;
     height: 75%;
+
     object-fit: contain;
+
     position: relative;
+
     z-index: 2;
+
     pointer-events: none;
 }
 
-.cell-slot.grayscale::before { filter: brightness(0.4) grayscale(100%); }
-.cell-slot.grayscale:hover::before { filter: brightness(1) grayscale(0%); }
-.cell-slot.grayscale:hover { transform: scale(1.05); }
-.cell-slot.active-selected::before { filter: brightness(1) grayscale(0%) !important; }
 
-.cell-slot:nth-child(1) { top: 11%; left: 50%; }
-.cell-slot:nth-child(2) { top: 30.5%; left: 84%; }
-.cell-slot:nth-child(3) { top: 69.5%; left: 84%; }
-.cell-slot:nth-child(4) { top: 89%; left: 50%; }
-.cell-slot:nth-child(5) { top: 69.5%; left: 16%; }
-.cell-slot:nth-child(6) { top: 30.5%; left: 16%; }
+/* ================= СОСТОЯНИЯ ================= */
 
-.cell-slot { animation: counterRotate 25s linear infinite; }
-.cell-slot.frozen { animation-play-state: paused !important; }
+.cell-slot.grayscale::before {
+    filter: brightness(0.4) grayscale(100%);
+}
 
-/* ================= ПРАВАЯ ЧАСТЬ: МЕНЮ ЗЕЛЬЕВАРЕНИЯ ================= */
+.cell-slot.grayscale:hover::before {
+    filter: brightness(1) grayscale(0%);
+}
+
+.cell-slot.grayscale:hover {
+    transform: scale(1.05);
+}
+
+.cell-slot.active-selected::before {
+    filter: brightness(1) grayscale(0%) !important;
+}
+
+
+/* ================= ПОЗИЦИИ ================= */
+
+.cell-slot:nth-child(1) {
+    top: 11%;
+    left: 50%;
+}
+
+.cell-slot:nth-child(2) {
+    top: 30.5%;
+    left: 84%;
+}
+
+.cell-slot:nth-child(3) {
+    top: 69.5%;
+    left: 84%;
+}
+
+.cell-slot:nth-child(4) {
+    top: 89%;
+    left: 50%;
+}
+
+.cell-slot:nth-child(5) {
+    top: 69.5%;
+    left: 16%;
+}
+
+.cell-slot:nth-child(6) {
+    top: 30.5%;
+    left: 16%;
+}
+
+
+/* ================= ПРАВАЯ ЧАСТЬ ================= */
+
 .menu-section {
+
     position: absolute;
+
     right: 7%;
     top: 33%;
+
     width: 38%;
     height: 48%;
+
     background: url('блок_первое_зелье.png') no-repeat center center;
     background-size: contain;
 }
 
+
+/* ================= СЛОТЫ ================= */
+
 .ingredients-slots-row {
+
     position: absolute;
-    top: 57%; 
+
+    top: 57%;
     left: 10%;
+
     width: 80%;
     height: 18%;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+
 .chosen-slot {
-    width: 21%;
-    height: 100%;
-    background: url('../ингредиенты/ингредиент_пустой.png') no-repeat center center;
+
+    width: 110px;
+    height: 110px;
+
+    flex-shrink: 0;
+
+    background: url('../ингредиенты/ингредиент_пустой.png')
+        no-repeat center center;
+
     background-size: contain;
+
     transition: filter 0.2s ease;
 }
 
-.chosen-slot:hover { filter: brightness(0.75); }
+.chosen-slot:hover {
+    filter: brightness(0.75);
+}
 
-/* ОФОРМЛЕНИЕ ТАЙМЕРА И ИТОГОВЫХ СТАТУСОВ */
+
+/* ================= ТАЙМЕР ================= */
+
 .game-timer {
+
     position: absolute;
+
     bottom: 6%;
     left: 50%;
+
     transform: translateX(-50%);
+
     font-family: 'Anticva', serif;
-    font-size: 54px;
+
+    font-size: 58px;
+
     color: #ffffff;
+
     letter-spacing: 2px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.5);
+
     user-select: none;
+
     white-space: nowrap;
 }
 
+
 .game-timer.win-status {
+
     color: #26d07c !important;
-    text-shadow: 0 0 15px rgba(38, 208, 124, 0.6) !important;
+
+    text-shadow:
+        0 0 15px rgba(38,208,124,0.6) !important;
 }
 
 .game-timer.lose-status {
+
     color: #ff3b30 !important;
-    text-shadow: 0 0 15px rgba(255, 59, 48, 0.6) !important;
+
+    text-shadow:
+        0 0 15px rgba(255,59,48,0.6) !important;
 }
 
-/* ================= ЭКРАНЫ ОВЕРЛЕЕВ (ОТСЧЕТ И ЗАГРУЗКА) ================= */
+
+/* ================= КНОПКА ГОТОВО ================= */
+
+.ready-btn {
+
+    position: absolute;
+
+    bottom: -70px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 240px;
+    height: 80px;
+
+    background: url('../первое_зелье/готово.png')
+        no-repeat center center;
+
+    background-size: contain;
+
+    border: none;
+
+    cursor: pointer;
+
+    z-index: 100;
+
+    transition: transform 0.1s ease;
+}
+
+.ready-btn:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+
+/* ================= COUNTDOWN ================= */
+
 .countdown-overlay {
+
     position: fixed;
+
     top: 0;
     left: 0;
+
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.85);
+
+    background: rgba(0,0,0,0.85);
+
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 99999; 
+
+    z-index: 99999;
+
     transition: opacity 0.5s ease;
 }
 
+
 .countdown-number {
+
     font-family: 'Anticva', serif;
+
     font-size: 120px;
+
     color: #ffffff;
+
     text-shadow: 0 0 30px #ffffff;
+
     animation: pulseCount 1s ease-in-out infinite;
 }
 
+
+/* ================= LOADING ================= */
+
 .loading-overlay {
+
     position: fixed;
+
     top: 0;
     left: 0;
+
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.88);
+
+    background: rgba(0,0,0,0.88);
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     z-index: 99995;
+
     opacity: 0;
     pointer-events: none;
+
     transition: opacity 0.4s ease;
 }
 
 .loading-overlay.active {
+
     opacity: 1;
+
     pointer-events: auto;
 }
 
+
 .coffins-container {
+
     display: flex;
     justify-content: center;
+
     gap: 25px;
+
     margin-bottom: 25px;
 }
 
+
 .coffin {
+
     width: 75px;
     height: 140px;
+
     object-fit: contain;
-    filter: brightness(0.25); 
-    transition: filter 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    filter: brightness(0.25);
+
+    transition: filter 0.25s cubic-bezier(0.4,0,0.2,1);
 }
 
 .coffin.active-coffin {
     filter: brightness(1) !important;
 }
 
+
 .loading-title-text {
+
     font-family: 'Anticva', serif;
+
     font-size: 28px;
+
     color: #ffffff;
+
     letter-spacing: 2px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.4);
+
     min-height: 40px;
 }
 
-/* Оверлей для гифки провала */
+
+/* ================= ПРОВАЛ ================= */
+
 .fail-gif-overlay {
+
     position: absolute;
+
     top: 0;
     left: 0;
+
     width: 100%;
     height: 100%;
+
     z-index: 90;
+
     pointer-events: none;
+
     background-size: cover;
     background-position: center;
+
     opacity: 0;
 }
+
 .fail-gif-overlay.run-animation {
     animation: fadeExplosion 2.5s ease-in-out forwards;
 }
 
-/* ================= МОДАЛЬНОЕ ОКНО "ИНФОРМАЦИЯ" ================= */
 
-/* Затемняющий оверлей на весь экран */
+/* ================= МОДАЛКА ================= */
+
 .info-modal-overlay {
+
     position: fixed;
+
     top: 0;
     left: 0;
+
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.65); /* Степень затемнения фонда */
-    z-index: 100000;                 /* Поверх игры и шапки */
+
+    background: rgba(0,0,0,0.65);
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    z-index: 100000;
+
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease-in-out; /* Плавное появление */
+
+    transition: opacity 0.5s ease-in-out;
 }
 
-/* Класс активации модального окна */
 .info-modal-overlay.active {
+
     opacity: 1;
+
     pointer-events: auto;
 }
 
-/* Карточка свитком/информацией */
+
 .info-card-body {
+
+    position: relative;
+
     width: 1200px;
     height: 850px;
+
     background: url('информация.png') no-repeat center center;
     background-size: contain;
-    position: relative;              /* ОБЯЗАТЕЛЬНО: чтобы кнопка позиционировалась от углов карточки */
+
     transform: scale(0.9);
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    transition:
+        transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
 }
 
 .info-modal-overlay.active .info-card-body {
-    transform: scale(1);             /* Эффект легкого всплытия */
+    transform: scale(1);
 }
 
-/* Кнопка закрытия справа на свитке */
+
+/* ================= КНОПКА ЗАКРЫТИЯ ================= */
+
 .info-close-btn {
+
     position: absolute;
+
     top: 40px;
     right: 40px;
 
     width: 230px;
     height: 75px;
+
     background: url('кнопка.png') no-repeat center center;
     background-size: contain;
-    cursor: pointer;
+
     border: none;
     outline: none;
-    transition: transform 0.2s ease, filter 0.2s ease;
-    z-index: 10;                     /* Чтобы кнопка гарантированно была поверх картинки */
+
+    z-index: 10;
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
 }
 
-/* Интерактивность для кнопки */
 .info-close-btn:hover {
+
     transform: scale(1.05);
+
     filter: brightness(1.15);
 }
 
 .info-close-btn:active {
+
     transform: scale(0.95);
+
     filter: brightness(0.85);
 }
 
-#bg-video {
+
+/* ================= WAIT MODAL ================= */
+
+.wait-modal-overlay {
+
     position: fixed;
+
     top: 0;
     left: 0;
-    width: 100vw;   /* Строго 100% ширины экрана */
-    height: 100vh;  /* Строго 100% высоты экрана */
-    object-fit: cover; /* Видео аккуратно подстроится под размеры без искажения пропорций */
-    pointer-events: none; /* Клики будут проходить насквозь к игре */
-    z-index: 1; /* Оставляем его на фоне под игровыми элементами */
-}
 
-/* Оверлей */
-.wait-modal-overlay {
-    position: fixed;
-    top: 0; left: 0; 
-    width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.85); /* Чуть темнее для контраста */
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0,0,0,0.85);
+
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 99999; /* Поверх всего */
+
+    z-index: 99999;
 }
+
 
 .wait-modal-content {
+
     position: relative;
-    text-align: center;
-    width: 420px; /* размер окна */
+
+    width: 420px;
+
     max-width: 80vw;
+
+    text-align: center;
 }
 
-/* Изображение внутри */
+
 .wait-bg {
+
     width: 100%;
+
     height: auto;
+
     display: block;
 }
 
+
+/* ================= КНОПКА ПОНЯТНО ================= */
+
 .understand-btn {
+
     position: absolute;
+
     bottom: 20px;
     left: 50%;
+
     transform: translateX(-50%);
 
     width: 180px;
     height: 55px;
 
-    background: url('../уведомление/понятно.png') no-repeat center center;
+    background: url('../уведомление/понятно.png')
+        no-repeat center center;
+
     background-size: contain;
 
     border: none;
@@ -460,79 +805,108 @@ body {
 
     cursor: pointer;
 
-    transition: filter 0.2s ease,
-                transform 0.15s ease;
+    transition:
+        filter 0.2s ease,
+        transform 0.15s ease;
 
     -webkit-tap-highlight-color: transparent;
 }
 
-/* Наведение */
+
 .understand-btn:hover {
     filter: brightness(0.85);
 }
 
-/* Нажатие */
 .understand-btn:active {
+
     filter: brightness(0.65);
-    transform: translateX(-50%) scale(0.96);
+
+    transform:
+        translateX(-50%)
+        scale(0.96);
 }
 
-/* Убираем красную/синюю обводку */
 .understand-btn:focus,
 .understand-btn:focus-visible {
+
     outline: none;
+
     box-shadow: none;
 }
 
+
 /* ================= АНИМАЦИИ ================= */
+
 @keyframes rotateCircle {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
+
 @keyframes counterRotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(-360deg); }
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-360deg);
+    }
 }
+
 @keyframes pulseCount {
-    0% { transform: scale(0.6); opacity: 0; }
-    20% { opacity: 1; }
-    80% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1.2); opacity: 0; }
-}
-@keyframes potionBounce {
 
     0% {
-        transform: translate(-50%, -60%) scale(0);
+        transform: scale(0.6);
         opacity: 0;
     }
 
-    60% {
-        transform: translate(-50%, -60%) scale(1.15);
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        transform: scale(1.1);
         opacity: 1;
     }
 
     100% {
-        transform: translate(-50%, -60%) scale(1);
-        opacity: 1;
+        transform: scale(1.2);
+        opacity: 0;
     }
 }
 
-/* Стиль для кнопки готово */
-.ready-btn {
-    position: absolute;
-    bottom: -158px; /* Регулируйте отступ от низа */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px; /* Укажите ширину вашей картинки */
-    height: 60px; /* Укажите высоту вашей картинки */
-    background: url('../первое_зелье/готово.png') no-repeat center center;
-    background-size: contain;
-    border: none;
-    cursor: pointer;
-    z-index: 100; /* Чтобы кнопка была поверх всего */
-    transition: transform 0.1s ease;
-}
+@keyframes potionBounce {
 
-.ready-btn:active {
-    transform: translateX(-50%) scale(0.95); /* Эффект нажатия */
+    0% {
+
+        transform:
+            translate(-50%, -60%)
+            scale(0);
+
+        opacity: 0;
+    }
+
+    60% {
+
+        transform:
+            translate(-50%, -60%)
+            scale(1.15);
+
+        opacity: 1;
+    }
+
+    100% {
+
+        transform:
+            translate(-50%, -60%)
+            scale(1);
+
+        opacity: 1;
+    }
 }
