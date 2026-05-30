@@ -536,7 +536,7 @@ html, body {
 /* ================= КНОПКА ГОТОВО ================= */
 .ready-btn {
     position: absolute;
-    bottom: -200px;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 200px;
@@ -683,7 +683,7 @@ html, body {
     /* Кнопка ГОТОВО — под таймером (таймер на bottom:12%, кнопка чуть ниже) */
     .ready-btn {
         position: absolute;
-        bottom: -8%;
+        bottom: 0;
         left: 50%;
         transform: translateX(-50%);
         width: clamp(110px, 18vh, 180px);
@@ -780,7 +780,7 @@ html, body {
         font-size: clamp(14px, 3.5vh, 24px);
     }
     .ready-btn {
-        bottom: -8%;
+        bottom: 0;
         width: clamp(78px, 13vh, 115px);
         height: clamp(24px, 5vh, 36px);
     }
