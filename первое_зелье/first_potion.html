@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Зельеварение — Болтливое зелье</title>
     <link rel="stylesheet" href="first_potion.css">
 </head>
@@ -92,11 +92,34 @@
         </div>
     </div>
 
-    <div class="rotate-overlay">
-  <p>Поверни устройство горизонтально</p>
-</div>
-
-
     <script src="first_potion.js"></script>
+
+    <!-- Overlay: поверни экран (portrait) -->
+    <div class="rotate-overlay" id="rotate-overlay">
+        <p>Поверни устройство горизонтально</p>
+    </div>
+
+    <script>
+    (function () {
+        var header = document.querySelector('.site-header');
+        var gc = document.querySelector('.game-container');
+        if (!header) return;
+        var sy = 0, sx = 0, T = 30;
+        document.addEventListener('touchstart', function(e){ sy = e.touches[0].clientY; sx = e.touches[0].clientX; }, {passive:true});
+        document.addEventListener('touchend', function(e){
+            var dy = e.changedTouches[0].clientY - sy;
+            var dx = e.changedTouches[0].clientX - sx;
+            if (Math.abs(dy) < T || Math.abs(dy) < Math.abs(dx)) return;
+            var hidden = header.classList.contains('header-hidden');
+            if (dy < 0 && !hidden) {
+                header.classList.add('header-hidden');
+                if (gc) { gc.style.height='100vh'; gc.style.marginTop='0'; }
+            } else if (dy > 0 && hidden) {
+                header.classList.remove('header-hidden');
+                if (gc) { gc.style.height=''; gc.style.marginTop=''; }
+            }
+        }, {passive:true});
+    })();
+    </script>
 </body>
 </html>
