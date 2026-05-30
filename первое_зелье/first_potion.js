@@ -128,7 +128,7 @@ function initGame(vkID, potionID) {
 
     let chosenSlots   = [null, null, null, null];
     let isGameActive  = false;
-    const startTime   = 30;
+    const startTime   = 45;
     let timeLeft      = startTime;
     let countdownInterval = null;
 
