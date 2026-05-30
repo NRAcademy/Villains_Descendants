@@ -609,6 +609,10 @@ window.location.href = '../menu/menu.html';
 
             if (chosenSlots.includes(type)) return;
 
+            // Лимит: не более 4 выбранных ячеек
+            const filledCount = chosenSlots.filter(s => s !== null).length;
+            if (filledCount >= 4) return;
+
             const freeIndex =
                 chosenSlots.findIndex(item => item === null);
 
@@ -774,6 +778,7 @@ window.location.href = '../menu/menu.html';
             lastAppleTime = Date.now();
         }
     });
+
 }
 
 // Функция для записи результата в LocalStorage
