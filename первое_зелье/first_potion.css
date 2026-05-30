@@ -445,10 +445,14 @@ html, body {
     transform: translateX(-50%);
     width: 180px;
     height: 55px;
+    background-color: transparent;
     background: url('../уведомление/понятно.png') no-repeat center center;
     background-size: contain;
     border: none;
     outline: none;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
     cursor: pointer;
     transition: filter 0.2s ease, transform 0.15s ease;
     -webkit-tap-highlight-color: transparent;
@@ -500,11 +504,15 @@ html, body {
     transform: translateX(-50%);
     width: 180px;
     height: 55px;
+    background-color: transparent;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     border: none;
     outline: none;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
     cursor: pointer;
     transition: filter 0.2s ease, transform 0.15s ease;
     -webkit-tap-highlight-color: transparent;
@@ -527,14 +535,19 @@ html, body {
 /* ================= КНОПКА ГОТОВО ================= */
 .ready-btn {
     position: absolute;
-    bottom: -316px;
+    bottom: -158px;
     left: 50%;
     transform: translateX(-50%);
     width: 200px;
     height: 60px;
+    background-color: transparent;
     background: url('../первое_зелье/готово.png') no-repeat center center;
     background-size: contain;
     border: none;
+    outline: none;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
     cursor: pointer;
     z-index: 100;
     transition: transform 0.1s ease;
@@ -620,7 +633,6 @@ html, body {
         align-items: center;
         justify-content: center;
         gap: 2vw;
-        overflow-y: auto;
     }
 
     /* Алхимический круг */
@@ -667,10 +679,10 @@ html, body {
         transform: translateX(-50%);
     }
 
-    /* Кнопка ГОТОВО */
+    /* Кнопка ГОТОВО — под таймером (таймер на bottom:12%, кнопка чуть ниже) */
     .ready-btn {
         position: absolute;
-        bottom: calc(1% - 10px);
+        bottom: -8%;
         left: 50%;
         transform: translateX(-50%);
         width: clamp(110px, 18vh, 180px);
@@ -768,6 +780,7 @@ html, body {
         font-size: clamp(14px, 3.5vh, 24px);
     }
     .ready-btn {
+        bottom: -8%;
         width: clamp(78px, 13vh, 115px);
         height: clamp(24px, 5vh, 36px);
     }
