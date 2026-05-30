@@ -3,6 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script>
+        // Масштабирование для мобильных в ландшафте
+        (function () {
+            function applyScale() {
+                var isLandscape = window.innerWidth > window.innerHeight;
+                var isMobile = window.innerWidth <= 1024 || window.innerHeight <= 500;
+                if (isLandscape && isMobile) {
+                    var DESIGN_W = 1280;
+                    var scale = window.innerWidth / DESIGN_W;
+                    document.documentElement.style.cssText =
+                        'width:' + DESIGN_W + 'px;height:' + Math.round(DESIGN_W * window.innerHeight / window.innerWidth) + 'px;';
+                    document.body.style.cssText =
+                        'width:' + DESIGN_W + 'px;' +
+                        'transform-origin:top left;' +
+                        'transform:scale(' + scale + ');' +
+                        '--mobile-scale:' + scale + ';';
+                } else {
+                    document.documentElement.style.cssText = '';
+                    document.body.style.cssText = '';
+                }
+            }
+            applyScale();
+            window.addEventListener('resize', applyScale);
+            window.addEventListener('orientationchange', function () {
+                setTimeout(applyScale, 100);
+            });
+        })();
+    </script>
     <title>Зельеварение — Болтливое зелье</title>
     <link rel="stylesheet" href="first_potion.css">
 </head>
