@@ -115,10 +115,10 @@ document.addEventListener("touchend", (e) => {
 
 (function () {
     const pages = [
-        "menu/справочник/страница 1.png",
-        "menu/справочник/страница 2.png",
-        "menu/справочник/страница 3.png",
-        "menu/справочник/страница 4.png"
+        "..menu/справочник/страница 1.png",
+        "..menu/справочник/страница 2.png",
+        "..menu/справочник/страница 3.png",
+        "..menu/справочник/страница 4.png"
     ];
 
     let currentPage = 0;
