@@ -570,57 +570,52 @@ html, body {
     /* Алхимический круг: квадратный, чтобы орбита не деформировалась.
        Центры ячеек лежат на контуре круга — это работает только если
        alchemy-section остаётся квадратной (width == height в px).
-       Задаём height через vh, width — пропорционально. */
+       Большой размер — чтобы круг, стенд и ячейки не были мелкими. */
     .alchemy-section {
-        left: 3%;
+        left: 1%;
         top: 50%;
         transform: translateY(-50%);
-        /* Квадрат: берём меньшую из сторон viewport */
-        width: clamp(160px, 44vh, 420px);
-        height: clamp(160px, 44vh, 420px);
+        width: clamp(200px, 58vh, 500px);
+        height: clamp(200px, 58vh, 500px);
     }
 
-    /* Меню: уменьшаем и придвигаем вплотную к кругу */
+    /* Меню: придвигаем вплотную к кругу */
     .menu-section {
-        /* Позиционируем правый край на 2% от края экрана */
-        right: 2%;
+        right: 1%;
         top: 50%;
         transform: translateY(-50%);
-        /* Уменьшаем — чтобы не перекрывал круг */
-        width: clamp(140px, 36%, 340px);
-        height: clamp(120px, 72%, 320px);
+        width: clamp(160px, 40%, 380px);
+        height: clamp(140px, 80%, 360px);
     }
 
     /* Слоты выбранных ингредиентов:
-       уменьшаем gap — было слишком большое расстояние */
+       маленький gap, центрирование */
     .ingredients-slots-row {
         top: 54%;
-        left: 6%;
-        width: 88%;
+        left: 5%;
+        width: 90%;
         height: 18%;
-        gap: 2%;             /* явный маленький gap вместо justify-content: space-between */
+        gap: 3%;
         justify-content: center;
     }
 
-    /* Таймер: шрифт Anticva + уменьшенный размер + располагаем в нижней части меню */
+    /* Таймер: шрифт Anticva + уменьшенный размер + ниже в меню */
     .game-timer {
         font-family: 'Anticva', serif;
-        font-size: clamp(18px, 3.5vh, 36px);
-        bottom: 18%;         /* выше кнопки "готово" */
+        font-size: clamp(20px, 4vh, 40px);
+        bottom: 12%;
         left: 50%;
         transform: translateX(-50%);
     }
 
     /* Кнопка ГОТОВО — НИЖЕ таймера, внутри menu-section */
     .ready-btn {
-        /* bottom: -158px уводил кнопку за экран.
-           Ставим её внутрь меню снизу. */
         position: absolute;
-        bottom: 4%;
+        bottom: 2%;
         left: 50%;
         transform: translateX(-50%);
-        width: clamp(100px, 15vh, 160px);
-        height: clamp(32px, 5vh, 50px);
+        width: clamp(100px, 16vh, 170px);
+        height: clamp(34px, 6vh, 56px);
     }
 
     /* Экран загрузки */
@@ -689,37 +684,41 @@ html, body {
     }
     /* Квадратный круг — ячейки сидят на контуре */
     .alchemy-section {
-        left: 3%;
+        left: 1%;
         top: 50%;
         transform: translateY(-50%);
-        width: clamp(140px, 40vh, 360px);
-        height: clamp(140px, 40vh, 360px);
+        width: clamp(180px, 56vh, 460px);
+        height: clamp(180px, 56vh, 460px);
     }
     .menu-section {
-        right: 2%;
+        right: 1%;
         top: 50%;
         transform: translateY(-50%);
-        width: clamp(130px, 34%, 310px);
-        height: clamp(110px, 68%, 290px);
+        width: clamp(150px, 38%, 350px);
+        height: clamp(130px, 78%, 340px);
     }
     .ingredients-slots-row {
+        top: 54%;
+        left: 5%;
+        width: 90%;
+        height: 18%;
         justify-content: center;
-        gap: 2%;
+        gap: 3%;
     }
     .game-timer {
         font-family: 'Anticva', serif;
-        font-size: clamp(20px, 3.8vw, 34px);
-        bottom: 20%;
+        font-size: clamp(20px, 4vh, 38px);
+        bottom: 12%;
         left: 50%;
         transform: translateX(-50%);
     }
     .ready-btn {
         position: absolute;
-        bottom: 4%;
+        bottom: 2%;
         left: 50%;
         transform: translateX(-50%);
-        width: clamp(115px, 15vw, 155px);
-        height: clamp(36px, 5.5vh, 50px);
+        width: clamp(110px, 16vh, 160px);
+        height: clamp(34px, 6vh, 52px);
     }
     .countdown-number {
         font-size: clamp(52px, 11vw, 90px);
@@ -746,37 +745,41 @@ html, body {
     }
     /* Квадратный круг */
     .alchemy-section {
-        left: 2%;
+        left: 1%;
         top: 50%;
         transform: translateY(-50%);
-        width: clamp(130px, 38vh, 330px);
-        height: clamp(130px, 38vh, 330px);
+        width: clamp(160px, 54vh, 400px);
+        height: clamp(160px, 54vh, 400px);
     }
     .menu-section {
         right: 1%;
         top: 50%;
         transform: translateY(-50%);
-        width: clamp(120px, 33%, 290px);
-        height: clamp(100px, 66%, 270px);
+        width: clamp(130px, 37%, 320px);
+        height: clamp(120px, 76%, 310px);
     }
     .ingredients-slots-row {
+        top: 54%;
+        left: 5%;
+        width: 90%;
+        height: 18%;
         justify-content: center;
-        gap: 2%;
+        gap: 3%;
     }
     .game-timer {
         font-family: 'Anticva', serif;
-        font-size: clamp(18px, 3.5vw, 30px);
-        bottom: 20%;
+        font-size: clamp(18px, 3.8vh, 34px);
+        bottom: 12%;
         left: 50%;
         transform: translateX(-50%);
     }
     .ready-btn {
         position: absolute;
-        bottom: 4%;
+        bottom: 2%;
         left: 50%;
         transform: translateX(-50%);
-        width: clamp(100px, 14vw, 140px);
-        height: clamp(32px, 5.5vh, 46px);
+        width: clamp(100px, 15vh, 148px);
+        height: clamp(30px, 5.5vh, 48px);
     }
     .countdown-number {
         font-size: clamp(46px, 10vw, 80px);
@@ -822,37 +825,37 @@ html, body {
         left: 1%;
         top: 50%;
         transform: translateY(-50%);
-        width: clamp(110px, 34vh, 280px);
-        height: clamp(110px, 34vh, 280px);
+        width: clamp(130px, 50vh, 340px);
+        height: clamp(130px, 50vh, 340px);
     }
     .menu-section {
         right: 1%;
         top: 50%;
         transform: translateY(-50%);
-        width: clamp(110px, 31%, 260px);
-        height: clamp(90px, 62%, 240px);
+        width: clamp(118px, 35%, 280px);
+        height: clamp(110px, 74%, 280px);
     }
     .ingredients-slots-row {
         top: 54%;
-        left: 6%;
-        width: 88%;
+        left: 5%;
+        width: 90%;
         height: 16%;
         justify-content: center;
-        gap: 2%;
+        gap: 3%;
     }
     .game-timer {
         font-family: 'Anticva', serif;
-        font-size: clamp(14px, 3vw, 22px);
-        bottom: 20%;
+        font-size: clamp(16px, 3.5vh, 26px);
+        bottom: 12%;
         left: 50%;
         transform: translateX(-50%);
     }
     .ready-btn {
         position: absolute;
-        bottom: 4%;
+        bottom: 2%;
         left: 50%;
         transform: translateX(-50%);
-        width: clamp(80px, 13vw, 118px);
+        width: clamp(82px, 14vh, 120px);
         height: clamp(26px, 5vh, 38px);
     }
     .countdown-number {
