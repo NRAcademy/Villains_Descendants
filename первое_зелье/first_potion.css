@@ -528,3 +528,83 @@ html, body {
 .ready-btn:active {
     transform: translateX(-50%) scale(0.95); /* Эффект нажатия */
 }
+/* ===============================================================
+   МОБИЛЬНЫЕ ПРАВКИ (только для экранов ≤ 768px)
+   =============================================================== */
+@media (max-width: 768px) {
+
+    /* ── 1. Шапка меньше по высоте ── */
+    .site-header {
+        height: 48px;
+        transition: transform 0.35s ease;
+    }
+    .header-inner {
+        gap: 24px;
+    }
+    .header-link {
+        font-size: 14px;
+    }
+
+    /* ── 1б. Классы для свайпа (задача 3) ── */
+    .site-header.header-hidden {
+        transform: translateY(-100%);
+    }
+    .site-header.header-visible {
+        transform: translateY(0);
+    }
+
+    /* ── 2. Уменьшаем круг, ячейки и детали ── */
+    .alchemy-section {
+        left: 2%;
+        top: 22%;
+        width: 50%;
+        height: 44%;
+        transform: scale(0.78);
+        transform-origin: top left;
+    }
+
+    /* ── 4. Скролл игровой зоны на мобиле ── */
+    html, body {
+        overflow: hidden; /* страница не скроллится */
+        height: 100%;
+        align-items: flex-start;
+    }
+
+    .game-container {
+        height: 140vw;           /* контейнер выше экрана — можно скроллить */
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding-top: 52px;       /* чтобы шапка не перекрывала верх */
+        box-sizing: border-box;
+    }
+
+    /* Таймер — чуть меньше на мобиле */
+    .game-timer {
+        font-size: 32px;
+    }
+
+    /* Меню-секция — сдвигаем вниз */
+    .menu-section {
+        right: 2%;
+        top: 50%;
+        width: 46%;
+        height: 42%;
+    }
+}
+
+/* ── 3. Свайп шапки: JS добавляет/убирает классы header-hidden / header-visible ──
+   Готовые стили уже выше. Ниже — плавный показ тонкой полоски-триггера */
+@media (max-width: 768px) {
+    /* Маленький триггер-индикатор вверху экрана когда шапка скрыта */
+    .site-header.header-hidden::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.18);
+        z-index: 1001;
+    }
+}
