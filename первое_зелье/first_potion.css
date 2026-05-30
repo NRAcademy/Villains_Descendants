@@ -6,7 +6,7 @@
     font-style: normal;
 }
 
-/* ================= ГЛОБАЛЬНАЯ ФИКСАЦИЯ КУРСОРA ================= */
+/* ================= ГЛОБАЛЬНАЯ ФИКСАЦИЯ КУРСОРА ================= */
 html, body, *, 
 a, a:hover, 
 button, button:hover, 
@@ -22,7 +22,7 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
-    background-color: #060713; /* Картинку background-image отсюда удаляем */
+    background-color: #060713;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,11 +36,16 @@ html, body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px; 
+    height: 80px;
     background: rgba(1, 1, 1, 0.75);
     display: flex;
     align-items: center;
-    z-index: 1000; 
+    z-index: 1000;
+    transition: transform 0.35s ease;
+}
+
+.site-header.header-hidden {
+    transform: translateY(-100%);
 }
 
 .header-inner {
@@ -53,17 +58,17 @@ html, body {
 }
 
 .header-link {
-    font-family: 'Anticva', serif; 
+    font-family: 'Anticva', serif;
     font-size: 22px;
-    color: #ffffff; 
-    text-decoration: none; 
-    letter-spacing: 1px; 
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 1px;
     transition: 0.3s ease;
     white-space: nowrap;
 }
 
 .header-link:hover {
-    color: #ffffff; 
+    color: #ffffff;
     text-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6);
 }
 
@@ -72,9 +77,8 @@ html, body {
     position: relative;
     width: 100vw;
     height: 75vw;
-    /* background: url('фон.png') no-repeat center center; <-- ЭТУ СТРОКУ НУЖНО УДАЛИТЬ */
-  z-index: 10; /* Видео с z-index: 1 окажется ровно ПОД игрой */
-    background: transparent !important; /* Делаем прозрачным, чтобы видеть видео под ним */
+    z-index: 10;
+    background: transparent !important;
     background-size: contain;
 }
 
@@ -87,12 +91,13 @@ html, body {
     height: 55%;
 }
 
+/* круг.png — уменьшен, ячейки остаются на своих позициях */
 .orbit-bg {
     position: absolute;
-    top: 11%;
-    left: 11%;
-    width: 78%;
-    height: 78%;
+    top: 18%;
+    left: 18%;
+    width: 64%;
+    height: 64%;
     background: url('круг.png') no-repeat center center;
     background-size: contain;
 }
@@ -140,7 +145,7 @@ html, body {
     width: calc(28% + 2px);
     height: calc(28% + 2px);
     margin-top: calc(-14% - 1px);
-    margin-left: calc(-14% - 1px); 
+    margin-left: calc(-14% - 1px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -174,6 +179,7 @@ html, body {
 .cell-slot.grayscale:hover { transform: scale(1.05); }
 .cell-slot.active-selected::before { filter: brightness(1) grayscale(0%) !important; }
 
+/* Позиции ячеек — привязаны к alchemy-section, НЕ к orbit-bg */
 .cell-slot:nth-child(1) { top: 11%; left: 50%; }
 .cell-slot:nth-child(2) { top: 30.5%; left: 84%; }
 .cell-slot:nth-child(3) { top: 69.5%; left: 84%; }
@@ -197,7 +203,7 @@ html, body {
 
 .ingredients-slots-row {
     position: absolute;
-    top: 57%; 
+    top: 57%;
     left: 10%;
     width: 80%;
     height: 18%;
@@ -216,7 +222,7 @@ html, body {
 
 .chosen-slot:hover { filter: brightness(0.75); }
 
-/* ОФОРМЛЕНИЕ ТАЙМЕРА И ИТОГОВЫХ СТАТУСОВ */
+/* ТАЙМЕР И СТАТУСЫ */
 .game-timer {
     position: absolute;
     bottom: 10%;
@@ -241,7 +247,7 @@ html, body {
     text-shadow: 0 0 15px rgba(255, 59, 48, 0.6) !important;
 }
 
-/* ================= ЭКРАНЫ ОВЕРЛЕЕВ (ОТСЧЕТ И ЗАГРУЗКА) ================= */
+/* ================= ЭКРАНЫ ОВЕРЛЕЕВ ================= */
 .countdown-overlay {
     position: fixed;
     top: 0;
@@ -252,7 +258,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 99999; 
+    z-index: 99999;
     transition: opacity 0.5s ease;
 }
 
@@ -297,7 +303,7 @@ html, body {
     width: 75px;
     height: 140px;
     object-fit: contain;
-    filter: brightness(0.25); 
+    filter: brightness(0.25);
     transition: filter 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -314,7 +320,7 @@ html, body {
     min-height: 40px;
 }
 
-/* Оверлей для гифки провала */
+/* Оверлей гифки провала */
 .fail-gif-overlay {
     position: absolute;
     top: 0;
@@ -327,55 +333,51 @@ html, body {
     background-position: center;
     opacity: 0;
 }
+
 .fail-gif-overlay.run-animation {
     animation: fadeExplosion 2.5s ease-in-out forwards;
 }
 
 /* ================= МОДАЛЬНОЕ ОКНО "ИНФОРМАЦИЯ" ================= */
-
-/* Затемняющий оверлей на весь экран */
 .info-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.65); /* Степень затемнения фонда */
-    z-index: 100000;                 /* Поверх игры и шапки */
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 100000;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease-in-out; /* Плавное появление */
+    transition: opacity 0.5s ease-in-out;
 }
 
-/* Класс активации модального окна */
 .info-modal-overlay.active {
     opacity: 1;
     pointer-events: auto;
 }
 
-/* Карточка свитком/информацией */
 .info-card-body {
-    width: 62vw;                     /* Пропорциональный размер под экраны */
+    width: 62vw;
     height: 44vw;
     background: url('информация.png') no-repeat center center;
     background-size: contain;
-    position: relative;              /* ОБЯЗАТЕЛЬНО: чтобы кнопка позиционировалась от углов карточки */
+    position: relative;
     transform: scale(0.9);
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .info-modal-overlay.active .info-card-body {
-    transform: scale(1);             /* Эффект легкого всплытия */
+    transform: scale(1);
 }
 
-/* Кнопка закрытия справа на свитке */
 .info-close-btn {
     position: absolute;
-    top: 2vw;                        /* Отступ от верхнего края карточки */
-    right: 2vw;                      /* Отступ от правого края карточки */
+    top: 2vw;
+    right: 2vw;
     width: 12vw;
     height: 4vw;
     background: url('кнопка.png') no-repeat center center;
@@ -384,10 +386,9 @@ html, body {
     border: none;
     outline: none;
     transition: transform 0.2s ease, filter 0.2s ease;
-    z-index: 10;                     /* Чтобы кнопка гарантированно была поверх картинки */
+    z-index: 10;
 }
 
-/* Интерактивность для кнопки */
 .info-close-btn:hover {
     transform: scale(1.05);
     filter: brightness(1.15);
@@ -398,37 +399,39 @@ html, body {
     filter: brightness(0.85);
 }
 
+/* Фоновое видео */
 #bg-video {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;   /* Строго 100% ширины экрана */
-    height: 100vh;  /* Строго 100% высоты экрана */
-    object-fit: cover; /* Видео аккуратно подстроится под размеры без искажения пропорций */
-    pointer-events: none; /* Клики будут проходить насквозь к игре */
-    z-index: 1; /* Оставляем его на фоне под игровыми элементами */
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 1;
 }
 
-/* Оверлей */
+/* ================= МОДАЛ ОЖИДАНИЯ ================= */
 .wait-modal-overlay {
     position: fixed;
-    top: 0; left: 0; 
-    width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.85); /* Чуть темнее для контраста */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 99999; /* Поверх всего */
+    z-index: 99999;
 }
 
 .wait-modal-content {
     position: relative;
     text-align: center;
-    width: 420px; /* размер окна */
+    width: 420px;
     max-width: 80vw;
 }
 
-/* Изображение внутри */
 .wait-bg {
     width: 100%;
     height: auto;
@@ -440,103 +443,140 @@ html, body {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-
     width: 180px;
     height: 55px;
-
     background: url('../уведомление/понятно.png') no-repeat center center;
     background-size: contain;
-
     border: none;
     outline: none;
-
     cursor: pointer;
-
-    transition: filter 0.2s ease,
-                transform 0.15s ease;
-
+    transition: filter 0.2s ease, transform 0.15s ease;
     -webkit-tap-highlight-color: transparent;
 }
 
-/* Наведение */
-.understand-btn:hover {
-    filter: brightness(0.85);
-}
-
-/* Нажатие */
+.understand-btn:hover { filter: brightness(0.85); }
 .understand-btn:active {
     filter: brightness(0.65);
     transform: translateX(-50%) scale(0.96);
 }
-
-/* Убираем красную/синюю обводку */
 .understand-btn:focus,
-.understand-btn:focus-visible {
+.understand-btn:focus-visible { outline: none; box-shadow: none; }
+
+/* ================= МОДАЛЫ УСПЕХ / ПРОВАЛ ================= */
+.success-modal-overlay,
+.fail-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.success-modal-content,
+.fail-modal-content {
+    position: relative;
+    text-align: center;
+    width: 420px;
+    max-width: 80vw;
+}
+
+.success-bg,
+.fail-bg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.success-btn,
+.fail-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 55px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
     outline: none;
-    box-shadow: none;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.success-btn { background-image: url('../уведомление/успешно_кнопка.png'); }
+.fail-btn    { background-image: url('../уведомление/неудача_кнопка.png'); }
+
+.success-btn:hover,
+.fail-btn:hover { filter: brightness(0.85); }
+
+.success-btn:active { filter: brightness(0.65); transform: translateX(-50%) scale(0.96); }
+.fail-btn:active    { filter: brightness(0.65); transform: translateX(-50%) scale(0.96); }
+
+.success-btn:focus,
+.success-btn:focus-visible,
+.fail-btn:focus,
+.fail-btn:focus-visible { outline: none; box-shadow: none; }
+
+/* ================= КНОПКА ГОТОВО ================= */
+.ready-btn {
+    position: absolute;
+    bottom: -316px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 60px;
+    background: url('../первое_зелье/готово.png') no-repeat center center;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    z-index: 100;
+    transition: transform 0.1s ease;
+}
+
+.ready-btn:active {
+    transform: translateX(-50%) scale(0.95);
 }
 
 /* ================= АНИМАЦИИ ================= */
 @keyframes rotateCircle {
     from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    to   { transform: rotate(360deg); }
 }
+
 @keyframes counterRotate {
     from { transform: rotate(0deg); }
-    to { transform: rotate(-360deg); }
+    to   { transform: rotate(-360deg); }
 }
+
 @keyframes pulseCount {
-    0% { transform: scale(0.6); opacity: 0; }
-    20% { opacity: 1; }
-    80% { transform: scale(1.1); opacity: 1; }
+    0%   { transform: scale(0.6); opacity: 0; }
+    20%  { opacity: 1; }
+    80%  { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(1.2); opacity: 0; }
 }
+
 @keyframes potionBounce {
-
-    0% {
-        transform: translate(-50%, -60%) scale(0);
-        opacity: 0;
-    }
-
-    60% {
-        transform: translate(-50%, -60%) scale(1.15);
-        opacity: 1;
-    }
-
-    100% {
-        transform: translate(-50%, -60%) scale(1);
-        opacity: 1;
-    }
+    0%   { transform: translate(-50%, -60%) scale(0); opacity: 0; }
+    60%  { transform: translate(-50%, -60%) scale(1.15); opacity: 1; }
+    100% { transform: translate(-50%, -60%) scale(1); opacity: 1; }
 }
 
-/* Стиль для кнопки готово */
-.ready-btn {
-    position: absolute;
-    bottom: -158px; /* Регулируйте отступ от низа */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px; /* Укажите ширину вашей картинки */
-    height: 60px; /* Укажите высоту вашей картинки */
-    background: url('../первое_зелье/готово.png') no-repeat center center;
-    background-size: contain;
-    border: none;
-    cursor: pointer;
-    z-index: 100; /* Чтобы кнопка была поверх всего */
-    transition: transform 0.1s ease;
-}
-
-.ready-btn:active {
-    transform: translateX(-50%) scale(0.95); /* Эффект нажатия */
+@keyframes fadeExplosion {
+    0%   { opacity: 0; }
+    20%  { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 /* ================================================================
-   MOBILE ADAPTIVE — добавляется В КОНЕЦ основного CSS
-   Desktop First. НЕ изменяет поведение при ширине >= 1024px.
-   ================================================================ */
-
-/* ================================================================
-   PORTRAIT MOBILE — показываем overlay "поверни экран"
-   Игра работает ТОЛЬКО в landscape. В portrait — блокируем.
+   PORTRAIT MOBILE — overlay "поверни экран"
    ================================================================ */
 @media screen and (max-width: 1023px) and (orientation: portrait) {
     .rotate-overlay {
@@ -545,9 +585,7 @@ html, body {
 }
 
 /* ================================================================
-   LANDSCAPE MOBILE — все телефоны в горизонтальной ориентации
-   Ключевой принцип: game-container → flexbox.
-   Обе секции вынуты из абсолютного потока и встают рядом.
+   LANDSCAPE MOBILE
    ================================================================ */
 @media screen and (max-width: 1023px) and (orientation: landscape) {
 
@@ -555,7 +593,7 @@ html, body {
         overflow: hidden;
     }
 
-    /* Шапка — свайп вверх/вниз через JS (класс .header-hidden) */
+    /* Шапка — только transform при свайпе, game-container НЕ двигается */
     .site-header {
         height: clamp(34px, 7vh, 52px);
         transition: transform 0.35s ease;
@@ -572,7 +610,7 @@ html, body {
         letter-spacing: 0.5px;
     }
 
-    /* Контейнер — FLEX, секции стоят рядом по горизонтали */
+    /* Контейнер — FLEX, статичный margin-top, НЕ меняется при свайпе шапки */
     .game-container {
         width: 100vw;
         height: calc(100vh - clamp(34px, 7vh, 52px));
@@ -582,16 +620,10 @@ html, body {
         align-items: center;
         justify-content: center;
         gap: 2vw;
-        transition: height 0.35s ease, margin-top 0.35s ease;
-    }
-    /* Когда шапка скрыта — контейнер занимает весь экран */
-    .site-header.header-hidden ~ .game-container,
-    body.header-hidden .game-container {
-        height: 100vh;
-        margin-top: 0;
+        overflow-y: auto;
     }
 
-    /* Алхимический круг: КВАДРАТ через vh */
+    /* Алхимический круг */
     .alchemy-section {
         position: relative;
         left: unset;
@@ -604,7 +636,7 @@ html, body {
         flex-shrink: 0;
     }
 
-    /* Меню: меньше */
+    /* Меню */
     .menu-section {
         position: relative;
         left: unset;
@@ -627,16 +659,15 @@ html, body {
         justify-content: center;
     }
 
-    /* Таймер — крупнее и выше */
+    /* Таймер */
     .game-timer {
-        font-family: 'Anticva', serif;
         font-size: clamp(26px, 6vh, 50px);
         bottom: 12%;
         left: 50%;
         transform: translateX(-50%);
     }
 
-    /* Кнопка ГОТОВО — ниже на 10px */
+    /* Кнопка ГОТОВО */
     .ready-btn {
         position: absolute;
         bottom: calc(1% - 10px);
@@ -664,16 +695,21 @@ html, body {
         font-size: clamp(58px, 12vw, 96px);
     }
 
-    /* Модальное окно */
+    /* Модальное окно информации — крупнее, по центру */
     .info-card-body {
-        width: clamp(70vw, 82vw, 92vw);
-        height: clamp(50vh, 62vh, 72vh);
+        width: clamp(80vw, 90vw, 96vw);
+        height: clamp(58vh, 70vh, 80vh);
+        left: 50%;
+        transform: translateX(-50%) scale(0.9);
+    }
+    .info-modal-overlay.active .info-card-body {
+        transform: translateX(-50%) scale(1);
     }
     .info-close-btn {
         top: 1.5vw;
         right: 1.5vw;
-        width: clamp(78px, 13vw, 126px);
-        height: clamp(26px, 5vh, 42px);
+        width: clamp(90px, 15vw, 140px);
+        height: clamp(30px, 6vh, 48px);
     }
 
     /* Wait modal */
@@ -685,12 +721,25 @@ html, body {
         height: clamp(36px, 6vh, 50px);
         bottom: clamp(10px, 2vh, 16px);
     }
+
+    /* Success / Fail modals */
+    .success-modal-content,
+    .fail-modal-content {
+        width: clamp(250px, 42vw, 370px);
+    }
+    .success-btn,
+    .fail-btn {
+        width: clamp(115px, 18vw, 165px);
+        height: clamp(36px, 6vh, 50px);
+        bottom: clamp(10px, 2vh, 16px);
+    }
 }
 
 /* ================================================================
-   568×320 — iPhone SE (1st gen) landscape — самый маленький
+   568×320 — iPhone SE landscape — самый маленький
    ================================================================ */
 @media screen and (max-width: 568px) and (orientation: landscape) {
+
     .site-header {
         height: clamp(26px, 8vh, 38px);
     }
@@ -737,10 +786,15 @@ html, body {
     }
     .info-card-body {
         width: 95vw;
-        height: 74vh;
+        height: 78vh;
+        left: 50%;
+        transform: translateX(-50%) scale(0.9);
+    }
+    .info-modal-overlay.active .info-card-body {
+        transform: translateX(-50%) scale(1);
     }
     .info-close-btn {
-        width: clamp(58px, 11vw, 92px);
+        width: clamp(68px, 13vw, 92px);
         height: clamp(20px, 4vh, 32px);
         top: 1vw;
         right: 1vw;
@@ -753,20 +807,28 @@ html, body {
         height: clamp(30px, 5.5vh, 44px);
         bottom: clamp(6px, 1.5vh, 12px);
     }
+    .success-modal-content,
+    .fail-modal-content {
+        width: clamp(210px, 58vw, 320px);
+    }
+    .success-btn,
+    .fail-btn {
+        width: clamp(96px, 15vw, 144px);
+        height: clamp(30px, 5.5vh, 44px);
+        bottom: clamp(6px, 1.5vh, 12px);
+    }
 }
 
 /* ================================================================
-   ROTATE OVERLAY — показывается в portrait на мобиле
-   Добавь этот HTML в страницу:
-   <div class="rotate-overlay">
-     <p>Пожалуйста, поверни устройство горизонтально</p>
-   </div>
+   ROTATE OVERLAY
    ================================================================ */
 .rotate-overlay {
     display: none;
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background: #060713;
     z-index: 999999;
     flex-direction: column;
