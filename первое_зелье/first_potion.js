@@ -794,3 +794,42 @@ function saveResultToLeaderboard(name, time) {
     // Сохраняем обратно
     localStorage.setItem("potion_leaderboard", JSON.stringify(leaderboard));
 }
+
+(function () {
+    if (window.innerWidth > 768) return; // только на мобиле
+
+    var header = document.querySelector('.site-header');
+    if (!header) return;
+
+    var touchStartY = 0;
+    var touchStartTime = 0;
+    var isHidden = false;
+
+    // Слушаем начало касания
+    document.addEventListener('touchstart', function (e) {
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+    }, { passive: true });
+
+    // Слушаем конец касания
+    document.addEventListener('touchend', function (e) {
+        var touchEndY = e.changedTouches[0].clientY;
+        var deltaY = touchStartY - touchEndY; // > 0 = свайп вверх, < 0 = свайп вниз
+        var elapsed = Date.now() - touchStartTime;
+
+        // Быстрый свайп (до 400мс) длиной больше 40px
+        if (elapsed < 400 && Math.abs(deltaY) > 40) {
+            if (deltaY > 0 && !isHidden) {
+                // Свайп вверх — скрыть шапку
+                header.classList.add('header-hidden');
+                header.classList.remove('header-visible');
+                isHidden = true;
+            } else if (deltaY < 0 && isHidden) {
+                // Свайп вниз — показать шапку
+                header.classList.remove('header-hidden');
+                header.classList.add('header-visible');
+                isHidden = false;
+            }
+        }
+    }, { passive: true });
+})();
