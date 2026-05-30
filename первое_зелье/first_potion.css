@@ -538,7 +538,7 @@ html, body {
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(50%);
     width: 200px;
     height: 60px;
     background-color: transparent;
@@ -555,7 +555,7 @@ html, body {
 }
 
 .ready-btn:active {
-    transform: translateX(-50%) scale(0.95);
+    transform: translateX(-50%) translateY(50%) scale(0.95);
 }
 
 /* ================= АНИМАЦИИ ================= */
@@ -680,12 +680,12 @@ html, body {
         transform: translateX(-50%);
     }
 
-    /* Кнопка ГОТОВО — под таймером (таймер на bottom:12%, кнопка чуть ниже) */
+    /* Кнопка ГОТОВО — середина по нижней линии блока */
     .ready-btn {
         position: absolute;
         bottom: 0;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%) translateY(50%);
         width: clamp(110px, 18vh, 180px);
         height: clamp(36px, 7vh, 62px);
     }
@@ -781,6 +781,7 @@ html, body {
     }
     .ready-btn {
         bottom: 0;
+        transform: translateX(-50%) translateY(50%);
         width: clamp(78px, 13vh, 115px);
         height: clamp(24px, 5vh, 36px);
     }
