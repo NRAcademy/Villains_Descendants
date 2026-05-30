@@ -1,79 +1,77 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const understandBtn = document.getElementById('understand-btn');
-
+ const understandBtn = document.getElementById('understand-btn');
 if (understandBtn) {
-    understandBtn.addEventListener('click', () => {
+ understandBtn.addEventListener('click', () => {
 window.location.href = '../menu/menu.html';
-    });
+ });
 }
-    // =====================================================
-    // ПРИНУДИТЕЛЬНЫЙ КУРСОР
-    // =====================================================
+ // =====================================================
+ // ПРИНУДИТЕЛЬНЫЙ КУРСОР
+ // =====================================================
 
-    document.documentElement.style.cursor =
-        "url('../menu/custom-cursor.png') 0 0, auto";
+ document.documentElement.style.cursor =
+ "url('../menu/custom-cursor.png') 0 0, auto";
 
-    document.body.style.cursor =
-        "url('../menu/custom-cursor.png') 0 0, auto";
+ document.body.style.cursor =
+ "url('../menu/custom-cursor.png') 0 0, auto";
 
+ // =====================================================
+ // ДАННЫЕ ИГРОКА
+ // =====================================================
 
-    // =====================================================
-    // ДАННЫЕ ИГРОКА
-    // =====================================================
+ const userData =
+ JSON.parse(localStorage.getItem('userProfile'));
 
-    const userData =
-        JSON.parse(localStorage.getItem('userProfile'));
+ const vkID =
+ userData ? userData.vkID : 'guest';
 
-    const vkID =
-        userData ? userData.vkID : 'guest';
+ const potionID = "first_potion";
 
-    const potionID = "first_potion";
+ const today =
+ new Date().toDateString();
 
-    const today =
-        new Date().toDateString();
-
-    const lastPlayed =
-        localStorage.getItem(
-            `lastPlayed_${vkID}_${potionID}`
-        );
-
-
-    // =====================================================
-    // ПРОВЕРКА: ИГРАЛ ЛИ СЕГОДНЯ
-    // =====================================================
-
-    if (lastPlayed === today) {
-
-        const waitModal =
-            document.getElementById('wait-modal');
-
-        if (waitModal) {
-
-            waitModal.style.display = 'flex';
-
-            const understandBtn =
-                document.getElementById('understand-btn');
-
-            if (understandBtn) {
-
-                understandBtn.addEventListener('click', () => {
-
-window.location.href = '../menu/menu.html';
-                });
-            }
-
-            // ПОЛНОСТЬЮ ОСТАНАВЛИВАЕМ ИГРУ
-            return;
-        }
-    }
+ const lastPlayed = 
+localStorage.GetItem( 
+ `lastPlayed_${vkID}_${potionID}`
+ );
 
 
-    // =====================================================
-    // ЕСЛИ НЕ ИГРАЛ — ЗАПУСКАЕМ ИГРУ
-    // =====================================================
+ // =====================================================
+ // ПРОВЕРКА: ИГРАЛ ЛИ СЕГОДНЯ
+ // =====================================================
 
-    initGame(vkID, potionID);
+ if (lastPlayed === today) {
+
+ const waitModal =
+ document.getElementById('wait-modal');
+
+ if (waitModal) {
+
+ waitModal.style.display = 'flex';
+
+ const understandBtn =
+ document.getElementById('understand-btn');
+
+ if (understandBtn) {
+
+ understandBtn.addEventListener('щелчок', () => {
+
+окно.Расположение.href = '../menu/menu.html';
+ });
+ }
+
+ // ПОЛНОСТЬЮ ОСТАНАВЛИВАЕМ ИГРУ
+ Возврат;
+ }
+ }
+
+
+ // =====================================================
+ // ЕСЛИ НЕ ИГРАЛ — ЗАПУСКАЕМ ИГРУ
+ // =====================================================
+
+ Инициализация игры (vkID, potionID);
 
 });
 
@@ -82,754 +80,758 @@ window.location.href = '../menu/menu.html';
 // ОСНОВНАЯ ИГРА
 // =========================================================
 
-function initGame(vkID, potionID) {
+функция initGame(vkID, potionID) {
 
-    // =====================================================
-    // АУДИО
-    // =====================================================
+ // =====================================================
+ // АУДИО
+ // =====================================================
 
-    const bgMusic = new Audio('фоновая_мелодия.mp3');
-    bgMusic.loop = true;
-    bgMusic.volume = 0.3;
+ const bgMusic = new Audio('фоновая_мелодия.mp3');
+ bgMusic.loop = true;
+ bgMusic.volume = 0.3;
+ const successSound = new Audio('успех.mp3');
+ successSound.volume = 1.0;
 
-    const successSound = new Audio('успех.mp3');
-    successSound.volume = 1.0;
+ const failSound = new Audio('провал.mp3');
+ failSound.volume = 0.3;
 
-    const failSound = new Audio('провал.mp3');
-    failSound.volume = 0.3;
+ // =====================================================
+ // ИНГРЕДИЕНТЫ
+ // =====================================================
 
+ const ingredientData = {
 
-    // =====================================================
-    // ИНГРЕДИЕНТЫ
-    // =====================================================
+ 'бадьян': {
+ name: 'бадьян',
+ img: '../ингредиенты/ингредиент_бадьян.png'
+ },
 
-    const ingredientData = {
+ 'мандрагора': {
+ name: 'мандрагора',
+ img: '../ингредиенты/ингредиент_мандрагора.png'
+ },
 
-        'badyan': {
-            name: 'бадьян',
-            img: '../ингредиенты/ингредиент_бадьян.png'
-        },
+ 'медовая_вода': {
+ name: 'медовая_вода',
+ img: '../ингредиенты/ингредиент_медовая_вода.png'
+ },
 
-        'mandrake': {
-            name: 'мандрагора',
-            img: '../ингредиенты/ингредиент_мандрагора.png'
-        },
+ 'мята': {
+ name: 'мята',
+ img: '../ингредиенты/ингредиент_мята.png'
+ },
 
-        'honey_water': {
-            name: 'медовая_вода',
-            img: '../ингредиенты/ингредиент_медовая_вода.png'
-        },
+ 'поганка': {
+ name: 'прыгающая_поганка',
+ img: '../ингредиенты/ингредиент_прыгающая_поганка.png'
+ },
 
-        'mint': {
-            name: 'мята',
-            img: '../ингредиенты/ингредиент_мята.png'
-        },
-
-        'toadstool': {
-            name: 'прыгающая_поганка',
-            img: '../ингредиенты/ингредиент_прыгающая_поганка.png'
-        },
-
-        'hellebore': {
-            name: 'чемерица',
-            img: '../ингредиенты/ингредиент_чемерица.png'
-        }
-    };
+ 'чемерица': {
+ name: 'чемерица',
+ img: '../ингредиенты/ингредиент_чемерица.png'
+ }
+ };
 
 const readyBtn = document.getElementById('ready-btn');
-
 if (readyBtn) {
-    readyBtn.addEventListener('click', () => {
-        if (!isGameActive) return; // Если игра закончилась, ничего не делаем
-        
-        // Проверяем, выбраны ли все ингредиенты (необязательно, но полезно)
-        if (chosenSlots.includes(null)) {
-            alert("Вы выбрали не все ингредиенты!");
-            return;
-        }
+ readyBtn.addEventListener('click', () => {
+ возвращает if (!isGameActive);
+ 
+ if (выбранные слоты.включает (null)) {
+ alert("Вы выбрали не все ингредиенты!");
+ Возврат;
+ }
 
-        // Вызываем функцию проверки и показа результата
-        startLoadingSequence();
-    });
+ Последовательность начальной загрузки();
+ });
 }
 
-    // =====================================================
-    // НАСТРОЙКИ ИГРЫ
-    // =====================================================
+ // =====================================================
+ // НАСТРОЙКИ ИГРЫ
+ // =====================================================
 
-    const winRecipe = [
-        'hellebore',
-        'mint',
-        'honey_water',
-        'mandrake'
-    ];
+ const winRecipe = [
+ 'hellebore',
+ 'mint',
+ 'honey_water',
+ 'mandrake'
+ ];
 
-    let chosenSlots = [null, null, null, null];
+ let chosenSlots = [null, null, null, null];
 
-    let isGameActive = false;
+ let isGameActive = false;
 
 const startTime = 30;
 let timeLeft = startTime;
 
-    let countdownInterval = null;
+ пусть countDownInterval = null;
 
 
-    // =====================================================
-    // DOM ЭЛЕМЕНТЫ
-    // =====================================================
+ // =====================================================
+ // DOM ЭЛЕМЕНТЫ
+ // =====================================================
 
-    const overlay =
-        document.getElementById("countdown-overlay");
+ const overlay =
+ document.getElementById("обратный отсчет-наложение");
 
-    const countdownText =
-        document.getElementById("countdown-text");
+ const countdownText = 
+ document.getElementById("обратный отсчет-текст");
 
-    const timerDisplay =
-        document.getElementById("game-timer");
+ const timerDisplay =
+ document.getElementById("таймер игры");
 
-    const cellSlots =
-        document.querySelectorAll(".cell-slot");
+ const ячейки = 
+ документ.querySelectorAll(".ячейка-слот");
 
-    const chosenSlotElements =
-        document.querySelectorAll(".chosen-slot");
+ const chosenSlotElements =
+ document.querySelectorAll(".chosen-slot");
+ const rotator =
+ document.getElementById("slots-rotator");
 
-    const rotator =
-        document.getElementById("slots-rotator");
+ // =====================================================
+ // ЭЛЕМЕНТЫ ЗАГРУЗКИ
+ // =====================================================
 
+ const loadingOverlay =
+ document.getElementById("loading-overlay");
 
-    // =====================================================
-    // ЭЛЕМЕНТЫ ЗАГРУЗКИ
-    // =====================================================
+ const coffinEls = [
+ document.getElementById("coffin-1"),
+ document.getElementById("coffin-2"),
+ document.getElementById("coffin-3")
+ ];
 
-    const loadingOverlay =
-        document.getElementById("loading-overlay");
+ const loadingTextEl =
+ document.getElementById("loading-text");
 
-    const coffinEls = [
-        document.getElementById("coffin-1"),
-        document.getElementById("coffin-2"),
-        document.getElementById("coffin-3")
-    ];
+ const centerStand =
+ document.querySelector(".center-stand");
 
-    const loadingTextEl =
-        document.getElementById("loading-text");
+ const failGifContainer =
+ document.getElementById("fail-gif-container");
 
-    const centerStand =
-        document.querySelector(".center-stand");
+ // =====================================================
+ // МОДАЛЬНОЕ ОКНО
+ // =====================================================
 
-    const failGifContainer =
-        document.getElementById("fail-gif-container");
+ const potionModal =
+ document.getElementById("potion-modal");
 
+ const modalCloseBtn =
+ document.getElementById("modal-close-btn");
 
-    // =====================================================
-    // МОДАЛЬНОЕ ОКНО
-    // =====================================================
+ // =====================================================
+ // ЗАПУСК МУЗЫКИ
+ // =====================================================
 
-    const potionModal =
-        document.getElementById("potion-modal");
+ bgMusic.play().catch(() => {
+ console.log("Автовоспроизведение заблокировано");
+ });
 
-    const modalCloseBtn =
-        document.getElementById("modal-close-btn");
 
+ // =====================================================
+ // НАЧАЛО ОТСЧЕТА
+ // =====================================================
 
-    // =====================================================
-    // ЗАПУСК МУЗЫКИ
-    // =====================================================
+ runPreloadCountdown();
 
-    bgMusic.play().catch(() => {
-        console.log("Автоплей заблокирован");
-    });
 
+ function runPreloadCountdown() {
 
-    // =====================================================
-    // СТАРТ ОТСЧЕТА
-    // =====================================================
+ let count = 3;
 
-    runPreloadCountdown();
+ countdownText.textContent = count;
 
+ const stageInterval = setInterval(() => {
 
-    function runPreloadCountdown() {
+ bgMusic.play().catch(() => {});
 
-        let count = 3;
+ count--;
 
-        countdownText.textContent = count;
+ if (count > 0) {
 
-        const stageInterval = setInterval(() => {
+ countdownText.textContent = count;
 
-            bgMusic.play().catch(() => {});
+ } else if (count === 0) {
 
-            count--;
+ countdownText.textContent = "СТАРТ!";
 
-            if (count > 0) {
+ } else {
 
-                countdownText.textContent = count;
+ clearInterval(stageInterval);
 
-            } else if (count === 0) {
+ if (overlay) {
 
-                countdownText.textContent = "СТАРТ!";
+ overlay.style.opacity = "0";
 
-            } else {
+ setTimeout(() => {
 
-                clearInterval(stageInterval);
+ overlay.style.display = "none";
 
-                if (overlay) {
+ startGameTimer();
 
-                    overlay.style.opacity = "0";
+ }, 500);
 
-                    setTimeout(() => {
+ } else {
 
-                        overlay.style.display = "none";
+ startGameTimer();
+ }
+ }
 
-                        startGameTimer();
+ }, 1000);
+ }
 
-                    }, 500);
 
-                } else {
+ // =====================================================
+ // ТАЙМЕР ИГРЫ
+ // =====================================================
 
-                    startGameTimer();
-                }
-            }
+ function startGameTimer() {
 
-        }, 1000);
-    }
+ isGameActive = true;
 
+ timerDisplay.textContent = `00:${timeLeft}`;
 
-    // =====================================================
-    // ТАЙМЕР ИГРЫ
-    // =====================================================
+ countdownInterval = setInterval(() => {
 
-    function startGameTimer() {
+ timeLeft--;
 
-        isGameActive = true;
+ if (timeLeft >= 10) {
 
-        timerDisplay.textContent = `00:${timeLeft}`;
+ timerDisplay.textContent = `00:${timeLeft}`;
 
-        countdownInterval = setInterval(() => {
+ } else if (интервал времени > 0) {
 
-            timeLeft--;
+ timerDisplay.textContent = `00:0${интеРвал времени}`;
 
-            if (timeLeft >= 10) {
+ } else {
 
-                timerDisplay.textContent = `00:${timeLeft}`;
+ timerDisplay.textContent = `00:00`;
 
-            } else if (timeLeft > 0) {
+ clearInterval (обратный отсчет времени);
 
-                timerDisplay.textContent = `00:0${timeLeft}`;
+ startLoadingSequence();
+ }
 
-            } else {
+ }, 1000);
+ }
 
-                timerDisplay.textContent = `00:00`;
 
-                clearInterval(countdownInterval);
+ // =====================================================
+ // ЭКРАН ЗАГРУЗКИ
+ // =====================================================
 
-                startLoadingSequence();
-            }
+ function startLoadingSequence() {
 
-        }, 1000);
-    }
+ isGameActive = false;
+ if (countdownInterval) {
+ clearInterval(countdownInterval);
+ }
 
+ if (rotator) {
+ rotator.classList.add("frozen");
+ }
 
-    // =====================================================
-    // ЭКРАН ЗАГРУЗКИ
-    // =====================================================
+ cellSlots.forEach(slot => {
+ slot.classList.add("замороженный");
+ });
 
-    function startLoadingSequence() {
+ if (loadingOverlay) {
+ loadingOverlay.classList.add("активный");
+ }
 
-        isGameActive = false;
+ const hasCoffins = coffinEls.every(el => el !== null);
 
-        if (countdownInterval) {
-            clearInterval(countdownInterval);
-        }
+ пусть coffinInterval = null;
 
-        if (rotator) {
-            rotator.classList.add("frozen");
-        }
+ пусть currentStep = 0;
 
-        cellSlots.forEach(slot => {
-            slot.classList.add("frozen");
-        });
+ if (hasCoffins) {
 
-        if (loadingOverlay) {
-            loadingOverlay.classList.add("active");
-        }
+ coffinEls.forEach(el => {
+ el.classList.remove("активный гроб");
+ });
 
-        const hasCoffins = coffinEls.every(el => el !== null);
+ coffinEls[0].classList.add("active-coffin");
 
-        let coffinInterval = null;
+ coffinInterval = setInterval(() => {
 
-        let currentStep = 0;
+ coffinEls[currentStep]
+ .classList.remove("active-coffin");
 
-        if (hasCoffins) {
+ currentStep = (currentStep + 1) % 3;
 
-            coffinEls.forEach(el => {
-                el.classList.remove("active-coffin");
-            });
+ coffinEls[currentStep]
+ .classList.add("active-coffin");
 
-            coffinEls[0].classList.add("active-coffin");
+ }, 500);
+ }
 
-            coffinInterval = setInterval(() => {
+ const fullText = "Загружаем результат...";
 
-                coffinEls[currentStep]
-                    .classList.remove("active-coffin");
+ if (loadingTextEl) {
 
-                currentStep = (currentStep + 1) % 3;
+ loadingTextEl.textContent = "";
 
-                coffinEls[currentStep]
-                    .classList.add("active-coffin");
+ let charIndex = 0;
 
-            }, 500);
-        }
+ const typeInterval = setInterval(() => {
 
-        const fullText = "Загружаем результат...";
+ if (charIndex < fullText.length) {
 
-        if (loadingTextEl) {
+ loadingTextEl.textContent +=
+ fullText.charAt(charIndex);
 
-            loadingTextEl.textContent = "";
+ charIndex++;
 
-            let charIndex = 0;
+ } else {
 
-            const typeInterval = setInterval(() => {
+ clearInterval(typeInterval);
+ }
 
-                if (charIndex < fullText.length) {
+ }, 900 / Полнотекст.длина);
+ }
 
-                    loadingTextEl.textContent +=
-                        fullText.charAt(charIndex);
+ setTimeout(() => {
 
-                    charIndex++;
+ if (coffinInterval) {
+ clearInterval(coffinInterval);
+ }
 
-                } else {
+ if (loadingOverlay) {
+ loadingOverlay.classList.remove("активен");
+ }
 
-                    clearInterval(typeInterval);
-                }
+ showGameResult();
 
-            }, 900 / fullText.length);
-        }
+ }, 4000);
+ }
 
-        setTimeout(() => {
 
-            if (coffinInterval) {
-                clearInterval(coffinInterval);
-            }
+ // =====================================================
+ // РЕЗУЛЬТАТ ИГРЫ
+ // =====================================================
 
-            if (loadingOverlay) {
-                loadingOverlay.classList.remove("active");
-            }
+ function showGameResult() {
 
-            showGameResult();
+ const isSuccess =
+ winRecipe.every(ingredient =>
+ chosenSlots.includes(ingredient)
+ ) &&
+ chosenSlots.every(slot =>
+ slot !== null &&
+ winRecipe.includes(slot)
+ );
 
-        }, 4000);
-    }
+ if (failGifContainer) {
 
+ failGifContainer.classList.remove("run-animation");
 
-    // =====================================================
-    // РЕЗУЛЬТАТ ИГРЫ
-    // =====================================================
+ void failGifContainer.offsetWidth;
 
-    function showGameResult() {
+ const uniqueGifPath =
+ 'провал_гиф.gif?t=' + Date.now();
 
-        const isSuccess =
-            winRecipe.every(ingredient =>
-                chosenSlots.includes(ingredient)
-            ) &&
-            chosenSlots.every(slot =>
-                slot !== null &&
-                winRecipe.includes(slot)
-            );
+ failGifContainer.style.backgroundImage =
+ `url('${uniqueGifPath}')`;
+ }
 
-        if (failGifContainer) {
 
-            failGifContainer.classList.remove("run-animation");
+ // =================================================
+ // УСПЕХ
+ // =================================================
 
-            void failGifContainer.offsetWidth;
+ if (isSuccess) {
 
-            const uniqueGifPath =
-                'провал_гиф.gif?t=' + Date.now();
+ successSound.play();
 
-            failGifContainer.style.backgroundImage =
-                `url('${uniqueGifPath}')`;
-        }
+ let userData = null;
+ try {
+ userData = JSON.parse(localStorage.getItem('userProfile'));
+ } catch (e) {
+ userData = null;
+ }
 
+ const playerName =
+ userData?.name ||
+ userData?.username ||
+ "Гость";
 
-// =================================================
-        // УСПЕХ
-        // =================================================
+ const timeSpent = startTime - timeLeft;
+ saveResultToLeaderboard(playerName, timeSpent);
 
-        if (isSuccess) {
+ // СОХРАНЯЕМ ПРОХОЖДЕНИЕ
+ localStorage.setItem(
+ `lastPlayed_${vkID}_${potionID}`,
+ new Date().toDateString()
+ );
 
-            successSound.play();
+ isGameActive = false;
 
-            // --- ВСТАВИТЬ СЮДА ---
-let userData = null;
+ if (countdownInterval) {
+ clearInterval(countdownInterval);
+ }
 
-try {
-    userData = JSON.parse(localStorage.getItem('userProfile'));
-} catch (e) {
-    userData = null;
+ bgMusic.pause();
+ bgMusic.currentTime = 0;
+
+ timerDisplay.textContent = "Успех!";
+ timerDisplay.className = "game-timer win-status";
+
+ // ПОСЛЕДНЕЕ ЗЕЛЬЕ
+ if (centerStand) {
+
+ const finalPotion =
+ document.createElement("div");
+
+ finalPotion.className =
+ "final-potion-result";
+
+ centerStand.appendChild(finalPotion);
+ }
+
+ // =============================================
+ // ПОЯВЛЕНИЕ СВИТКА
+ // =============================================
+
+ setTimeout(() => {
+
+ if (potionModal) {
+
+ potionModal.classList.add("active");
+
+ const closeButton =
+ modalCloseBtn ||
+ potionModal.querySelector("button");
+
+ if (closeButton) {
+
+ closeButton.onclick = (e) => {
+
+ e.preventDefault();
+
+ potionModal.classList.remove("active");
+ potionModal.style.display = "none";
+
+ const waitModal =
+ document.getElementById('wait-modal');
+
+ if (waitModal) {
+
+ waitModal.style.display = 'flex';
+
+ if (understandBtn) {
+ understandBtn.onclick = () => {
+ окно.Расположение.href = '../menu/menu.html';
+ };
+ }
+ }
+ };
+ }
+ }
+
+ }, 1000);
+
+
+ // =================================================
+ // ПРОВАЛ
+ // =================================================
+ } else {
+
+ failSound.play();
+
+ timerDisplay.textContent = "Провал";
+ timerDisplay.className = "состояние потери игрового таймера";
+
+ if (failGifContainer) {
+ failGifContainer.classList.add("запуск анимации");
+ }
+
+ setTimeout(() => {
+ if (failGifContainer) {
+ failGifContainer.classList.remove("выполнить анимацию");
+ failGifContainer.style.backgroundImage = "none";
+ }
+
+ const waitModal = document.getElementById("wait-modal");
+ if (waitModal) {
+ waitModal.style.display = "flex";
+ }
+ }, 2500);
+ }
+ }
+
+ // =====================================================
+ // ВЫБОР ИНГРЕДИЕНТОВ
+ // =====================================================
+
+ cellSlots.forEach(slot => {
+
+ slot.addEventListener("click", () => {
+
+ if (bgMusic.paused) {
+ bgMusic.play().catch(() => {});
+ }
+
+ if (!isGameActive) return;
+
+ const type =
+ slot.getAttribute("data-ingredient");
+
+ if (chosenSlots.includes(type)) return;
+
+ const freeIndex =
+ chosenSlots.findIndex(item => item === null);
+
+ if (freeIndex !== -1) {
+
+ chosenSlots[freeIndex] = type;
+
+ slot.classList.remove("grayscale");
+ slot.classList.add("active-selected");
+
+ const targetSlot =
+ document.getElementById(`slot-${freeIndex}`);
+
+ if (targetSlot && ingredientData[type]) {
+
+ targetSlot.style.background =
+ `url('${ingredientData[type].img}') no-repeat center center`;
+
+ targetSlot.style.backgroundSize =
+ "contain";
+ }
+ }
+ });
+ });
+
+
+ // =====================================================
+ // ОЧИСТКА СЛОТОВ
+ // =====================================================
+
+ chosenSlotElements.forEach(slotElement => {
+
+ slotElement.addEventListener("щелчок", () => {
+
+ if (!isGameActive) возвращает;
+
+ const index = parseInt(
+ slotElement.getAttribute("data-index")
+ );
+
+ const currentIngredient =
+ chosenSlots[index];
+
+ if (currentIngredient) {
+
+ chosenSlots[index] = null;
+
+ slotElement.style.background =
+ "url('../ингредиенты/ингредиент_пустой.png') no-repeat center center";
+
+ slotElement.style.backgroundSize =
+ "contain";
+ const matchingCell =
+ document.querySelector(
+ `.cell-slot[data-ingredient="${currentIngredient}"]`
+ );
+
+ if (matchingCell) {
+ matchingCell.classList.remove("active-selected");
+ matchingCell.classList.add("grayscale");
+ }
+ }
+ });
+ });
+
+
+ // =====================================================
+ // МАГИЧЕСКИЙ ШЛЕЙФ
+ // =====================================================
+
+ const appleImages = [ 
+ '../меню/apple 1.png', 
+ '../меню/apple 2.png'
+ ];
+
+ функция createApple(x, y) {
+
+ const apple = document.createElement('img');
+
+ apple.src =
+ appleImages[
+ Math.floor(Math.random() * appleImages.length)
+ ];
+
+ apple.style.position = 'fixed';
+ apple.style.left = (x - 20) + 'px';
+ apple.style.top = (y - 20) + 'px';
+ apple.style.width = (25 + Math.random() * 25) + 'px';
+ apple.style.pointerEvents = 'none';
+ apple.style.opacity = '1';
+ apple.style.zIndex = '999999';
+ apple.style.transition =
+ 'transform 1.5s ease-out, opacity 1.5s ease-out';
+
+ document.body.appendChild(apple);
+ const randomX = (Math.random() - 0.5) * 120;
+ const randomRotate = (Math.random() - 0.5) * 540;
+
+ requestAnimationFrame(() => {
+ apple.style.transform =
+ `translate(${randomX}px, -140px) rotate(${randomRotate}deg)`;
+ apple.style.opacity = '0';
+ });
+
+ setTimeout(() => { apple.remove(); }, 1500);
+ }
+
+ document.addEventListener('click', e => {
+ createApple(e.clientX, e.clientY);
+ });
+
+ let isMouseDown = false;
+
+ document.addEventListener('mousedown', e => {
+ if (e.button === 0) isMouseDown = true;
+ });
+
+ document.addEventListener('mouseup', e => {
+ if (e.button === 0) isMouseDown = false;
+ });
+
+ let lastAppleTime = 0;
+
+ document.addEventListener('mousemove', e => {
+ if (isMouseDown && Date.now() - Время последнего приложения > 60) {
+ Создать Apple(например,clientX, например,clientY);
+ lastAppleTime = Дата.сейчас();
+ }
+ });
 }
 
-const playerName =
-    userData?.name ||
-    userData?.username ||
-    "Гость";
-            
-            // Если вы хотите сохранять время, которое реально осталось на таймере:
-            // подставьте переменную timeLeft, если она доступна в этой области видимости
-            const timeSpent = startTime - timeLeft;
-saveResultToLeaderboard(playerName, timeSpent);
-            // ---------------------
-
-            // СОХРАНЯЕМ ПРОХОЖДЕНИЕ
-            localStorage.setItem(
-                `lastPlayed_${vkID}_${potionID}`,
-                new Date().toDateString()
-            );
-
-            // ОСТАНАВЛИВАЕМ ИГРУ
-            isGameActive = false;
-
-            if (countdownInterval) {
-                clearInterval(countdownInterval);
-            }
-
-            bgMusic.pause();
-            bgMusic.currentTime = 0;
-
-            timerDisplay.textContent = "Успех!";
-            timerDisplay.className = "game-timer win-status";
-
-
-            // ФИНАЛЬНОЕ ЗЕЛЬЕ
-            if (centerStand) {
-
-                const finalPotion =
-                    document.createElement("div");
-
-                finalPotion.className =
-                    "final-potion-result";
-
-                centerStand.appendChild(finalPotion);
-            }
-
-
-            // =============================================
-            // ПОЯВЛЕНИЕ СВИТКА
-            // =============================================
-
-            setTimeout(() => {
-
-                if (potionModal) {
-
-                    potionModal.classList.add("active");
-
-                    const closeButton =
-                        modalCloseBtn ||
-                        potionModal.querySelector("button");
-
-                    if (closeButton) {
-
-                        closeButton.onclick = (e) => {
-
-                            e.preventDefault();
-
-                            potionModal.classList.remove("active");
-
-                            potionModal.style.display = "none";
-
-                            console.log("Окно закрыто");
-
-
-                            // =================================
-                            // ПОКАЗЫВАЕМ WAIT MODAL
-                            // =================================
-
-                            const waitModal =
-                                document.getElementById('wait-modal');
-
-                            if (waitModal) {
-
-                                waitModal.style.display = 'flex';
-
-                                if (understandBtn) {
-
-                                    understandBtn.onclick = () => {
-
-window.location.href = '../menu/menu.html';
-                                    };
-                                }
-                            };
-                        };
-                    }
-                }
-
-            }, 1000);
-
-
-// =================================================
-        // ПРОВАЛ
-        // =================================================
-        } else {
-            failSound.play();
-
-            timerDisplay.textContent = "Провал";
-            timerDisplay.className = "game-timer lose-status";
-
-            if (failGifContainer) {
-                failGifContainer.classList.add("run-animation");
-            }
-
-            setTimeout(() => {
-                if (failGifContainer) {
-                    failGifContainer.classList.remove("run-animation");
-                    failGifContainer.style.backgroundImage = "none";
-                }
-
-                const waitModal = document.getElementById('wait-modal');
-                if (waitModal) {
-                    waitModal.style.display = 'flex';
-                }
-            }, 2500);
-        }
-} // 👈 ВОТ ЭТОЙ СКОБКИ НЕ ХВАТАЕТ
 
 // =====================================================
-// ВЫБОР ИНГРЕДИЕНТОВ
-// ============================================
+// ТАБЛИЦА ЛИДЕРОВ
+// =====================================================
 
-    cellSlots.forEach(slot => {
-
-        slot.addEventListener("click", () => {
-
-            if (bgMusic.paused) {
-                bgMusic.play().catch(() => {});
-            }
-
-            if (!isGameActive) return;
-
-            const type =
-                slot.getAttribute("data-ingredient");
-
-            if (chosenSlots.includes(type)) return;
-
-            const freeIndex =
-                chosenSlots.findIndex(item => item === null);
-
-            if (freeIndex !== -1) {
-
-                chosenSlots[freeIndex] = type;
-
-                slot.classList.remove("grayscale");
-
-                slot.classList.add("active-selected");
-
-                const targetSlot =
-                    document.getElementById(`slot-${freeIndex}`);
-
-                if (targetSlot && ingredientData[type]) {
-
-                    targetSlot.style.background =
-                        `url('${ingredientData[type].img}') no-repeat center center`;
-
-                    targetSlot.style.backgroundSize =
-                        "contain";
-                }
-            }
-        });
-    });
-
-
-    // =====================================================
-    // ОЧИСТКА СЛОТОВ
-    // =====================================================
-
-    chosenSlotElements.forEach(slotElement => {
-
-        slotElement.addEventListener("click", () => {
-
-            if (!isGameActive) return;
-
-            const index = parseInt(
-                slotElement.getAttribute("data-index")
-            );
-
-            const currentIngredient =
-                chosenSlots[index];
-
-            if (currentIngredient) {
-
-                chosenSlots[index] = null;
-
-                slotElement.style.background =
-                    "url('../ингредиенты/ингредиент_пустой.png') no-repeat center center";
-
-                slotElement.style.backgroundSize =
-                    "contain";
-
-                const matchingCell =
-                    document.querySelector(
-                        `.cell-slot[data-ingredient="${currentIngredient}"]`
-                    );
-
-                if (matchingCell) {
-
-                    matchingCell.classList.remove(
-                        "active-selected"
-                    );
-
-                    matchingCell.classList.add("grayscale");
-                }
-            }
-        });
-    });
-
-
-    // =====================================================
-    // МАГИЧЕСКИЙ ШЛЕЙФ
-    // =====================================================
-
-    const appleImages = [
-        '../menu/apple 1.png',
-        '../menu/apple 2.png'
-    ];
-
-
-    function createApple(x, y) {
-
-        const apple = document.createElement('img');
-
-        apple.src =
-            appleImages[
-                Math.floor(Math.random() * appleImages.length)
-            ];
-
-        apple.style.position = 'fixed';
-
-        apple.style.left = (x - 20) + 'px';
-
-        apple.style.top = (y - 20) + 'px';
-
-        apple.style.width =
-            (25 + Math.random() * 25) + 'px';
-
-        apple.style.pointerEvents = 'none';
-
-        apple.style.opacity = '1';
-
-        apple.style.zIndex = '999999';
-
-        apple.style.transition =
-            'transform 1.5s ease-out, opacity 1.5s ease-out';
-
-        document.body.appendChild(apple);
-
-        const randomX =
-            (Math.random() - 0.5) * 120;
-
-        const randomRotate =
-            (Math.random() - 0.5) * 540;
-
-        requestAnimationFrame(() => {
-
-            apple.style.transform =
-                `translate(${randomX}px, -140px) rotate(${randomRotate}deg)`;
-
-            apple.style.opacity = '0';
-        });
-
-        setTimeout(() => {
-            apple.remove();
-        }, 1500);
-    }
-
-
-    document.addEventListener('click', e => {
-        createApple(e.clientX, e.clientY);
-    });
-
-    let isMouseDown = false;
-
-    document.addEventListener('mousedown', e => {
-
-        if (e.button === 0) {
-            isMouseDown = true;
-        }
-    });
-
-    document.addEventListener('mouseup', e => {
-
-        if (e.button === 0) {
-            isMouseDown = false;
-        }
-    });
-
-    let lastAppleTime = 0;
-
-    document.addEventListener('mousemove', e => {
-
-        if (
-            isMouseDown &&
-            Date.now() - lastAppleTime > 60
-        ) {
-
-            createApple(e.clientX, e.clientY);
-
-            lastAppleTime = Date.now();
-        }
-    });
-}
-
-// Функция для записи результата в LocalStorage
 function saveResultToLeaderboard(name, time) {
-    // Получаем текущие данные или создаем пустой массив
-    let leaderboard = JSON.parse(localStorage.getItem("potion_leaderboard")) || [];
-
-    // Добавляем новый результат
-    leaderboard.push({
-        name: name,
-        timeSpent: time,
-        date: new Date().toLocaleDateString()
-    });
-
-    // Сортируем (по времени: чем меньше, тем лучше)
-    leaderboard.sort((a, b) => a.timeSpent - b.timeSpent);
-
-    // Сохраняем обратно
-    localStorage.setItem("potion_leaderboard", JSON.stringify(leaderboard));
+ let leaderboard = JSON.parse(localStorage.getItem("potion_leaderboard")) || [];
+ leaderboard.push({
+ name: name,
+ timeSpent: time,
+ date: new Date().toLocaleDateString()
+ });
+ leaderboard.sort((a, b) => a.timeSpent - b.timeSpent);
+ localStorage.setItem("potion_leaderboard", JSON.stringify(leaderboard));
 }
+
+
+// =====================================================
+// МОБИЛЬНАЯ ВЕРСИЯ: свайп шапки + скроллинг
+// Работает только на сенсорных устройствах
+// =====================================================
 
 (function () {
-    if (window.innerWidth > 768) return; // только на мобиле
 
-    var header = document.querySelector('.site-header');
-    if (!header) return;
+ var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+ if (!isTouch) return;
 
-    var touchStartY = 0;
-    var touchStartTime = 0;
-    var isHidden = false;
+ var header = document.querySelector('.site-header');
 
-    // Слушаем начало касания
-    document.addEventListener('touchstart', function (e) {
-        touchStartY = e.touches[0].clientY;
-        touchStartTime = Date.now();
-    }, { passive: true });
+ function isLandscape() {
+ if (screen.orientation) {
+ return screen.orientation.type.indexOf('landscape') !== -1;
+ }
+ return window.innerWidth > window.innerHeight
+ }
 
-    // Слушаем конец касания
-    document.addEventListener('touchend', function (e) {
-        var touchEndY = e.changedTouches[0].clientY;
-        var deltaY = touchStartY - touchEndY; // > 0 = свайп вверх, < 0 = свайп вниз
-        var elapsed = Date.now() - touchStartTime;
+ // ── Разрешаем/блокируем скролл по ориентации ──
+ function applyScrollMode() {
+ var gameContainer = document.querySelector('.game-контейнер');
 
-        // Быстрый свайп (до 400мс) длиной больше 40px
-        if (elapsed < 400 && Math.abs(deltaY) > 40) {
-            if (deltaY > 0 && !isHidden) {
-                // Свайп вверх — скрыть шапку
-                header.classList.add('header-hidden');
-                header.classList.remove('header-visible');
-                isHidden = true;
-            } else if (deltaY < 0 && isHidden) {
-                // Свайп вниз — показать шапку
-                header.classList.remove('header-hidden');
-                header.classList.add('header-visible');
-                isHidden = false;
-            }
-        }
-    }, { passive: true });
+ if (isLandscape()) {
+ // Снимаем overflow:hidden с body (он задан в базовом CSS)
+ document.body.style.overflowY = 'авто';
+ document.body.style.overflowX = 'скрытый';
+ document.body.style.height = 'auto';
+ document.body.style.alignItems = 'flex-start';
+ document.body.style.touchAction = 'pan-y';
+ if (gameContainer) {
+ gameContainer.style.height = '115vh';
+ gameContainer.style.overflow = 'visible';
+ gameContainer.style.paddingTop = '46px';
+ gameContainer.style.boxSizing = 'border-box';
+ gameContainer.style.touchAction = 'pan-y';
+ }
+ } else {
+ // Портрет — исходное состояние
+ document.body.style.overflowY = 'hidden';
+ document.body.style.height = '100%';
+ document.body.style.alignItems = 'center';
+ document.body.style.touchAction = '';
+
+ if (gameContainer) {
+ gameContainer.style.height = '75vw';
+ gameContainer.style.overflow = '';
+ gameContainer.style.paddingTop = '';
+ gameContainer.style.touchAction = '';
+ }
+ }
+ }
+
+ applyScrollMode();
+ window.addEventListener('orientationchange', function () { setTimeout(applyScrollMode, 200); });
+ window.addEventListener("изменить размер", applyScrollMode);
+
+ // ── Свайп шапки вверх (скрыть) / вниз (показать) ──
+ if (!заголовок) возвращает;
+
+ var touchStartY = 0;
+ var touchStartX = 0;
+ var touchStartTime = 0;
+ var isHidden = false;
+
+ document.addEventListener('touchstart', function (e) {
+ touchStartY = e.touches[0].clientY;
+ touchStartX = e.touches[0].clientX;
+ touchStartTime = Date.now();
+ }, { passive: true });
+
+ document.addEventListener('touchend', function (e) {
+ if (!isLandscape()) return;
+
+ var endY = e.changedTouches[0].clientY;
+ var EndX = e.Измененные касания[0].clientX;
+ var deltaY = touchStartY - endY; // > 0 = вверх
+ var deltaX = Math.abs(touchStartX - EndX);
+ var elapsed = Date.now() - Время запуска касания;
+
+ если (истекло > 500) вернуть;
+ if (Math.abs(deltaY) < 35) возвращает;
+ if (deltaX > Math.abs(deltaY)) return; // горизонтальный свайп — игнор
+
+ if (deltaY > 0 && !isHidden) {
+ header.classList.add('скрытый заголовок');
+ header.classList.remove('видимый заголовок');
+ isHidden = true;
+ } else if (deltaY < 0 && isHidden) {
+ header.classList.remove('скрытый заголовок');
+ header.classList.add('видимый заголовок');
+ isHidden = false;
+ } 
+ }, { пассивный: true });
+
+ // При повороте обратно в портрет — шапка всегда видна
+ window.addEventListener('orientationchange', функция () { 
+ setTimeout(функция () { 
+ if (!isLandscape()) {
+ header.classList.remove('скрытый заголовок');
+ header.classList.add('видимый заголовок');
+ isHidden = false;
+ }
+ }, 200);
+ });
+
 })();
