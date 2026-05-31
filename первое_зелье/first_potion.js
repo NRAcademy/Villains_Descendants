@@ -614,3 +614,117 @@ function saveResultToLeaderboard(name, time) {
 
     localStorage.setItem("potion_leaderboard", JSON.stringify(leaderboard));
 }
+
+// =====================================================
+// GALLERY MODALS: СПРАВОЧНИК / ИНСТРУКЦИЯ
+// =====================================================
+
+(function () {
+
+    // ---- СПРАВОЧНИК ----
+    var spravPages = [
+        'menu/справочник/страница 1.png',
+        'menu/справочник/страница 2.png',
+        'menu/справочник/страница 3.png',
+        'menu/справочник/страница 4.png'
+    ];
+    var spravIndex = 0;
+
+    // ---- ИНСТРУКЦИЯ ----
+    var instrPages = [
+        'menu/инструкция/инструкция 1.png',
+        'menu/инструкция/инструкция 2.png',
+        'menu/инструкция/инструкция 3.png',
+        'menu/инструкция/инструкция 4.png',
+        'menu/инструкция/инструкция 5.png'
+    ];
+    var instrIndex = 0;
+
+    function openModal(overlayId, imgId, pages, indexRef) {
+        var overlay = document.getElementById(overlayId);
+        var img     = document.getElementById(imgId);
+        if (!overlay || !img) return;
+        img.src = pages[indexRef.val];
+        overlay.classList.add('active');
+    }
+
+    function closeModal(overlayId) {
+        var overlay = document.getElementById(overlayId);
+        if (overlay) overlay.classList.remove('active');
+    }
+
+    // Open buttons
+    var btnSprav = document.getElementById('btn-spravochnik');
+    var btnInstr = document.getElementById('btn-instrukcia');
+
+    var spravRef = { val: 0 };
+    var instrRef = { val: 0 };
+
+    if (btnSprav) {
+        btnSprav.addEventListener('click', function (e) {
+            e.preventDefault();
+            spravRef.val = 0;
+            openModal('spravochnik-modal', 'sprav-img', spravPages, spravRef);
+        });
+    }
+
+    if (btnInstr) {
+        btnInstr.addEventListener('click', function (e) {
+            e.preventDefault();
+            instrRef.val = 0;
+            openModal('instrukcia-modal', 'instr-img', instrPages, instrRef);
+        });
+    }
+
+    // Close on backdrop click (outside the box)
+    ['spravochnik-modal', 'instrukcia-modal'].forEach(function (id) {
+        var overlay = document.getElementById(id);
+        if (!overlay) return;
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+    });
+
+    // NAV: СПРАВОЧНИК
+    var spravPrev = document.getElementById('sprav-prev');
+    var spravNext = document.getElementById('sprav-next');
+    var spravImg  = document.getElementById('sprav-img');
+
+    if (spravPrev) {
+        spravPrev.addEventListener('click', function (e) {
+            e.stopPropagation();
+            spravRef.val = (spravRef.val - 1 + spravPages.length) % spravPages.length;
+            if (spravImg) spravImg.src = spravPages[spravRef.val];
+        });
+    }
+    if (spravNext) {
+        spravNext.addEventListener('click', function (e) {
+            e.stopPropagation();
+            spravRef.val = (spravRef.val + 1) % spravPages.length;
+            if (spravImg) spravImg.src = spravPages[spravRef.val];
+        });
+    }
+
+    // NAV: ИНСТРУКЦИЯ
+    var instrPrev = document.getElementById('instr-prev');
+    var instrNext = document.getElementById('instr-next');
+    var instrImg  = document.getElementById('instr-img');
+
+    if (instrPrev) {
+        instrPrev.addEventListener('click', function (e) {
+            e.stopPropagation();
+            instrRef.val = (instrRef.val - 1 + instrPages.length) % instrPages.length;
+            if (instrImg) instrImg.src = instrPages[instrRef.val];
+        });
+    }
+    if (instrNext) {
+        instrNext.addEventListener('click', function (e) {
+            e.stopPropagation();
+            instrRef.val = (instrRef.val + 1) % instrPages.length;
+            if (instrImg) instrImg.src = instrPages[instrRef.val];
+        });
+    }
+
+})();
