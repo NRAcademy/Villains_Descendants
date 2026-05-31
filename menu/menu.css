@@ -556,13 +556,11 @@ body {
 .handbook-prev {
     left: 0;
     transform: translateY(-50%) translateX(-60%);
-    background-image: url('кнопка_назад.png');
 }
 
 .handbook-next {
     right: 0;
     transform: translateY(-50%) translateX(60%);
-    background-image: url('кнопка_вперед.png');
 }
 
 .handbook-prev:active {
