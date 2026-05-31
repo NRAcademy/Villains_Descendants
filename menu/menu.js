@@ -110,6 +110,46 @@ document.addEventListener("touchend", (e) => {
 })();
 
 // ======================================================
+// МОДАЛ ИНСТРУКЦИЯ
+// ======================================================
+
+(function () {
+    const pages = [
+        "инструкция/инструкция 1.png",
+        "инструкция/инструкция 2.png",
+        "инструкция/инструкция 3.png",
+        "инструкция/инструкция 4.png",
+        "инструкция/инструкция 5.png"
+    ];
+
+    let currentPage = 0;
+
+    const overlay = document.getElementById("instruction-overlay");
+    const modal   = document.getElementById("instruction-modal");
+    const pageImg = document.getElementById("instruction-page-img");
+    const prevBtn = document.getElementById("instruction-prev");
+    const nextBtn = document.getElementById("instruction-next");
+    const openBtn = document.getElementById("open-instruction");
+
+    if (!overlay || !openBtn) return;
+
+    function showPage(index) {
+        currentPage = ((index % pages.length) + pages.length) % pages.length;
+        pageImg.src = pages[currentPage];
+    }
+
+    function openInstruction() { showPage(0); overlay.classList.add("active"); }
+    function closeInstruction() { overlay.classList.remove("active"); }
+
+    openBtn.addEventListener("click", e => { e.preventDefault(); openInstruction(); });
+    prevBtn.addEventListener("click", e => { e.stopPropagation(); showPage(currentPage - 1); });
+    nextBtn.addEventListener("click", e => { e.stopPropagation(); showPage(currentPage + 1); });
+
+    overlay.addEventListener("click",    e => { if (!modal.contains(e.target)) closeInstruction(); });
+    overlay.addEventListener("touchend", e => { if (!modal.contains(e.target)) closeInstruction(); }, { passive: true });
+})();
+
+// ======================================================
 // МОДАЛ СПРАВОЧНИК
 // ======================================================
 
