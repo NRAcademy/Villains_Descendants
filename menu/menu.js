@@ -222,7 +222,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             localStorage.removeItem("potion_daily_block");
         }
-    }
 
     // Выбор зелья
     const talkativePotion = document.getElementById("potion-talkative");
