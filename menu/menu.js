@@ -242,9 +242,6 @@ function startPotionGame() {
     window.location.href = "../первое_зелье/first_potion.html";
 }
 
-
-function startPotionGame() {
-    window.location.href = "../второе_зелье/second_potion.html";
 }
 // ======================================================
 // МАГИЧЕСКИЙ ЭФФЕКТ: ЯБЛОКИ
