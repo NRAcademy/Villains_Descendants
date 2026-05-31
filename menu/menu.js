@@ -132,6 +132,9 @@ document.addEventListener("touchend", (e) => {
 
     if (!overlay || !openBtn) return;
 
+    prevBtn.style.backgroundImage = "url('инструкция/кнопка_назад.png')";
+    nextBtn.style.backgroundImage = "url('инструкция/кнопка_вперед.png')";
+
     function showPage(index) {
         currentPage = ((index % pages.length) + pages.length) % pages.length;
         pageImg.src = pages[currentPage];
@@ -170,6 +173,9 @@ document.addEventListener("touchend", (e) => {
     const openBtn = document.getElementById("open-handbook");
 
     if (!overlay || !openBtn) return;
+
+    prevBtn.style.backgroundImage = "url('справочник/кнопка_назад.png')";
+    nextBtn.style.backgroundImage = "url('справочник/кнопка_вперед.png')";
 
     function showPage(index) {
         currentPage = ((index % pages.length) + pages.length) % pages.length;
