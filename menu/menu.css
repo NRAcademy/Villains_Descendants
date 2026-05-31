@@ -515,9 +515,7 @@ body {
 
 .handbook-modal {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-block;
     max-width: 90vw;
     max-height: 85vh;
 }
@@ -534,8 +532,8 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: clamp(36px, 6vw, 64px);
-    height: clamp(36px, 6vw, 64px);
+    width: clamp(40px, 6vw, 70px);
+    height: clamp(40px, 6vw, 70px);
     background-color: transparent;
     background-size: contain;
     background-repeat: no-repeat;
@@ -556,13 +554,23 @@ body {
 }
 
 .handbook-prev {
-    left: clamp(6px, 2vw, 20px);
+    left: 0;
+    transform: translateY(-50%) translateX(-60%);
     background-image: url('menu/кнопка_назад.png');
 }
 
 .handbook-next {
-    right: clamp(6px, 2vw, 20px);
+    right: 0;
+    transform: translateY(-50%) translateX(60%);
     background-image: url('menu/кнопка_вперед.png');
+}
+
+.handbook-prev:active {
+    transform: translateY(-50%) translateX(-60%) scale(0.93);
+}
+
+.handbook-next:active {
+    transform: translateY(-50%) translateX(60%) scale(0.93);
 }
 
 /* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */
