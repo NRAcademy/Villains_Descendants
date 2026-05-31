@@ -48,7 +48,6 @@ window.addEventListener("load", () => {
 function checkOrientation() {
     const overlay = document.getElementById("rotate-overlay");
     if (!overlay) return;
-    // Показываем overlay только в portrait на мобиле
     const isMobile = window.innerWidth <= 1000 || window.innerHeight <= 1000;
     const isPortrait = window.innerHeight > window.innerWidth;
     overlay.style.display = (isMobile && isPortrait) ? "flex" : "none";
@@ -157,18 +156,18 @@ document.addEventListener("touchend", (e) => {
     const pages = [
         "справочник/страница 1.png",
         "справочник/страница 2.png",
-        "cправочник/страница 3.png",
+        "справочник/страница 3.png",
         "справочник/страница 4.png"
     ];
 
     let currentPage = 0;
 
-    const overlay   = document.getElementById("handbook-overlay");
-    const modal     = document.getElementById("handbook-modal");
-    const pageImg   = document.getElementById("handbook-page-img");
-    const prevBtn   = document.getElementById("handbook-prev");
-    const nextBtn   = document.getElementById("handbook-next");
-    const openBtn   = document.getElementById("open-handbook");
+    const overlay = document.getElementById("handbook-overlay");
+    const modal   = document.getElementById("handbook-modal");
+    const pageImg = document.getElementById("handbook-page-img");
+    const prevBtn = document.getElementById("handbook-prev");
+    const nextBtn = document.getElementById("handbook-next");
+    const openBtn = document.getElementById("open-handbook");
 
     if (!overlay || !openBtn) return;
 
@@ -177,29 +176,15 @@ document.addEventListener("touchend", (e) => {
         pageImg.src = pages[currentPage];
     }
 
-    function openHandbook() {
-        showPage(0);
-        overlay.classList.add("active");
-    }
-
-    function closeHandbook() {
-        overlay.classList.remove("active");
-    }
+    function openHandbook()  { showPage(0); overlay.classList.add("active"); }
+    function closeHandbook() { overlay.classList.remove("active"); }
 
     openBtn.addEventListener("click", e => { e.preventDefault(); openHandbook(); });
-
     prevBtn.addEventListener("click", e => { e.stopPropagation(); showPage(currentPage - 1); });
     nextBtn.addEventListener("click", e => { e.stopPropagation(); showPage(currentPage + 1); });
 
-    // Закрыть при клике вне модального окна
-    overlay.addEventListener("click", e => {
-        if (!modal.contains(e.target)) closeHandbook();
-    });
-
-    // Закрыть при тапе вне на мобиле
-    overlay.addEventListener("touchend", e => {
-        if (!modal.contains(e.target)) closeHandbook();
-    }, { passive: true });
+    overlay.addEventListener("click",    e => { if (!modal.contains(e.target)) closeHandbook(); });
+    overlay.addEventListener("touchend", e => { if (!modal.contains(e.target)) closeHandbook(); }, { passive: true });
 })();
 
 // ======================================================
@@ -222,13 +207,15 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             localStorage.removeItem("potion_daily_block");
         }
+    }
 
-    // Выбор зелья
+    // Выбор зелья 1
     const talkativePotion = document.getElementById("potion-talkative");
     if (talkativePotion) {
         talkativePotion.addEventListener("click", () => { startPotionGame(); });
     }
 
+    // Выбор зелья 2
     const secondPotion = document.getElementById("potion-second");
     if (secondPotion) {
         secondPotion.addEventListener("click", () => {
@@ -241,7 +228,6 @@ function startPotionGame() {
     window.location.href = "../первое_зелье/first_potion.html";
 }
 
-}
 // ======================================================
 // МАГИЧЕСКИЙ ЭФФЕКТ: ЯБЛОКИ
 // ======================================================
