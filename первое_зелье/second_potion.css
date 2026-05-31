@@ -1,0 +1,942 @@
+/* ================= ПОДКЛЮЧЕНИЕ ШРИФТА ================= */
+@font-face {
+    font-family: 'Anticva';
+    src: url('Anticva.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ================= ГЛОБАЛЬНАЯ ФИКСАЦИЯ КУРСОРА ================= */
+html, body, *, 
+a, a:hover, 
+button, button:hover, 
+img, img:hover, 
+.cell-slot, .cell-slot:hover,
+.chosen-slot, .chosen-slot:hover,
+.header-link, .header-link:hover {
+    cursor: url('../menu/custom-cursor.png') 0 0, url('/menu/custom-cursor.png') 0 0, url('../custom-cursor.png') 0 0, auto !important;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #060713;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+/* ==== ШАПКА ==== */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: rgba(1, 1, 1, 0.75);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    transition: transform 0.35s ease;
+}
+
+.site-header.header-hidden {
+    transform: translateY(-100%);
+}
+
+.header-inner {
+    width: 100%;
+    padding: 0 5%;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    align-items: center;
+}
+
+.header-link {
+    font-family: 'Anticva', serif;
+    font-size: 22px;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+    white-space: nowrap;
+}
+
+.header-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px #ffffff, 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* Главный контейнер игры */
+.game-container {
+    position: relative;
+    width: 100vw;
+    height: 75vw;
+    z-index: 10;
+    background: transparent !important;
+    background-size: contain;
+}
+
+/* ================= ЛЕВАЯ ЧАСТЬ: АЛХИМИЧЕСКИЙ КРУГ ================= */
+.alchemy-section {
+    position: absolute;
+    left: 9.5%;
+    top: 30%;
+    width: 44%;
+    height: 55%;
+}
+
+/* круг.png — уменьшен, ячейки остаются на своих позициях */
+.orbit-bg {
+    position: absolute;
+    top: 18%;
+    left: 18%;
+    width: 64%;
+    height: 64%;
+    background: url('круг.png') no-repeat center center;
+    background-size: contain;
+}
+
+.center-stand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 55%;
+    height: 55%;
+    background: url('стенд.png') no-repeat center center;
+    background-size: contain;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+/* Финальный флакон зелья при Успехе */
+.final-potion-result {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 70%;
+    background: url('../зелье/второе_зелье.png') no-repeat center center;
+    background-size: contain;
+    transform: translate(-50%, -60%);
+    z-index: 10;
+    animation: potionBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.slots-rotator {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rotateCircle 25s linear infinite;
+    z-index: 3;
+}
+
+.slots-rotator.frozen {
+    animation-play-state: paused !important;
+}
+
+.cell-slot {
+    position: absolute;
+    width: calc(28% + 2px);
+    height: calc(28% + 2px);
+    margin-top: calc(-14% - 1px);
+    margin-left: calc(-14% - 1px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.cell-slot::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('ячейка.png') no-repeat center center;
+    background-size: contain;
+    z-index: 1;
+    transition: filter 0.2s ease;
+}
+
+.ingredient-img {
+    width: 75%;
+    height: 75%;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.cell-slot.grayscale::before { filter: brightness(0.4) grayscale(100%); }
+.cell-slot.grayscale:hover::before { filter: brightness(1) grayscale(0%); }
+.cell-slot.grayscale:hover { transform: scale(1.05); }
+.cell-slot.active-selected::before { filter: brightness(1) grayscale(0%) !important; }
+
+/* Позиции ячеек — центр ячейки на окружности круг.png (r=32% от alchemy-section) */
+.cell-slot:nth-child(1) { top: 18.0%; left: 50.0%; }
+.cell-slot:nth-child(2) { top: 34.0%; left: 77.7%; }
+.cell-slot:nth-child(3) { top: 66.0%; left: 77.7%; }
+.cell-slot:nth-child(4) { top: 82.0%; left: 50.0%; }
+.cell-slot:nth-child(5) { top: 66.0%; left: 22.3%; }
+.cell-slot:nth-child(6) { top: 34.0%; left: 22.3%; }
+
+.cell-slot { animation: counterRotate 25s linear infinite; }
+.cell-slot.frozen { animation-play-state: paused !important; }
+
+/* ================= ПРАВАЯ ЧАСТЬ: МЕНЮ ЗЕЛЬЕВАРЕНИЯ ================= */
+.menu-section {
+    position: absolute;
+    right: 7%;
+    top: 33%;
+    width: 38%;
+    height: 48%;
+    background: url('блок_второе_зелье.png') no-repeat center center;
+    background-size: contain;
+}
+
+.ingredients-slots-row {
+    position: absolute;
+    top: 57%;
+    left: 10%;
+    width: 80%;
+    height: 18%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chosen-slot {
+    width: 21%;
+    height: 100%;
+    background: url('../ингредиенты/ингредиент_пустой.png') no-repeat center center;
+    background-size: contain;
+    transition: filter 0.2s ease;
+}
+
+.chosen-slot:hover { filter: brightness(0.75); }
+
+/* ТАЙМЕР И СТАТУСЫ */
+.game-timer {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Anticva', serif;
+    font-size: 58px;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    user-select: none;
+    white-space: nowrap;
+}
+
+.game-timer.win-status {
+    color: #26d07c !important;
+    text-shadow: 0 0 15px rgba(38, 208, 124, 0.6) !important;
+}
+
+.game-timer.lose-status {
+    color: #ff3b30 !important;
+    text-shadow: 0 0 15px rgba(255, 59, 48, 0.6) !important;
+}
+
+/* ================= ЭКРАНЫ ОВЕРЛЕЕВ ================= */
+.countdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    transition: opacity 0.5s ease;
+}
+
+.countdown-number {
+    font-family: 'Anticva', serif;
+    font-size: 120px;
+    color: #ffffff;
+    text-shadow: 0 0 30px #ffffff;
+    animation: pulseCount 1s ease-in-out infinite;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.88);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99995;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.loading-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.coffins-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.coffin {
+    width: 75px;
+    height: 140px;
+    object-fit: contain;
+    filter: brightness(0.25);
+    transition: filter 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.coffin.active-coffin {
+    filter: brightness(1) !important;
+}
+
+.loading-title-text {
+    font-family: 'Anticva', serif;
+    font-size: 28px;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    min-height: 40px;
+}
+
+/* Оверлей гифки провала */
+.fail-gif-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 90;
+    pointer-events: none;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+}
+
+.fail-gif-overlay.run-animation {
+    animation: fadeExplosion 2.5s ease-in-out forwards;
+}
+
+/* ================= МОДАЛЬНОЕ ОКНО "ИНФОРМАЦИЯ" ================= */
+.info-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.info-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.info-card-body {
+    width: 62vw;
+    height: 44vw;
+    background: url('информация 2.png') no-repeat center center;
+    background-size: contain;
+    position: relative;
+    flex-shrink: 0;
+    transform: scale(0.9);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.info-modal-overlay.active .info-card-body {
+    transform: scale(1);
+}
+
+.info-close-btn {
+    position: absolute;
+    top: 2vw;
+    right: 2vw;
+    width: 12vw;
+    height: 4vw;
+    background: url('кнопка.png') no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    z-index: 10;
+}
+
+.info-close-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.15);
+}
+
+.info-close-btn:active {
+    transform: scale(0.95);
+    filter: brightness(0.85);
+}
+
+/* Фоновое видео */
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ================= МОДАЛ ОЖИДАНИЯ ================= */
+.wait-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.wait-modal-content {
+    position: relative;
+    text-align: center;
+    width: 420px;
+    max-width: 80vw;
+}
+
+.wait-bg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.understand-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 55px;
+    background-color: transparent;
+    background: url('../уведомление/понятно.png') no-repeat center center;
+    background-size: contain;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.understand-btn:hover { filter: brightness(0.85); }
+.understand-btn:active {
+    filter: brightness(0.65);
+    transform: translateX(-50%) scale(0.96);
+}
+.understand-btn:focus,
+.understand-btn:focus-visible { outline: none; box-shadow: none; }
+
+/* ================= МОДАЛЫ УСПЕХ / ПРОВАЛ ================= */
+.success-modal-overlay,
+.fail-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.success-modal-content,
+.fail-modal-content {
+    position: relative;
+    text-align: center;
+    width: 420px;
+    max-width: 80vw;
+}
+
+.success-bg,
+.fail-bg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.success-btn,
+.fail-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 55px;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.success-btn { background-image: url('../уведомление/успешно_кнопка.png'); }
+.fail-btn    { background-image: url('../уведомление/неудача_кнопка.png'); }
+
+.success-btn:hover,
+.fail-btn:hover { filter: brightness(0.85); }
+
+.success-btn:active { filter: brightness(0.65); transform: translateX(-50%) scale(0.96); }
+.fail-btn:active    { filter: brightness(0.65); transform: translateX(-50%) scale(0.96); }
+
+.success-btn:focus,
+.success-btn:focus-visible,
+.fail-btn:focus,
+.fail-btn:focus-visible { outline: none; box-shadow: none; }
+
+/* ================= КНОПКА ГОТОВО ================= */
+.ready-btn {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(50%);
+    width: 200px;
+    height: 60px;
+    background-color: transparent;
+    background: url('../первое_зелье/готово.png') no-repeat center center;
+    background-size: contain;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    z-index: 100;
+    transition: transform 0.1s ease;
+}
+
+.ready-btn:active {
+    transform: translateX(-50%) translateY(50%) scale(0.95);
+}
+
+/* ================= АНИМАЦИИ ================= */
+@keyframes rotateCircle {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+@keyframes counterRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+}
+
+@keyframes pulseCount {
+    0%   { transform: scale(0.6); opacity: 0; }
+    20%  { opacity: 1; }
+    80%  { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1.2); opacity: 0; }
+}
+
+@keyframes potionBounce {
+    0%   { transform: translate(-50%, -60%) scale(0); opacity: 0; }
+    60%  { transform: translate(-50%, -60%) scale(1.15); opacity: 1; }
+    100% { transform: translate(-50%, -60%) scale(1); opacity: 1; }
+}
+
+@keyframes fadeExplosion {
+    0%   { opacity: 0; }
+    20%  { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ================================================================
+   PORTRAIT MOBILE — overlay "поверни экран"
+   ================================================================ */
+@media screen and (max-width: 1023px) and (orientation: portrait) {
+    .rotate-overlay {
+        display: flex !important;
+    }
+}
+
+/* ================================================================
+   LANDSCAPE MOBILE
+   ================================================================ */
+@media screen and (max-width: 1023px) and (orientation: landscape) {
+
+    html, body {
+        overflow: hidden;
+    }
+
+    /* Шапка — только transform при свайпе, game-container НЕ двигается */
+    .site-header {
+        height: clamp(34px, 7vh, 52px);
+        transition: transform 0.35s ease;
+    }
+    .site-header.header-hidden {
+        transform: translateY(-100%);
+    }
+    .header-inner {
+        gap: clamp(14px, 3vw, 44px);
+        padding: 0 3%;
+    }
+    .header-link {
+        font-size: clamp(10px, 1.6vw, 17px);
+        letter-spacing: 0.5px;
+    }
+
+    /* Контейнер — FLEX, статичный margin-top, НЕ меняется при свайпе шапки */
+    .game-container {
+        width: 100vw;
+        height: calc(100vh - clamp(34px, 7vh, 52px));
+        margin-top: clamp(34px, 7vh, 52px);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 2vw;
+    }
+
+    /* Алхимический круг */
+    .alchemy-section {
+        position: relative;
+        left: unset;
+        top: unset;
+        right: unset;
+        bottom: unset;
+        transform: none;
+        width: clamp(180px, 82vh, 420px);
+        height: clamp(180px, 82vh, 420px);
+        flex-shrink: 0;
+    }
+
+    /* Меню */
+    .menu-section {
+        position: relative;
+        left: unset;
+        top: unset;
+        right: unset;
+        bottom: unset;
+        transform: none;
+        width: clamp(120px, 28vw, 270px);
+        height: clamp(120px, 68vh, 320px);
+        flex-shrink: 0;
+    }
+
+    /* Слоты ингредиентов */
+    .ingredients-slots-row {
+        top: 54%;
+        left: 5%;
+        width: 90%;
+        height: 18%;
+        gap: 3%;
+        justify-content: center;
+    }
+
+    /* Таймер */
+    .game-timer {
+        font-size: clamp(26px, 6vh, 50px);
+        bottom: 12%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* Кнопка ГОТОВО — середина по нижней линии блока */
+    .ready-btn {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) translateY(50%);
+        width: clamp(110px, 18vh, 180px);
+        height: clamp(36px, 7vh, 62px);
+    }
+
+    /* Загрузка */
+    .coffin {
+        width: clamp(38px, 6vw, 62px);
+        height: clamp(70px, 11vh, 115px);
+    }
+    .coffins-container {
+        gap: clamp(10px, 2vw, 20px);
+        margin-bottom: clamp(8px, 2vh, 18px);
+    }
+    .loading-title-text {
+        font-size: clamp(13px, 2.2vw, 22px);
+    }
+
+    /* Отсчёт */
+    .countdown-number {
+        font-size: clamp(58px, 12vw, 96px);
+    }
+
+    /* Модальное окно информации — крупнее, по центру */
+    .info-card-body {
+        width: clamp(80vw, 90vw, 96vw);
+        height: clamp(58vh, 70vh, 80vh);
+        transform: scale(0.9);
+    }
+    .info-modal-overlay.active .info-card-body {
+        transform: scale(1);
+    }
+    .info-close-btn {
+        top: 1.5vw;
+        right: 1.5vw;
+        width: clamp(90px, 15vw, 140px);
+        height: clamp(30px, 6vh, 48px);
+    }
+
+    /* Wait modal */
+    .wait-modal-content {
+        width: clamp(250px, 42vw, 370px);
+    }
+    .understand-btn {
+        width: clamp(115px, 18vw, 165px);
+        height: clamp(36px, 6vh, 50px);
+        bottom: clamp(10px, 2vh, 16px);
+    }
+
+    /* Success / Fail modals */
+    .success-modal-content,
+    .fail-modal-content {
+        width: clamp(250px, 42vw, 370px);
+    }
+    .success-btn,
+    .fail-btn {
+        width: clamp(115px, 18vw, 165px);
+        height: clamp(36px, 6vh, 50px);
+        bottom: clamp(10px, 2vh, 16px);
+    }
+}
+
+/* ================================================================
+   568×320 — iPhone SE landscape — самый маленький
+   ================================================================ */
+@media screen and (max-width: 568px) and (orientation: landscape) {
+
+    .site-header {
+        height: clamp(26px, 8vh, 38px);
+    }
+    .header-inner {
+        gap: clamp(6px, 1.5vw, 16px);
+        padding: 0 2%;
+    }
+    .header-link {
+        font-size: clamp(7px, 1.2vw, 11px);
+        letter-spacing: 0.3px;
+    }
+    .game-container {
+        height: calc(100vh - clamp(26px, 8vh, 38px));
+        margin-top: clamp(26px, 8vh, 38px);
+        gap: 1.5vw;
+    }
+    .alchemy-section {
+        width: clamp(120px, 78vh, 300px);
+        height: clamp(120px, 78vh, 300px);
+    }
+    .menu-section {
+        width: clamp(115px, 36vw, 280px);
+        height: clamp(120px, 78vh, 300px);
+    }
+    .game-timer {
+        font-size: clamp(14px, 3.5vh, 24px);
+    }
+    .ready-btn {
+        bottom: 0;
+        transform: translateX(-50%) translateY(50%);
+        width: clamp(78px, 13vh, 115px);
+        height: clamp(24px, 5vh, 36px);
+    }
+    .countdown-number {
+        font-size: clamp(36px, 9vw, 62px);
+    }
+    .coffin {
+        width: clamp(26px, 5vw, 44px);
+        height: clamp(50px, 9vh, 82px);
+    }
+    .coffins-container {
+        gap: clamp(7px, 1.5vw, 14px);
+    }
+    .loading-title-text {
+        font-size: clamp(9px, 1.8vw, 16px);
+    }
+    .info-card-body {
+        width: 95vw;
+        height: 78vh;
+        transform: scale(0.9);
+    }
+    .info-modal-overlay.active .info-card-body {
+        transform: scale(1);
+    }
+    .info-close-btn {
+        width: clamp(68px, 13vw, 92px);
+        height: clamp(20px, 4vh, 32px);
+        top: 1vw;
+        right: 1vw;
+    }
+    .wait-modal-content {
+        width: clamp(210px, 58vw, 320px);
+    }
+    .understand-btn {
+        width: clamp(96px, 15vw, 144px);
+        height: clamp(30px, 5.5vh, 44px);
+        bottom: clamp(6px, 1.5vh, 12px);
+    }
+    .success-modal-content,
+    .fail-modal-content {
+        width: clamp(210px, 58vw, 320px);
+    }
+    .success-btn,
+    .fail-btn {
+        width: clamp(96px, 15vw, 144px);
+        height: clamp(30px, 5.5vh, 44px);
+        bottom: clamp(6px, 1.5vh, 12px);
+    }
+}
+
+/* ================================================================
+   ROTATE OVERLAY
+   ================================================================ */
+.rotate-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #060713;
+    z-index: 999999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-family: 'Anticva', serif;
+    font-size: clamp(16px, 5vw, 28px);
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* ================================================================
+   GALLERY MODALS: СПРАВОЧНИК / ИНСТРУКЦИЯ
+   ================================================================ */
+.gallery-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.70);
+    z-index: 200000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+.gallery-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.gallery-modal-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90vw;
+    max-height: 88vh;
+    gap: 0;
+    /* stop clicks inside from closing the modal */
+}
+
+.gallery-page-img {
+    display: block;
+    max-width: 80vw;
+    max-height: 84vh;
+    object-fit: contain;
+    border-radius: 4px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.gallery-nav-btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    transition: transform 0.15s ease, filter 0.15s ease;
+    z-index: 1;
+}
+
+.gallery-nav-btn img {
+    display: block;
+    width: clamp(36px, 5vw, 72px);
+    height: auto;
+    pointer-events: none;
+}
+
+.gallery-nav-btn:hover { filter: brightness(1.25); transform: scale(1.08); }
+.gallery-nav-btn:active { filter: brightness(0.8); transform: scale(0.95); }
+
+@media screen and (max-width: 1023px) and (orientation: landscape) {
+    .gallery-page-img {
+        max-width: 76vw;
+        max-height: 80vh;
+    }
+    .gallery-nav-btn img {
+        width: clamp(28px, 4vw, 56px);
+    }
+}
+
+@media screen and (max-width: 568px) and (orientation: landscape) {
+    .gallery-page-img {
+        max-width: 72vw;
+        max-height: 78vh;
+    }
+    .gallery-nav-btn img {
+        width: clamp(22px, 3.5vw, 44px);
+    }
+}
