@@ -157,7 +157,7 @@ document.addEventListener("touchend", (e) => {
     const pages = [
         "справочник/страница 1.png",
         "справочник/страница 2.png",
-        "справочник/страница 3.png",
+        "cправочник/страница 3.png",
         "справочник/страница 4.png"
     ];
 
@@ -229,12 +229,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (talkativePotion) {
         talkativePotion.addEventListener("click", () => { startPotionGame(); });
     }
+
+    const secondPotion = document.getElementById("potion-second");
+    if (secondPotion) {
+        secondPotion.addEventListener("click", () => {
+            window.location.href = "https://nracademy.github.io/Villains_Descendants/второе_зелье/second_potion.html";
+        });
+    }
 });
 
 function startPotionGame() {
     window.location.href = "../первое_зелье/first_potion.html";
 }
 
+
+function startPotionGame() {
+    window.location.href = "../второе_зелье/second_potion.html";
+}
 // ======================================================
 // МАГИЧЕСКИЙ ЭФФЕКТ: ЯБЛОКИ
 // ======================================================
