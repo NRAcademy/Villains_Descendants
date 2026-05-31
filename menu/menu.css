@@ -253,11 +253,6 @@ body {
     background-size: contain;
 }
 
-.potion-ribbon-2 {
-    background: url('подпись 2.png') no-repeat center center;
-    background-size: contain;
-}
-
 .potion-ribbon {
     position: absolute;
     top: -10%;
@@ -269,6 +264,11 @@ body {
     background-size: contain;
     z-index: 5;
     pointer-events: none;
+}
+
+.potion-ribbon-2 {
+    background: url('подпись 2.png') no-repeat center center;
+    background-size: contain;
 }
 
 .potion-item:hover .potion-ribbon  { filter: brightness(1.54); }
