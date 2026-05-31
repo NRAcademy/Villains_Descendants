@@ -13,6 +13,7 @@ window.addEventListener("load", () => {
     ];
 
     let activeIndex = 0;
+    
 
     // Анимация гробов
     const coffinInterval = setInterval(() => {
