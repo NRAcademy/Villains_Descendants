@@ -111,7 +111,7 @@ function initGame(vkID, potionID) {
     // =====================================================
 
     const ingredientData = {
-        blood_salamander: { name: 'кровь_саламандра',             img: '../ингредиенты/ингредиент_кровь_саламандры.png' },
+        blood_salamander: { name: 'кровь_саламандра',             img: '../ингредиенты/ингредиент_кровь_саламандра.png' },
         mandrake:   { name: 'мандрагора',          img: '../ингредиенты/ингредиент_мандрагора.png' },
         honey_water:{ name: 'медовая_вода',        img: '../ингредиенты/ингредиент_медовая_вода.png' },
         horned_slug:{ name: 'рогатый_слизень',                img: '../ингредиенты/ингредиент_рогатый_слизень.png' },
@@ -619,6 +619,7 @@ function saveResultToLeaderboard(name, time) {
 // GALLERY MODALS: СПРАВОЧНИК / ИНСТРУКЦИЯ
 // =====================================================
 
+document.addEventListener('DOMContentLoaded', function () {
 (function () {
 
     // ---- СПРАВОЧНИК ----
@@ -728,3 +729,4 @@ function saveResultToLeaderboard(name, time) {
     }
 
 })();
+});
