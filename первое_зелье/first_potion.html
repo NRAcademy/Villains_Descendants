@@ -56,8 +56,8 @@
     <header class="site-header" role="banner">
         <nav class="header-inner" aria-label="Главное меню">
             <a class="header-link" href="https://nracademy.github.io/Villains_Descendants/menu/menu.html" target="_blank">НАЗАД</a>
-            <a class="header-link" href="https://nracademy.github.io/Villains_Descendants/" target="_blank">ИНСТРУКЦИЯ</a>
-            <a class="header-link" href="https://vk.com/villains_descendants" target="_blank">СПРАВОЧНИК</a>
+            <a class="header-link" id="btn-instrukcia" href="#">ИНСТРУКЦИЯ</a>
+            <a class="header-link" id="btn-spravochnik" href="#">СПРАВОЧНИК</a>
             <a class="header-link" href="https://vk.com/veneno_bianco" target="_blank">ПОМОЩЬ</a>
         </nav>
     </header>
@@ -117,6 +117,33 @@
     <!-- Overlay: поверни экран (portrait) -->
     <div class="rotate-overlay" id="rotate-overlay">
         <p>Поверни устройство горизонтально</p>
+    </div>
+
+
+    <!-- ===== MODAL: СПРАВОЧНИК ===== -->
+    <div class="gallery-modal-overlay" id="spravochnik-modal">
+        <div class="gallery-modal-box" id="spravochnik-box">
+            <button class="gallery-nav-btn gallery-prev" id="sprav-prev">
+                <img src="menu/кнопка_назад.png" alt="prev">
+            </button>
+            <img class="gallery-page-img" id="sprav-img" src="" alt="">
+            <button class="gallery-nav-btn gallery-next" id="sprav-next">
+                <img src="menu/кнопка_вперед.png" alt="next">
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: ИНСТРУКЦИЯ ===== -->
+    <div class="gallery-modal-overlay" id="instrukcia-modal">
+        <div class="gallery-modal-box" id="instrukcia-box">
+            <button class="gallery-nav-btn gallery-prev" id="instr-prev">
+                <img src="menu/кнопка_назад.png" alt="prev">
+            </button>
+            <img class="gallery-page-img" id="instr-img" src="" alt="">
+            <button class="gallery-nav-btn gallery-next" id="instr-next">
+                <img src="menu/кнопка_вперед.png" alt="next">
+            </button>
+        </div>
     </div>
 
     <script src="first_potion.js"></script>
