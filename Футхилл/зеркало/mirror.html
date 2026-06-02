@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Зеркало</title>
+  <link rel="stylesheet" href="mirror.css">
+</head>
+<body>
+
+  <div id="custom-cursor"></div>
+
+  <audio id="bgMusic" src="музыка.mp3" loop preload="auto"></audio>
+
+  <!-- ─── Intro Video ─── -->
+  <div id="intro-video">
+    <video id="introVid" src="вступление.mp4" playsinline webkit-playsinline></video>
+  </div>
+
+  <!-- ─── Main Scene ─── -->
+  <div id="scene">
+    <img id="bg" src="фон.png" alt="" draggable="false">
+
+    <!-- PORTRAIT (только телефон вертикально) -->
+    <div class="portrait-layout">
+      <img class="card-img slide-in delay-0" src="карта 1.png" alt="" draggable="false">
+      <img class="ribbon-img slide-in delay-1" src="подпись 1.png" alt="" draggable="false">
+      <!-- Рама телефона вертикаль — поверх контента, под кнопкой -->
+      <img id="frame-portrait" src="рама.png" alt="" draggable="false">
+      <!-- Кнопка строго по центру экрана -->
+      <img class="btn-img" id="pBtn" src="кнопка.png" alt="" draggable="false">
+    </div>
+
+    <!-- LANDSCAPE телефон -->
+    <div class="landscape-phone-layout">
+      <img class="card-img slide-in delay-0" src="карта 1.png" alt="" draggable="false">
+      <img class="ribbon-img slide-in delay-1" src="подпись 1.png" alt="" draggable="false">
+      <!-- Рама телефона горизонталь — повёрнута 90° -->
+      <img id="frame-landscape" src="рама.png" alt="" draggable="false">
+      <img class="btn-img" id="lBtn" src="кнопка.png" alt="" draggable="false">
+    </div>
+
+    <!-- DESKTOP -->
+    <div class="desktop-layout">
+      <img class="card-img slide-in delay-0" src="карта 1.png" alt="" draggable="false">
+      <img class="ribbon-img slide-in delay-1" src="подпись 1.png" alt="" draggable="false">
+      <!-- Рама ПК -->
+      <img id="frame-desktop" src="рама пк.png" alt="" draggable="false">
+      <img class="btn-img" id="dBtn" src="кнопка.png" alt="" draggable="false">
+    </div>
+  </div>
+
+  <script src="mirror.js"></script>
+</body>
+</html>
