@@ -1,0 +1,305 @@
+body {
+  margin: 0;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ================= ШРИФТ ================= */
+
+@font-face {
+    font-family: 'Anticva';
+    src: url('Anticva.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ================= ШАПКА ================= */
+
+.site-header {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 80px;
+
+    background: rgba(1, 1, 1, 0.75);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 10000;
+}
+
+.header-inner {
+
+    width: 100%;
+
+    padding: 0 15px;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    align-items: center;
+
+    flex-wrap: nowrap;
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
+}
+
+.header-inner::-webkit-scrollbar {
+    display: none;
+}
+
+.header-link {
+
+    font-family: 'Anticva', serif;
+
+    font-size: 14px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    letter-spacing: 1px;
+
+    transition: 0.3s ease;
+
+    white-space: nowrap;
+
+    flex-shrink: 0;
+}
+
+.header-link:hover {
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 10px #ffffff,
+        0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+/* фон */
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("../Меню/фон.png") no-repeat top center;
+  background-size: 100% auto;
+  z-index: -1;
+}
+
+/* курсор */
+#cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 99999999; /* 🔥 выше шапки */
+  will-change: transform;
+}
+
+/* контент */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 90px; /* ниже старт */
+  padding-bottom: 200px;
+}
+
+/* 🔥 НАЗВАНИЕ В 2 РАЗА БОЛЬШЕ + НИЖЕ */
+.title {
+  width: 700px;       /* было ~350 */
+  margin-bottom: 70px;
+  transform: translateY(20px);
+}
+
+/* сетка */
+.building-grid {
+  display: grid;
+
+  /* 🔥 теперь 3 колонки */
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 30px;
+
+  justify-items: center;
+  align-items: center;
+}
+
+/* 🔥 КНОПКИ ЧУТЬ БОЛЬШЕ */
+.building {
+  width: 340px; /* было 300 */
+  transition: 0.2s ease;
+  cursor: none;
+
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* hover тень */
+.building:hover {
+  filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
+  transform: scale(1.03);
+}
+
+/* 🔥 СЕРЫЕ БЕЗ ПРОЗРАЧНОСТИ */
+.gray {
+  filter: grayscale(100%);
+  pointer-events: none; /* некликабельны */
+}
+
+/* активная (1 урок) */
+.active {
+  filter: none;
+}
+
+/* 🔥 полностью отключаем выделение */
+body {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+/* 🔥 запрещаем перетаскивание картинок */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  user-select: none;
+}
+
+/* на всякий случай для кнопок */
+.building {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* 🔥 полный фикс системного курсора */
+
+html,
+body,
+*,
+a,
+a:hover,
+button,
+button:hover,
+img,
+img:hover,
+.building,
+.building:hover,
+.header-link,
+.header-link:hover {
+
+    cursor: none !important;
+}
+/* ===================================================== */
+/* АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНА */
+/* ===================================================== */
+
+@media (max-width: 768px) {
+
+  /* убираем кастомный курсор на телефоне */
+  html,
+  body,
+  * {
+    cursor: auto !important;
+  }
+
+  #cursor {
+    display: none;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* ================= ШАПКА ================= */
+
+  .site-header {
+    height: auto;
+    padding: 15px 0;
+    justify-content: center;
+  }
+
+  .header-inner {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+    padding: 0 20px;
+    overflow-x: visible;
+  }
+
+  .header-link {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* ================= ФОН ================= */
+
+  .background {
+    background: url("../Меню/фон.png") no-repeat top center;
+    background-size: cover;
+    position: fixed;
+  }
+
+  /* ================= КОНТЕНТ ================= */
+
+  .content {
+    padding-top: 140px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 120px;
+    align-items: center;
+  }
+
+  /* ================= НАЗВАНИЕ ================= */
+
+  .title {
+    width: 95%;
+    max-width: 650px;
+    margin-bottom: 40px;
+    transform: translateY(0);
+  }
+
+  /* ================= СЕТКА ================= */
+
+  .building-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    width: 100%;
+    justify-items: center;
+  }
+
+  /* ================= КАРТОЧКИ ================= */
+
+  .building {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+  }
+
+  /* отключаем hover на телефонах */
+  .building:hover {
+    transform: none;
+    filter: none;
+  }
+
+  /* серые остаются серыми */
+  .gray {
+    filter: grayscale(100%);
+  }
+
+}
