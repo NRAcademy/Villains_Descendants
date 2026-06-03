@@ -24,8 +24,15 @@ if (saved && saved.date === today) {
   combo = combos[saved.index];
   alreadyOpened = true;
 } else {
-  // Первый раз сегодня — рандом и сохраняем
-  const index = Math.floor(Math.random() * combos.length);
+  // Новый день — индекс определяется по дате детерминированно,
+  // чтобы каждый день была новая комбинация и не повторялась подряд.
+  // Считаем кол-во дней с эпохи и берём остаток от деления на длину массива.
+  const daysSinceEpoch = Math.floor(Date.now() / 86400000);
+  // Если есть предыдущий сохранённый индекс — исключаем его, чтобы не повторилось
+  let index = daysSinceEpoch % combos.length;
+  if (saved && index === saved.index) {
+    index = (index + 1) % combos.length;
+  }
   combo = combos[index];
   localStorage.setItem('mirrorDay', JSON.stringify({ date: today, index }));
 }
