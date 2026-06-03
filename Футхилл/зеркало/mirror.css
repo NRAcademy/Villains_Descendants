@@ -103,11 +103,11 @@ img {
   width: min(98vw, 620px);
   position: relative;
   z-index: 5;
-  margin-top: 8vh;
+  margin-top: -2vh;
 }
 .portrait-layout .ribbon-img {
   width: min(100vw, 640px);
-  margin-top: -28vw;
+  margin-top: -38vw;
   position: relative;
   z-index: 10;
 }
@@ -127,7 +127,7 @@ img {
   bottom: 6vh;
   transform: translateX(-50%);
   width: min(62vw, 310px);
-  z-index: 6;
+  z-index: 9999;
   pointer-events: auto;
 }
 
