@@ -107,7 +107,7 @@ img {
 }
 .portrait-layout .ribbon-img {
   width: min(100vw, 640px);
-  margin-top: -38vw;
+  margin-top: -45vw;
   position: relative;
   z-index: 10;
 }
