@@ -230,91 +230,76 @@ img:hover,
   .site-header {
     height: auto;
     padding: 15px 0;
+    justify-content: center;
   }
 
   .header-inner {
-
     flex-wrap: wrap;
-
-    gap: 18px;
-
+    justify-content: center;
+    gap: 14px 24px;
     padding: 0 20px;
+    overflow-x: visible;
   }
 
   .header-link {
-
     font-size: 16px;
-
     letter-spacing: 0.5px;
+    white-space: nowrap;
   }
 
   /* ================= ФОН ================= */
 
   .background {
-
-    background:
-      url("../Меню/фон.png")
-      no-repeat
-      top center;
-
+    background: url("../Меню/фон.png") no-repeat top center;
     background-size: cover;
-
     position: fixed;
   }
 
   /* ================= КОНТЕНТ ================= */
 
   .content {
-
-    padding-top: 140px;
-
-    padding-left: 20px;
-    padding-right: 20px;
-
-    padding-bottom: 120px;
+    padding-top: 120px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 60px;
+    align-items: center;
   }
 
   /* ================= НАЗВАНИЕ ================= */
 
   .title {
-
-    width: 95%;
-
-    max-width: 650px;
-
-    margin-bottom: 40px;
-
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 30px;
     transform: translateY(0);
   }
 
   /* ================= СЕТКА ================= */
 
   .building-grid {
-
     grid-template-columns: 1fr;
-
-    gap: 25px;
-
+    gap: 20px;
     width: 100%;
+    justify-items: center;
   }
 
   /* ================= КАРТОЧКИ ================= */
 
   .building {
-
     width: 100%;
-
-    max-width: 340px;
-
+    max-width: 100%;
     height: auto;
   }
 
   /* отключаем hover на телефонах */
   .building:hover {
-
     transform: none;
-
     filter: none;
+  }
+
+  /* серые остаются серыми */
+  .gray {
+    filter: grayscale(100%);
   }
 
 }
