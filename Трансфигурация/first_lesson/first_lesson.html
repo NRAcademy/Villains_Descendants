@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Первый урок — Трансфигурация</title>
+  <link rel="stylesheet" href="first_lesson.css">
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header class="site-header" id="header">
+    <div class="header-inner">
+      <a href="../Transfiguration.html" class="header-link">НАЗАД</a>
+      <span class="header-link" id="btnLearn">ОБУЧЕНИЕ</span>
+      <span class="header-link" id="btnGuide">СПРАВОЧНИК</span>
+      <a href="https://vk.com/veneno_bianco" target="_blank" class="header-link">ПОМОЩЬ</a>
+    </div>
+  </header>
+
+  <!-- ФОНОВОЕ ИЗОБРАЖЕНИЕ -->
+  <div class="bg"></div>
+
+  <!-- ВСПЫШКА -->
+  <div id="flash"></div>
+
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <div class="page-wrapper">
+
+    <!-- НАЗВАНИЕ -->
+    <div class="title-block">
+      <img src="название.png" alt="" class="title-img">
+    </div>
+
+    <!-- ЦЕНТР: круг + крыса + результат поверх -->
+    <div class="circle-wrap" id="circleWrap">
+      <img src="круг.png" alt="" class="circle-img" id="circleImg">
+      <img src="крыса.png" alt="" class="rat-img" id="ratImg">
+      <!-- удача/неудача поверх круга -->
+      <img src="" alt="" class="result-overlay hidden" id="resultOverlay">
+    </div>
+
+    <!-- КНОПКИ -->
+    <div class="btn-row" id="btnRow">
+      <img src="кнопка 2.png" alt="Готово"    class="rec-btn" id="btn2">
+      <img src="кнопка 3.png" alt="Повторить" class="rec-btn" id="btn3">
+    </div>
+
+  </div>
+
+  <!-- ПОДСКАЗКА -->
+  <div class="hint-wrap" id="hintWrap">
+    <img src="подсказка.png" alt="" class="hint-img">
+    <img src="указатель.png" alt="" class="pointer-img" id="pointer">
+  </div>
+
+  <!-- CANVAS для жеста -->
+  <canvas id="gestureCanvas"></canvas>
+
+  <!-- ЛЕПЕСТКИ -->
+  <div id="petals-container"></div>
+
+  <!-- МОДАЛКИ -->
+
+  <!-- ОБУЧЕНИЕ -->
+  <div class="modal-overlay active" id="modalLearn">
+    <div class="modal-box learn-box">
+      <img src="обучение.png" alt="" class="modal-full-img">
+    </div>
+  </div>
+
+  <!-- СПРАВОЧНИК -->
+  <div class="modal-overlay" id="modalGuide">
+    <div class="modal-box">
+      <button class="modal-close" id="closeGuide">✕</button>
+      <button class="modal-nav" id="guidePrev">
+        <img src="../../menu/справочник/кнопка_назад.png" alt="">
+      </button>
+      <img src="../../menu/справочник/страница 1.png" alt="" class="modal-img" id="guideImg">
+      <button class="modal-nav" id="guideNext">
+        <img src="../../menu/справочник/кнопка_вперед.png" alt="">
+      </button>
+    </div>
+  </div>
+
+  <!-- ЗАГРУЗКА -->
+  <div class="modal-overlay" id="modalLoading">
+    <div class="loading-box">
+      <div class="coffins-row">
+        <img src="../загрузка/гроб 1.png" alt="" class="coffin-img" id="cof1">
+        <img src="../загрузка/гроб 2.png" alt="" class="coffin-img" id="cof2">
+        <img src="../загрузка/гроб 3.png" alt="" class="coffin-img" id="cof3">
+        <img src="../загрузка/гроб 4.png" alt="" class="coffin-img" id="cof4">
+        <img src="../загрузка/гроб 5.png" alt="" class="coffin-img" id="cof5">
+      </div>
+      <div class="loading-text" id="loadingText"></div>
+    </div>
+  </div>
+
+  <!-- УСПЕХ -->
+  <div class="modal-overlay" id="modalSuccess">
+    <div class="modal-box result-modal">
+      <img src="../уведомление/успешно.png" alt="" class="modal-full-img">
+      <img src="../уведомление/понятно.png" alt="" class="ok-btn" id="okSuccess">
+    </div>
+  </div>
+
+  <!-- НЕУДАЧА -->
+  <div class="modal-overlay" id="modalFail">
+    <div class="modal-box result-modal">
+      <img src="../уведомление/неудача.png" alt="" class="modal-full-img">
+      <img src="../уведомление/понятно.png" alt="" class="ok-btn" id="okFail">
+    </div>
+  </div>
+
+  <!-- ОЖИДАНИЕ -->
+  <div class="modal-overlay" id="modalWait">
+    <div class="modal-box result-modal">
+      <img src="../уведомление/ожидание.png" alt="" class="modal-full-img">
+      <img src="../уведомление/понятно.png" alt="" class="ok-btn" id="okWait">
+    </div>
+  </div>
+
+  <!-- АУДИО -->
+  <audio id="audioBg"      src="фоновая_музыка.mp3" loop></audio>
+  <audio id="audioSuccess" src="успех.mp3"></audio>
+  <audio id="audioFail"    src="провал.mp3"></audio>
+
+  <script src="first_lesson.js"></script>
+</body>
+</html>
