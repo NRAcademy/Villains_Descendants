@@ -1,0 +1,442 @@
+/* ===== ШРИФТ ===== */
+@font-face {
+  font-family: 'Anticva';
+  src: url('../Anticva.otf') format('opentype');
+}
+
+/* ===== СБРОС ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: 'Anticva', serif;
+  background: #000;
+  cursor: url('custom-cursor.png'), auto;
+}
+
+a, button, .header-link, .rec-btn, .ok-btn, .modal-nav, .modal-close {
+  cursor: url('custom-cursor.png'), pointer;
+}
+
+/* ===== ФОН ===== */
+.bg {
+  position: fixed;
+  inset: 0;
+  background: url('фон.png') center/cover no-repeat;
+  z-index: 0;
+}
+
+/* ===== ШАПКА ===== */
+.site-header {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 80px;
+  background: rgba(1, 1, 1, 0.75);
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  transition: transform 0.4s ease;
+  touch-action: pan-y;
+}
+.site-header.header-hidden { transform: translateY(-100%); }
+
+.header-inner {
+  width: 100%;
+  padding: 0 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+}
+
+.header-link {
+  font-family: 'Anticva', serif;
+  font-size: 22px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  transition: 0.3s ease;
+  user-select: none;
+}
+.header-link:hover {
+  text-shadow: 0 0 10px #fff, 0 0 20px rgba(255,255,255,0.6);
+}
+
+/* ===== СТРАНИЦА ===== */
+.page-wrapper {
+  position: fixed;
+  inset: 0;
+  top: 80px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* ===== НАЗВАНИЕ ===== */
+.title-block {
+  flex-shrink: 0;
+  margin-top: 14px;
+  text-align: center;
+  pointer-events: none;
+}
+.title-img {
+  height: 62px;
+  width: auto;
+}
+
+/* ===== КРУГ + КРЫСА ===== */
+.circle-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.circle-img {
+  width: 560px;
+  max-width: 80vw;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.rat-img {
+  position: absolute;
+  width: 290px;
+  max-width: 42vw;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ===== КНОПКИ ЗАПИСИ ===== */
+.btn-row {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 30px;
+  min-height: 80px;
+  position: relative;
+  z-index: 20;
+  pointer-events: all;
+}
+
+.rec-btn {
+  height: 70px;
+  width: auto;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.rec-btn:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.9));
+}
+
+/* ===== РЕЗУЛЬТАТ поверх круга ===== */
+.result-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  max-width: 160px;
+  height: auto;
+  z-index: 5;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ===== ВСПЫШКА ===== */
+#flash {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 500;
+  transition: opacity 0.15s ease;
+}
+#flash.active {
+  opacity: 1;
+}
+
+/* ===== CANVAS ЖЕСТОВ ===== */
+#gestureCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: transparent;
+}
+
+/* ===== ПОДСКАЗКА ===== */
+.hint-wrap {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 600;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+  pointer-events: none;
+}
+/* подсказка.png видна рядом с указателем */
+.hint-img {
+  height: 340px;
+  width: auto;
+}
+.pointer-img {
+  height: 180px;
+  width: auto;
+  animation: bounce 0.9s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(16px); }
+}
+
+/* ===== ЛЕПЕСТКИ ===== */
+#petals-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+.petal {
+  position: absolute;
+  width: 28px;
+  height: auto;
+  pointer-events: none;
+  animation: petalFloat 1.4s ease-out forwards;
+}
+@keyframes petalFloat {
+  0%   { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(-130px) scale(0.5) rotate(30deg); }
+}
+
+/* ===== УТИЛИТЫ ===== */
+.hidden { display: none !important; }
+
+/* ===== ЗАГРУЗКА ===== */
+.loading-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+}
+
+.coffins-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.coffin-img {
+  height: 100px;
+  width: auto;
+  filter: brightness(0.3);
+  transition: filter 0.15s ease;
+}
+.coffin-img.active {
+  filter: brightness(1);
+}
+
+.loading-text {
+  font-family: 'Anticva', serif;
+  font-size: 28px;
+  color: #fff;
+  letter-spacing: 2px;
+  min-height: 40px;
+  text-shadow: 0 0 12px rgba(255,255,255,0.4);
+}
+
+/* ===== МОДАЛЬНЫЕ ОКНА ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.active { display: flex; }
+
+/* Загрузка — сильнее затемнение */
+#modalLoading {
+  background: rgba(0,0,0,0.92);
+}
+
+.modal-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 90vw;
+  max-height: 88vh;
+}
+
+/* модалка обучения — просто картинка */
+.learn-box {
+  justify-content: center;
+}
+.modal-full-img {
+  max-width: 45vw;
+  max-height: 70vh;
+  object-fit: contain;
+  display: block;
+}
+
+/* модалка результата — картинка + кнопка поверх */
+.result-modal {
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+
+/* картинка результата */
+.result-modal .modal-full-img {
+  max-width: 38vw;
+  max-height: 60vh;
+  display: block;
+}
+
+/* кнопка "понятно" — поверх картинки, снизу по центру */
+.result-modal .ok-btn {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 48px;
+  width: auto;
+}
+
+.ok-btn {
+  height: 55px;
+  width: auto;
+  transition: filter 0.2s ease;
+}
+.ok-btn:hover {
+  filter: brightness(0.7);
+}
+
+.modal-img {
+  max-width: 65vw;
+  max-height: 78vh;
+  object-fit: contain;
+}
+.modal-nav {
+  background: none;
+  border: none;
+  padding: 0;
+  flex-shrink: 0;
+}
+.modal-nav img { width: 50px; height: auto; }
+
+.modal-close {
+  position: absolute;
+  top: -36px; right: 0;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 30px; height: 30px;
+  font-size: 14px;
+  line-height: 30px;
+  text-align: center;
+}
+.modal-close:hover { background: rgba(255,255,255,0.25); }
+
+/* ===== ПОВЕРНИ ТЕЛЕФОН ===== */
+#rotate-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+#rotate-overlay p {
+  font-family: 'Anticva', serif;
+  font-size: clamp(18px, 5vw, 32px);
+  color: #fff;
+  letter-spacing: 2px;
+  line-height: 1.6;
+}
+
+/* ======================================================
+   МОБАЙЛ — PORTRAIT
+   ====================================================== */
+@media screen and (max-width: 1000px) and (orientation: portrait) {
+  #rotate-overlay { display: flex; }
+}
+
+@media screen and (orientation: portrait) {
+  html, body { overflow-y: auto; height: auto; }
+
+  .page-wrapper {
+    position: relative;
+    top: 0;
+    min-height: calc(100svh - 80px);
+    height: auto;
+    padding-top: 80px;
+    padding-bottom: 30px;
+    justify-content: flex-start;
+  }
+
+  .title-img { height: 46px; }
+  .circle-img { width: 92vw; max-width: 420px; }
+  .rat-img    { width: 48vw; max-width: 220px; }
+  .result-overlay { width: 38%; max-width: 130px; }
+  .result-modal .modal-full-img { max-width: 80vw; max-height: 55vh; }
+  .result-modal .ok-btn { height: 36px; }
+
+  .header-inner { gap: 20px; flex-wrap: wrap; padding: 0 3%; }
+  .header-link  { font-size: 17px; }
+
+  #gestureCanvas { position: fixed; }
+
+  /* на мобиле модалка обучения — шире */
+  .modal-full-img { max-width: 80vw; max-height: 65vh; }
+  /* модалка результата на мобиле */
+  .result-modal .modal-full-img { max-width: 80vw; max-height: 55vh; }
+  .result-modal .ok-btn { height: 34px; }
+}
+
+/* ======================================================
+   МОБАЙЛ — LANDSCAPE
+   ====================================================== */
+@media screen and (orientation: landscape) and (max-height: 600px) {
+  .title-img  { height: 46px; }
+  .circle-img { width: 320px; }
+  .rat-img    { width: 160px; }
+  .header-inner { gap: 40px; }
+  .header-link  { font-size: 16px; }
+  .site-header  { height: 60px; }
+  .page-wrapper { top: 60px; }
+
+  /* pointer smaller in landscape */
+  .pointer-img { height: 120px; }
+
+  /* кнопки выше */
+  .btn-row { margin-bottom: 50px; }
+
+  /* круг + крыса выше */
+  .circle-wrap { margin-top: -20px; }
+}
