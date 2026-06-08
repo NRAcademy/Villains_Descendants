@@ -395,8 +395,8 @@ a, button, .header-link, .lesson-btn, .side-btn, .modal-nav, .modal-close {
   }
 
   .lesson-btn {
-    width: 82vw;
-    max-width: 340px;
+    width: 68vw;
+    max-width: 280px;
   }
 
   .header-inner { gap: 20px; flex-wrap: wrap; padding: 0 3%; }
