@@ -420,7 +420,7 @@ a, button, .header-link, .lesson-btn, .side-btn, .modal-nav, .modal-close {
 @media screen and (orientation: landscape) and (max-height: 600px) {
   .title-img { height: 48px; }
   .side-panel { width: 80px; }
-  .side-btn { width: 52px; }
+  .side-btn { width: 70px; }
   .lesson-btn { width: 230px; }
   .lesson-1 { left: 6%; top: 8%; }
   .lesson-3 { right: 6%; top: 8%; }
