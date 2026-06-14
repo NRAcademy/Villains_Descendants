@@ -55,6 +55,22 @@ const combos = [
   { bg: 'Игнихайд/фон 6.png',    card: 'Игнихайд/карта 21.png',  ribbon: 'Игнихайд/подпись 1.png',  btn: 'Игнихайд/кнопка 6.png' },
 ];
 
+// ── Уникальный ID устройства (один раз, навсегда) ──
+let deviceId = localStorage.getItem('mirrorDeviceId');
+if (!deviceId) {
+  deviceId = Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
+  localStorage.setItem('mirrorDeviceId', deviceId);
+}
+
+// ── Хэш строки → число ──
+function hashCode(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = Math.imul(31, h) + str.charCodeAt(i) | 0;
+  }
+  return Math.abs(h);
+}
+
 // ── Проверка localStorage — один раз в день ──
 const today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
 const saved = JSON.parse(localStorage.getItem('mirrorDay') || 'null');
@@ -67,11 +83,12 @@ if (saved && saved.date === today) {
   combo = combos[saved.index];
   alreadyOpened = true;
 } else {
-  // Новый день — случайный индекс, не совпадающий с предыдущим днём
-  let index;
-  do {
-    index = Math.floor(Math.random() * combos.length);
-  } while (saved && index === saved.index);
+  // Новый день — индекс уникален для каждого устройства через хэш(deviceId + дата)
+  const baseIndex = hashCode(deviceId + today) % combos.length;
+  // Гарантируем, что не повторяется вчерашний
+  const index = (saved && baseIndex === saved.index)
+    ? (baseIndex + 1) % combos.length
+    : baseIndex;
   combo = combos[index];
   localStorage.setItem('mirrorDay', JSON.stringify({ date: today, index }));
 }
