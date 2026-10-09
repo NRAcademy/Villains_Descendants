@@ -1161,7 +1161,7 @@ const SFX={
 // =====================================================
 // BACKGROUND MUSIC (Библиотека/library.mp3)
 // =====================================================
-const bgMusic=new Audio(encodeURI('Библиотека/library.mp3'));
+const bgMusic=new Audio(encodeURI('Библиотека/library.mp3.mp3'));
 bgMusic.loop=true;bgMusic.volume=0.35;bgMusic.preload='auto';
 soundEnabled=!getSave().soundOff;
 function startMusic(){if(soundEnabled)bgMusic.play().catch(()=>{});}
