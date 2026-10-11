@@ -91,12 +91,46 @@ function hashCode(str) {
   return Math.abs(h);
 }
 
+// ── Версия результатов зеркала ──
+// При изменении номера старые результаты у всех пользователей сбрасываются.
+const MIRROR_VERSION = '2';
+const savedVersion = localStorage.getItem('mirrorVersion');
+
+if (savedVersion !== MIRROR_VERSION) {
+  localStorage.removeItem('mirrorDay');
+  localStorage.setItem('mirrorVersion', MIRROR_VERSION);
+}
+
 // ── Проверка localStorage — один раз в день ──
 const today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
 const saved = JSON.parse(localStorage.getItem('mirrorDay') || 'null');
 
 let combo;
 let alreadyOpened = false;
+
+if (saved && saved.date === today) {
+  // Уже открывали сегодня — берём сохранённую комбинацию
+  combo = combos[saved.index];
+  alreadyOpened = true;
+} else {
+  // Новый день — индекс уникален для каждого устройства через хэш(deviceId + дата)
+  const baseIndex = hashCode(deviceId + today) % combos.length;
+
+  // Гарантируем, что не повторяется вчерашний
+  const index = (saved && baseIndex === saved.index)
+    ? (baseIndex + 1) % combos.length
+    : baseIndex;
+
+  combo = combos[index];
+
+  localStorage.setItem(
+    'mirrorDay',
+    JSON.stringify({
+      date: today,
+      index
+    })
+  );
+}
 
 if (saved && saved.date === today) {
   // Уже открывали сегодня — берём сохранённую комбинацию
