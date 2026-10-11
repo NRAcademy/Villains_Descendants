@@ -88,6 +88,61 @@ body {
   display: block;
 }
 
+/* ─────────────────────────────
+   ВСПЫШКА ПОСЛЕ ВСТУПЛЕНИЯ
+───────────────────────────── */
+
+#intro-flash {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: white;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  z-index: 20000;
+
+  visibility: hidden;
+}
+
+
+/* Запуск вспышки */
+
+#intro-flash.flash-active {
+  visibility: visible;
+
+  animation: introFlash 2.2s ease-out forwards;
+}
+
+
+@keyframes introFlash {
+
+  /* Резкая яркая вспышка */
+  0% {
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  /* Небольшое удержание белого экрана */
+  18% {
+    opacity: 1;
+  }
+
+  /* Медленное растворение */
+  100% {
+    opacity: 0;
+  }
+
+}
 
 /* ─────────────────────────────
    ОСНОВНАЯ СЦЕНА
