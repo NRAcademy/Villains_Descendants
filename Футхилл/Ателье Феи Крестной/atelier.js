@@ -258,7 +258,7 @@ if (
 function returnToFoothill() {
 
   window.location.href =
-    '../foothill.html';
+    'https://nracademy.github.io/Villains_Descendants/Футхилл/Меню/foothill.html';
 
 }
 
