@@ -771,10 +771,16 @@ function createApple(x, y) {
   );
 
 
+  // Размер яблока: от APPLE_MIN_SIZE до APPLE_MIN_SIZE + APPLE_SIZE_RANGE (px).
+  // Было 22–46. Меняй числа ниже, чтобы подогнать размер.
+
+  const APPLE_MIN_SIZE = 45;
+  const APPLE_SIZE_RANGE = 40;
+
   const size =
-    22 +
+    APPLE_MIN_SIZE +
     Math.random() *
-    24;
+    APPLE_SIZE_RANGE;
 
 
   apple.style.width =
