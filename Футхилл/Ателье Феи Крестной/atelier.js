@@ -208,23 +208,29 @@ atelierButton.addEventListener('click', returnToFoothill);
 
 function showAtelier() {
 
-  introMusic.pause();
-
-  introMusic.currentTime = 0;
-
-  bgMusic.currentTime = 0;
-
-  bgMusic.play().catch(() => {
-    // Браузер может запретить autoplay.
-    // Попытка запуска будет повторена при первом касании.
-  });
-
+  // Видео исчезает, открывается само ателье.
+  // Вступительную музыку здесь НЕ останавливаем.
 
   introScreen.style.display = 'none';
 
   scene.classList.add('active');
 
 }
+
+// ─────────────────────────────
+// КОНЕЦ ВСТУПИТЕЛЬНОЙ МУЗЫКИ
+// ─────────────────────────────
+
+introMusic.addEventListener('ended', function () {
+
+  bgMusic.currentTime = 0;
+
+  bgMusic.play().catch(() => {
+    // Если браузер временно запретил воспроизведение,
+    // музыка запустится при следующем взаимодействии.
+  });
+
+});
 
 
 // ─────────────────────────────
@@ -316,13 +322,26 @@ function unlockAudio() {
   }
 
 
-  // Если видео уже закончилось —
-  // запускаем фоновую музыку.
+function unlockAudio() {
 
-  if (
-    introVideo.ended ||
-    introScreen.style.display === 'none'
-  ) {
+  if (!isMobilePortrait()) {
+    return;
+  }
+
+  // Пока вступительная музыка ещё не закончилась,
+  // разрешаем браузеру запустить именно её.
+
+  if (!introMusic.ended) {
+
+    introMusic.play().catch(() => {});
+
+    return;
+  }
+
+  // Фоновую музыку разрешаем запускать
+  // только после полного окончания вступительной.
+
+  if (introMusic.ended) {
 
     bgMusic.play().catch(() => {});
 
