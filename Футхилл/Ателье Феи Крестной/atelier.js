@@ -312,15 +312,35 @@ function startVideo() {
   introVideo.volume = 0;
 
 
-  // Начинаем с самого начала.
+function startVideo() {
 
+  if (!isMobilePortrait()) {
+    return;
+  }
+
+  introVideo.muted = true;
+  introVideo.volume = 0;
   introVideo.currentTime = 0;
 
+  const videoPromise = introVideo.play();
 
-  // Сначала запускаем видео.
+  if (videoPromise !== undefined) {
 
-  const videoPromise =
-    introVideo.play();
+    videoPromise
+      .then(function () {
+
+        startIntroMusic();
+
+      })
+      .catch(function (error) {
+
+        console.log('Видео не запустилось:', error);
+
+      });
+
+  }
+
+}
 
 
   if (videoPromise !== undefined) {
