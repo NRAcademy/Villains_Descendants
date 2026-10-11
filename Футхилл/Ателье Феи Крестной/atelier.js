@@ -7,22 +7,28 @@ const introMusic = document.getElementById('introMusic');
 const bgMusic = document.getElementById('bgMusic');
 
 const introScreen = document.getElementById('intro-video');
+const introFlash = document.getElementById('intro-flash');
+
 const scene = document.getElementById('scene');
 
 const atelierButton = document.getElementById('atelier-button');
 
-const unsupportedScreen = document.getElementById('unsupported-screen');
-const returnText = document.getElementById('return-text');
+const unsupportedScreen =
+  document.getElementById('unsupported-screen');
 
-const customCursor = document.getElementById('custom-cursor');
-const introFlash = document.getElementById('intro-flash');
+const returnText =
+  document.getElementById('return-text');
+
+const customCursor =
+  document.getElementById('custom-cursor');
+
 
 // ─────────────────────────────
 // ЕЖЕДНЕВНЫЙ НАРЯД
 // ─────────────────────────────
 
 // Сюда добавляй новые наряды.
-// Достаточно дописывать новые названия файлов.
+
 const outfits = [
   'наряд 1.png',
   'наряд 2.png',
@@ -31,9 +37,12 @@ const outfits = [
 ];
 
 
-// ── Уникальный ID устройства ──
+// ─────────────────────────────
+// УНИКАЛЬНЫЙ ID УСТРОЙСТВА
+// ─────────────────────────────
 
-let atelierDeviceId = localStorage.getItem('atelierDeviceId');
+let atelierDeviceId =
+  localStorage.getItem('atelierDeviceId');
 
 if (!atelierDeviceId) {
 
@@ -45,10 +54,13 @@ if (!atelierDeviceId) {
     'atelierDeviceId',
     atelierDeviceId
   );
+
 }
 
 
-// ── Хэш строки → число ──
+// ─────────────────────────────
+// ХЭШ
+// ─────────────────────────────
 
 function atelierHashCode(str) {
 
@@ -63,11 +75,13 @@ function atelierHashCode(str) {
   }
 
   return Math.abs(h);
+
 }
 
 
-// ── Получаем сегодняшнюю дату
-// по местному времени устройства ──
+// ─────────────────────────────
+// СЕГОДНЯШНЯЯ ДАТА
+// ─────────────────────────────
 
 const atelierNow = new Date();
 
@@ -78,17 +92,16 @@ const atelierToday = [
 ].join('-');
 
 
-// ── Смотрим сохранённый результат ──
+// ─────────────────────────────
+// ВЫБОР НАРЯДА
+// ─────────────────────────────
 
 const savedOutfit = JSON.parse(
   localStorage.getItem('atelierDay') || 'null'
 );
 
-
 let outfitIndex;
 
-
-// ── Если сегодня уже заходили ──
 
 if (
   savedOutfit &&
@@ -96,14 +109,12 @@ if (
   outfits[savedOutfit.index]
 ) {
 
+  // Сегодня уже был выбран наряд.
   outfitIndex = savedOutfit.index;
 
-}
+} else {
 
-
-// ── Если наступил новый день ──
-
-else {
+  // Новый день.
 
   let newIndex =
     atelierHashCode(
@@ -111,8 +122,7 @@ else {
     ) % outfits.length;
 
 
-  // Не позволяем вчерашнему наряду
-  // выпасть повторно.
+  // Не повторяем вчерашний наряд.
 
   if (
     savedOutfit &&
@@ -129,8 +139,6 @@ else {
   outfitIndex = newIndex;
 
 
-  // Запоминаем сегодняшний результат.
-
   localStorage.setItem(
     'atelierDay',
     JSON.stringify({
@@ -142,11 +150,11 @@ else {
 }
 
 
-// ── Устанавливаем сегодняшний наряд ──
+// Устанавливаем сегодняшний наряд.
 
-const todayOutfit = outfits[outfitIndex];
+document.getElementById('outfit').src =
+  outfits[outfitIndex];
 
-document.getElementById('outfit').src = todayOutfit;
 
 // ─────────────────────────────
 // ПРОВЕРКА УСТРОЙСТВА
@@ -155,12 +163,17 @@ document.getElementById('outfit').src = todayOutfit;
 function isMobilePortrait() {
 
   const isMobile =
-    window.matchMedia('(max-width: 767px)').matches;
+    window.matchMedia(
+      '(max-width: 767px)'
+    ).matches;
 
   const isPortrait =
-    window.matchMedia('(orientation: portrait)').matches;
+    window.matchMedia(
+      '(orientation: portrait)'
+    ).matches;
 
   return isMobile && isPortrait;
+
 }
 
 
@@ -168,16 +181,24 @@ function isMobilePortrait() {
 // КАСТОМНЫЙ КУРСОР
 // ─────────────────────────────
 
-if (window.matchMedia('(pointer: fine)').matches) {
+if (
+  window.matchMedia('(pointer: fine)').matches
+) {
 
   customCursor.style.display = 'block';
 
-  document.addEventListener('mousemove', function (event) {
+  document.addEventListener(
+    'mousemove',
+    function (event) {
 
-    customCursor.style.left = event.clientX + 'px';
-    customCursor.style.top = event.clientY + 'px';
+      customCursor.style.left =
+        event.clientX + 'px';
 
-  });
+      customCursor.style.top =
+        event.clientY + 'px';
+
+    }
+  );
 
 }
 
@@ -188,54 +209,63 @@ if (window.matchMedia('(pointer: fine)').matches) {
 
 function returnToFoothill() {
 
-  window.location.href = '../foothill.html';
+  window.location.href =
+    '../foothill.html';
 
 }
 
 
-// Надпись «ВЕРНУТЬСЯ»
+returnText.addEventListener(
+  'click',
+  returnToFoothill
+);
 
-returnText.addEventListener('click', returnToFoothill);
 
-
-// Кнопка ателье
-
-atelierButton.addEventListener('click', returnToFoothill);
+atelierButton.addEventListener(
+  'click',
+  returnToFoothill
+);
 
 
 // ─────────────────────────────
-// ПЕРЕХОД К ОСНОВНОЙ СЦЕНЕ
+// ОТКРЫТИЕ АТЕЛЬЕ
 // ─────────────────────────────
 
 function showAtelier() {
 
-  // Видео исчезает, открывается само ателье.
-  // Вступительную музыку здесь НЕ останавливаем.
+  // Видео исчезает.
 
   introScreen.style.display = 'none';
+
+
+  // Появляется основная сцена.
 
   scene.classList.add('active');
 
 }
 
-// ─────────────────────────────
-// КОНЕЦ ВСТУПИТЕЛЬНОЙ МУЗЫКИ
-// ─────────────────────────────
-
-introMusic.addEventListener('ended', function () {
-
-  bgMusic.currentTime = 0;
-
-  bgMusic.play().catch(() => {
-    // Если браузер временно запретил воспроизведение,
-    // музыка запустится при следующем взаимодействии.
-  });
-
-});
-
 
 // ─────────────────────────────
-// ЗАПУСК МУЗЫКИ
+// ПОСЛЕ ОКОНЧАНИЯ ВСТУПИТЕЛЬНОЙ МУЗЫКИ
+// ─────────────────────────────
+
+introMusic.addEventListener(
+  'ended',
+  function () {
+
+    // Только теперь запускаем
+    // фоновую музыку.
+
+    bgMusic.currentTime = 0;
+
+    bgMusic.play().catch(() => {});
+
+  }
+);
+
+
+// ─────────────────────────────
+// ЗАПУСК ВСТУПИТЕЛЬНОЙ МУЗЫКИ
 // ─────────────────────────────
 
 function startIntroMusic() {
@@ -243,8 +273,11 @@ function startIntroMusic() {
   introMusic.volume = 1;
 
   introMusic.play().catch(() => {
-    // Если браузер заблокировал звук,
-    // он будет запущен после первого взаимодействия.
+
+    // Если браузер заблокировал
+    // автоматический звук,
+    // он будет запущен после касания.
+
   });
 
 }
@@ -260,28 +293,41 @@ function startVideo() {
     return;
   }
 
-  introVideo.muted = true;
 
-  const videoPromise = introVideo.play();
+  // Видео всегда без собственного звука.
+
+  introVideo.muted = true;
+  introVideo.volume = 0;
+
+
+  // Начинаем с самого начала.
+
+  introVideo.currentTime = 0;
+
+
+  // Сначала запускаем видео.
+
+  const videoPromise =
+    introVideo.play();
+
 
   if (videoPromise !== undefined) {
 
     videoPromise
-      .then(() => {
+      .then(function () {
+
+        // Видео успешно запустилось.
+        // Теперь пытаемся запустить музыку.
 
         startIntroMusic();
 
       })
-      .catch(() => {
+      .catch(function () {
 
-        // Видео не должно блокироваться,
-        // поэтому пробуем запустить его после касания.
+        // Если браузер заблокировал запуск,
+        // ждём первого касания.
 
       });
-
-  } else {
-
-    startIntroMusic();
 
   }
 
@@ -289,35 +335,50 @@ function startVideo() {
 
 
 // ─────────────────────────────
-// ЗАВЕРШЕНИЕ ВИДЕО
+// ОКОНЧАНИЕ ВИДЕО
 // ─────────────────────────────
 
-introVideo.addEventListener('ended', function () {
+introVideo.addEventListener(
+  'ended',
+  function () {
 
-  // Включаем белую вспышку
-  introFlash.classList.add('flash-active');
+    // Белая вспышка.
 
-
-  // Когда вспышка достигла максимальной яркости,
-  // незаметно меняем видео на страницу ателье.
-
-  setTimeout(function () {
-
-    showAtelier();
-
-  }, 150);
+    introFlash.classList.add(
+      'flash-active'
+    );
 
 
-  // После завершения анимации
-  // полностью убираем слой вспышки.
+    // Через 150 мс,
+    // когда вспышка уже яркая,
+    // показываем ателье.
 
-  setTimeout(function () {
+    setTimeout(
+      function () {
 
-    introFlash.classList.remove('flash-active');
+        showAtelier();
 
-  }, 2300);
+      },
+      150
+    );
 
-});
+
+    // После полного исчезновения
+    // вспышки убираем её.
+
+    setTimeout(
+      function () {
+
+        introFlash.classList.remove(
+          'flash-active'
+        );
+
+      },
+      2300
+    );
+
+  }
+);
 
 
 // ─────────────────────────────
@@ -331,56 +392,43 @@ function unlockAudio() {
   }
 
 
-  // Если вступительная музыка ещё не играет,
-  // пытаемся запустить её.
-
-  if (
-    introScreen.style.display !== 'none' &&
-    introVideo.currentTime < introVideo.duration
-  ) {
-
-    introMusic.play().catch(() => {});
-
-  }
-
-
-function unlockAudio() {
-
-  if (!isMobilePortrait()) {
-    return;
-  }
-
-  // Пока вступительная музыка ещё не закончилась,
-  // разрешаем браузеру запустить именно её.
+  // Пока вступительная музыка
+  // не закончилась — запускаем именно её.
 
   if (!introMusic.ended) {
 
     introMusic.play().catch(() => {});
 
     return;
-  }
-
-  // Фоновую музыку разрешаем запускать
-  // только после полного окончания вступительной.
-
-  if (introMusic.ended) {
-
-    bgMusic.play().catch(() => {});
 
   }
+
+
+  // Фоновую музыку запускаем
+  // только после окончания вступительной.
+
+  bgMusic.play().catch(() => {});
 
 }
 
 
-document.addEventListener('touchstart', unlockAudio, {
-  passive: true
-});
+document.addEventListener(
+  'touchstart',
+  unlockAudio,
+  {
+    passive: true
+  }
+);
 
-document.addEventListener('click', unlockAudio);
+
+document.addEventListener(
+  'click',
+  unlockAudio
+);
 
 
 // ─────────────────────────────
-// ЛЕПЕСТКИ / APPLE
+// APPLE / ЛЕПЕСТКИ
 // ─────────────────────────────
 
 let appleInterval = null;
@@ -388,26 +436,24 @@ let appleInterval = null;
 let isHolding = false;
 
 
-// Создание одного яблока
-
 function createApple(x, y) {
 
-  const apple = document.createElement('div');
+  const apple =
+    document.createElement('div');
 
-  apple.classList.add('apple-particle');
+  apple.classList.add(
+    'apple-particle'
+  );
 
-
-  // Чередуем два изображения
 
   const image =
     Math.random() < 0.5
       ? 'apple 1.png'
       : 'apple 2.png';
 
-  apple.style.backgroundImage = `url("${image}")`;
+  apple.style.backgroundImage =
+    `url("${image}")`;
 
-
-  // Случайное направление
 
   const angle =
     Math.random() * Math.PI * 2;
@@ -430,6 +476,7 @@ function createApple(x, y) {
   apple.style.left = x + 'px';
   apple.style.top = y + 'px';
 
+
   apple.style.setProperty(
     '--move-x',
     moveX + 'px'
@@ -446,25 +493,27 @@ function createApple(x, y) {
   );
 
 
-  // Немного случайный размер
-
   const size =
     22 + Math.random() * 24;
 
-  apple.style.width = size + 'px';
-  apple.style.height = size + 'px';
+  apple.style.width =
+    size + 'px';
+
+  apple.style.height =
+    size + 'px';
 
 
   document.body.appendChild(apple);
 
 
-  // Удаляем после окончания анимации
+  setTimeout(
+    function () {
 
-  setTimeout(() => {
+      apple.remove();
 
-    apple.remove();
-
-  }, 3000);
+    },
+    3000
+  );
 
 }
 
@@ -482,26 +531,26 @@ function startAppleEffect(x, y) {
   isHolding = true;
 
 
-  // Первый всплеск сразу
-
   createApple(x, y);
 
 
-  // Затем бесконечно создаём новые
+  appleInterval =
+    setInterval(
+      function () {
 
-  appleInterval = setInterval(() => {
-
-    if (!isHolding) {
-      return;
-    }
+        if (!isHolding) {
+          return;
+        }
 
 
-    createApple(
-      x + (-20 + Math.random() * 40),
-      y + (-20 + Math.random() * 40)
+        createApple(
+          x + (-20 + Math.random() * 40),
+          y + (-20 + Math.random() * 40)
+        );
+
+      },
+      180
     );
-
-  }, 180);
 
 }
 
@@ -517,7 +566,9 @@ function stopAppleEffect() {
 
   if (appleInterval !== null) {
 
-    clearInterval(appleInterval);
+    clearInterval(
+      appleInterval
+    );
 
     appleInterval = null;
 
@@ -530,88 +581,130 @@ function stopAppleEffect() {
 // МЫШЬ
 // ─────────────────────────────
 
-document.addEventListener('mousedown', function (event) {
+document.addEventListener(
+  'mousedown',
+  function (event) {
 
-  startAppleEffect(
-    event.clientX,
-    event.clientY
-  );
+    startAppleEffect(
+      event.clientX,
+      event.clientY
+    );
 
-});
-
-
-document.addEventListener('mouseup', function () {
-
-  stopAppleEffect();
-
-});
+  }
+);
 
 
-document.addEventListener('mouseleave', function () {
+document.addEventListener(
+  'mouseup',
+  function () {
 
-  stopAppleEffect();
+    stopAppleEffect();
 
-});
+  }
+);
+
+
+document.addEventListener(
+  'mouseleave',
+  function () {
+
+    stopAppleEffect();
+
+  }
+);
 
 
 // ─────────────────────────────
 // СЕНСОРНЫЙ ЭКРАН
 // ─────────────────────────────
 
-document.addEventListener('touchstart', function (event) {
+document.addEventListener(
+  'touchstart',
+  function (event) {
 
-  const touch = event.touches[0];
+    const touch =
+      event.touches[0];
 
-  if (!touch) {
-    return;
+    if (!touch) {
+      return;
+    }
+
+
+    startAppleEffect(
+      touch.clientX,
+      touch.clientY
+    );
+
+  },
+  {
+    passive: true
   }
+);
 
 
-  startAppleEffect(
-    touch.clientX,
-    touch.clientY
-  );
+document.addEventListener(
+  'touchend',
+  function () {
 
-}, {
-  passive: true
-});
+    stopAppleEffect();
 
-
-document.addEventListener('touchend', function () {
-
-  stopAppleEffect();
-
-}, {
-  passive: true
-});
+  },
+  {
+    passive: true
+  }
+);
 
 
-document.addEventListener('touchcancel', function () {
+document.addEventListener(
+  'touchcancel',
+  function () {
 
-  stopAppleEffect();
+    stopAppleEffect();
 
-}, {
-  passive: true
-});
+  },
+  {
+    passive: true
+  }
+);
 
 
 // ─────────────────────────────
-// ЕСЛИ ПОВЕРНУЛИ ТЕЛЕФОН
+// ПРОВЕРКА ОРИЕНТАЦИИ
 // ─────────────────────────────
 
 function checkOrientation() {
 
   if (isMobilePortrait()) {
 
-    unsupportedScreen.style.display = 'none';
+    unsupportedScreen.style.display =
+      'none';
+
+    // На вертикальном телефоне
+    // вступительный экран должен быть виден.
+
+    if (
+      !introVideo.ended &&
+      introScreen.style.display === 'none'
+    ) {
+
+      introScreen.style.display =
+        'flex';
+
+    }
 
   } else {
 
-    unsupportedScreen.style.display = 'flex';
+    // ПК / горизонтальный телефон.
 
-    introScreen.style.display = 'none';
+    unsupportedScreen.style.display =
+      'flex';
 
-    scene.classList.remove('active');
+    introScreen.style.display =
+      'none';
+
+    scene.classList.remove(
+      'active'
+    );
 
     introVideo.pause();
     introMusic.pause();
@@ -622,13 +715,23 @@ function checkOrientation() {
 }
 
 
-window.addEventListener('resize', checkOrientation);
+window.addEventListener(
+  'resize',
+  checkOrientation
+);
 
-window.addEventListener('orientationchange', function () {
 
-  setTimeout(checkOrientation, 100);
+window.addEventListener(
+  'orientationchange',
+  function () {
 
-});
+    setTimeout(
+      checkOrientation,
+      100
+    );
+
+  }
+);
 
 
 // ─────────────────────────────
@@ -636,6 +739,7 @@ window.addEventListener('orientationchange', function () {
 // ─────────────────────────────
 
 checkOrientation();
+
 
 if (isMobilePortrait()) {
 
