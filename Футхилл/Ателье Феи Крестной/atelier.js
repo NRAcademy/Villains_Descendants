@@ -15,6 +15,7 @@ const unsupportedScreen = document.getElementById('unsupported-screen');
 const returnText = document.getElementById('return-text');
 
 const customCursor = document.getElementById('custom-cursor');
+const introFlash = document.getElementById('intro-flash');
 
 // ─────────────────────────────
 // ЕЖЕДНЕВНЫЙ НАРЯД
@@ -293,7 +294,28 @@ function startVideo() {
 
 introVideo.addEventListener('ended', function () {
 
-  showAtelier();
+  // Включаем белую вспышку
+  introFlash.classList.add('flash-active');
+
+
+  // Когда вспышка достигла максимальной яркости,
+  // незаметно меняем видео на страницу ателье.
+
+  setTimeout(function () {
+
+    showAtelier();
+
+  }, 150);
+
+
+  // После завершения анимации
+  // полностью убираем слой вспышки.
+
+  setTimeout(function () {
+
+    introFlash.classList.remove('flash-active');
+
+  }, 2300);
 
 });
 
