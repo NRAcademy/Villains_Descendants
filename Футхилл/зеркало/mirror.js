@@ -132,21 +132,6 @@ if (saved && saved.date === today) {
   );
 }
 
-if (saved && saved.date === today) {
-  // Уже открывали сегодня — берём сохранённую комбинацию
-  combo = combos[saved.index];
-  alreadyOpened = true;
-} else {
-  // Новый день — индекс уникален для каждого устройства через хэш(deviceId + дата)
-  const baseIndex = hashCode(deviceId + today) % combos.length;
-  // Гарантируем, что не повторяется вчерашний
-  const index = (saved && baseIndex === saved.index)
-    ? (baseIndex + 1) % combos.length
-    : baseIndex;
-  combo = combos[index];
-  localStorage.setItem('mirrorDay', JSON.stringify({ date: today, index }));
-}
-
 // Применяем комбинацию ко всем layout
 document.getElementById('bg').src = combo.bg;
 document.querySelectorAll('.card-img').forEach(el => el.src = combo.card);
