@@ -365,12 +365,92 @@ function startIntroMusic() {
 // ЗАПУСК ВИДЕО
 // ─────────────────────────────
 
-function startVideo() {
+let introFailed = false;
 
-  console.log(
-    'Запуск видео...'
+
+// Если видео не загрузилось / не поддерживается —
+// не оставляем человека на чёрном экране.
+
+function skipBrokenIntro() {
+
+  if (introFailed) {
+    return;
+  }
+
+  introFailed = true;
+
+  console.warn(
+    'Вступительное видео недоступно — открываем ателье без него.'
   );
 
+  introMusic.pause();
+
+  showAtelier();
+
+  bgMusic.currentTime = 0;
+
+  bgMusic.play().catch(
+    function (error) {
+      console.log('Фоновая музыка не запустилась:', error);
+    }
+  );
+
+}
+
+
+function tryPlayVideo() {
+
+  if (
+    introFailed ||
+    introVideo.ended ||
+    !introVideo.paused ||
+    !isMobilePortrait()
+  ) {
+    return;
+  }
+
+  introVideo.muted = true;
+  introVideo.defaultMuted = true;
+  introVideo.volume = 0;
+  introVideo.playsInline = true;
+
+  const videoPromise = introVideo.play();
+
+  if (videoPromise !== undefined) {
+
+    videoPromise
+      .then(function () {
+
+        console.log('Видео успешно запущено.');
+
+        startIntroMusic();
+
+      })
+      .catch(function (error) {
+
+        console.error('Ошибка запуска видео:', error);
+
+        // NotSupportedError — файл не найден или кодек не поддерживается.
+        // NotAllowedError — ждём касания (см. unlockAudio).
+
+        if (error && error.name === 'NotSupportedError') {
+          skipBrokenIntro();
+        }
+
+      });
+
+  } else {
+
+    startIntroMusic();
+
+  }
+
+}
+
+
+function startVideo() {
+
+  console.log('Запуск видео...');
 
   if (!isMobilePortrait()) {
 
@@ -382,104 +462,26 @@ function startVideo() {
 
   }
 
+  console.log('Источник:', introVideo.currentSrc);
+  console.log('readyState:', introVideo.readyState);
+  console.log('networkState:', introVideo.networkState);
 
-  // Видео без звука.
-
-  introVideo.muted =
-    true;
-
-  introVideo.volume =
-    0;
-
-  introVideo.playsInline =
-    true;
-
-
-  // Начинаем с самого начала.
-
-  try {
-
-    introVideo.currentTime =
-      0;
-
-  } catch (error) {
-
-    console.log(
-      'Не удалось установить currentTime:',
-      error
-    );
-
+  if (introVideo.error) {
+    skipBrokenIntro();
+    return;
   }
 
-
-  // Информация для диагностики.
-
-  console.log(
-    'Видео:',
-    introVideo
-  );
-
-  console.log(
-    'Источник:',
-    introVideo.currentSrc
-  );
-
-  console.log(
-    'readyState:',
-    introVideo.readyState
-  );
-
-  console.log(
-    'networkState:',
-    introVideo.networkState
-  );
-
-
-  // Запускаем видео.
-
-  const videoPromise =
-    introVideo.play();
-
-
-  if (videoPromise !== undefined) {
-
-    videoPromise
-      .then(
-        function () {
-
-          console.log(
-            'Видео успешно запущено.'
-          );
-
-
-          // После успешного запуска
-          // видео запускаем вступительную музыку.
-
-          startIntroMusic();
-
-        }
-      )
-      .catch(
-        function (error) {
-
-          console.error(
-            'Ошибка запуска видео:',
-            error
-          );
-
-        }
-      );
-
-  } else {
-
-    // Старые браузеры,
-    // которые не возвращают Promise.
-
-    startIntroMusic();
-
-  }
+  tryPlayVideo();
 
 }
+
+
+// Видео догрузилось позже, чем сработал первый play() —
+// пробуем ещё раз.
+
+introVideo.addEventListener('canplay', tryPlayVideo);
+
+introVideo.addEventListener('error', skipBrokenIntro);
 
 
 // ─────────────────────────────
@@ -608,31 +610,19 @@ function unlockAudio() {
   }
 
 
-  // Если видео ещё не закончилось
-  // и почему-то остановлено —
-  // пробуем запустить его снова.
+  // Если видео ещё не запустилось —
+  // пробуем снова (теперь уже внутри жеста пользователя).
 
-  if (
-    !introVideo.ended &&
-    introVideo.paused
-  ) {
+  tryPlayVideo();
 
-    introVideo.muted =
-      true;
 
-    introVideo.playsInline =
-      true;
+  // Видео сломано — играем только фоновую музыку.
 
-    introVideo.play().catch(
-      function (error) {
+  if (introFailed) {
 
-        console.log(
-          'Повторный запуск видео не удался:',
-          error
-        );
+    bgMusic.play().catch(function () {});
 
-      }
-    );
+    return;
 
   }
 
@@ -677,6 +667,15 @@ function unlockAudio() {
 
 document.addEventListener(
   'touchstart',
+  unlockAudio,
+  {
+    passive: true
+  }
+);
+
+
+document.addEventListener(
+  'touchend',
   unlockAudio,
   {
     passive: true
