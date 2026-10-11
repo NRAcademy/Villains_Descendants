@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Ателье Крестной Феи</title>
+
+  <link rel="stylesheet" href="atelier.css">
+</head>
+
+<body>
+
+  <!-- Кастомный курсор -->
+  <div id="custom-cursor"></div>
+
+  <!-- Музыка вступления -->
+  <audio
+    id="introMusic"
+    src="вступление.mp3"
+    preload="auto">
+  </audio>
+
+  <!-- Фоновая музыка -->
+  <audio
+    id="bgMusic"
+    src="фоновая мелодия.mp3"
+    preload="auto"
+    loop>
+  </audio>
+
+
+  <!-- Пустая страница для ПК / горизонтального телефона -->
+  <div id="unsupported-screen">
+    <img src="пустая страница.png" alt="" draggable="false">
+
+    <div id="return-text">ВЕРНУТЬСЯ</div>
+  </div>
+
+
+  <!-- Вступительное видео -->
+  <div id="intro-video">
+    <video
+      id="introVid"
+      src="вступление.mp4"
+      playsinline
+      webkit-playsinline
+      muted
+      preload="auto">
+    </video>
+  </div>
+
+
+  <!-- Основная сцена -->
+  <div id="scene">
+
+    <img
+      id="bg"
+      src="фон.png"
+      alt=""
+      draggable="false">
+
+    <img
+      id="frame"
+      src="рама.png"
+      alt=""
+      draggable="false">
+
+    <img
+      id="outfit"
+      class="slide-in"
+      src="наряд 1.png"
+      alt=""
+      draggable="false">
+
+    <img
+      id="atelier-button"
+      src="кнопка.png"
+      alt="Вернуться"
+      draggable="false">
+
+  </div>
+
+
+  <script src="atelier.js"></script>
+
+</body>
+</html>
