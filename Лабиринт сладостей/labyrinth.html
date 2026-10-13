@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Лабиринт сладостей</title>
+<style>
+@font-face{font-family:Anticva;src:url('Anticva.otf')}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;cursor:none!important}
+html,body{margin:0;height:100%;overflow:hidden;background:#000;color:#fff;font-family:Anticva,Georgia,serif;touch-action:none}
+img{-webkit-user-drag:none;display:block}
+
+/* ---- кастомный курсор ---- */
+#cur{position:fixed;left:0;top:0;width:40px;pointer-events:none;z-index:100001;display:none}
+.fb{position:fixed;width:38px;margin:-19px 0 0 -19px;pointer-events:none;z-index:100000;animation:fly .9s ease-out forwards}
+@keyframes fly{from{transform:translate(0,0) scale(.5) rotate(0);opacity:1}
+to{transform:translate(var(--dx),var(--dy)) scale(1.1) rotate(var(--r));opacity:0}}
+
+/* ---- заглушка для компьютера ---- */
+#desk{position:fixed;inset:0;z-index:9999;background:#000 url("пустая страница.png") center/cover no-repeat;display:none}
+#back{position:absolute;left:50%;bottom:8vh;transform:translateX(-50%);font:inherit;font-size:clamp(24px,3vw,44px);
+color:#fff;background:rgba(0,0,0,.45);border:2px solid #fff;padding:.4em 1.4em;letter-spacing:.08em}
+
+/* ---- игра ---- */
+#bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+#hud{position:fixed;top:0;left:0;right:0;height:50px;display:flex;justify-content:center;align-items:center;gap:10px;z-index:10;padding-top:env(safe-area-inset-top)}
+#hud img{height:38px;opacity:.25;filter:grayscale(1);transition:.3s}
+#hud img.on{opacity:1;filter:none;transform:scale(1.1)}
+#board{position:absolute;left:50%;top:50px;transform:translateX(-50%);z-index:5}
+#cv{position:absolute;inset:0}
+.e{position:absolute;left:0;top:0;pointer-events:none}
+.e img{width:100%;height:100%;object-fit:contain}
+.sw{z-index:2}.sw img{padding:12%}.skull{z-index:2}.enemy{z-index:3}.bat{z-index:4}.web{z-index:5}
+.pop img{animation:pop .5s ease-out}
+@keyframes pop{from{transform:scale(0);opacity:0}70%{transform:scale(1.3)}to{transform:scale(1);opacity:1}}
+.sway{animation:sway .45s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-14deg) translateX(-3px)}to{transform:rotate(14deg) translateX(3px)}}
+.bat.burn img{animation:burn .22s infinite alternate;filter:sepia(1) saturate(10) hue-rotate(-45deg) drop-shadow(0 0 10px #f00)}
+.bat.burn::after{content:'';position:absolute;left:5%;right:5%;top:-45%;bottom:20%;
+background:radial-gradient(ellipse at 50% 80%,#ff0 0,#f60 35%,rgba(255,0,0,.6) 60%,transparent 72%);animation:flick .15s infinite alternate;mix-blend-mode:screen}
+@keyframes burn{from{filter:sepia(1) saturate(10) hue-rotate(-45deg) brightness(.9) drop-shadow(0 0 6px #f30)}
+to{filter:sepia(1) saturate(10) hue-rotate(-45deg) brightness(1.6) drop-shadow(0 0 18px #ff0)}}
+@keyframes flick{from{transform:scale(.85,.95)}to{transform:scale(1.1,1.15) translateY(-4px)}}
+
+#dim{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity 1.1s;z-index:50}
+#dim.on{opacity:.88}
+#flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:60}
+#flash.go{animation:fl .9s ease-out}
+@keyframes fl{0%{opacity:0}15%{opacity:1}100%{opacity:0}}
+#res,#fail{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+#res{z-index:70;background:rgba(0,0,0,.6)}
+#res.on,#fail.on{display:flex;animation:fadein .8s}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+#res h1,#fail h1{font-weight:normal;letter-spacing:.08em;margin:0 0 18px}
+#res h1{font-size:34px}
+#fail h1{font-size:64px;color:#ff3b3b;text-shadow:0 0 25px #f00}
+#fail{z-index:80;background:rgba(70,0,0,.93)}
+#fail p{opacity:.8;margin-top:10px}
+.cards{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;max-width:340px}
+.card{position:relative;width:70px}
+.card img{width:100%}
+.card b{position:absolute;left:-6px;top:-8px;background:#7b2cbf;border-radius:50%;width:24px;height:24px;font:14px/24px sans-serif;text-align:center}
+#tm{margin:22px 0 12px;opacity:.85}
+#again{font:inherit;font-size:22px;color:#fff;background:#7b2cbf;border:0;border-radius:10px;padding:10px 24px}
+#again:disabled{opacity:.35}
+#toast{position:fixed;left:50%;bottom:6%;transform:translateX(-50%);background:rgba(0,0,0,.75);padding:10px 18px;border-radius:20px;z-index:40;opacity:0;transition:.3s;white-space:nowrap;pointer-events:none}
+#toast.on{opacity:1}
+</style>
+</head>
+<body>
+
+<div id="desk"><button id="back">ВЕРНУТЬСЯ</button></div>
+
+<script>
+const A = n => encodeURI(n);
+const $ = (t, c, p = document.body) => { const e = document.createElement(t); if (c) e.className = c; p.appendChild(e); return e; };
+const mobile = /Android|iPhone|iPad|iPod|Mobile|Opera Mini/i.test(navigator.userAgent) ||
+  (navigator.maxTouchPoints > 1 && matchMedia('(pointer:coarse)').matches);
+
+/* ================= КАСТОМНЫЙ КУРСОР ================= */
+(() => {
+  const cur = new Image(); cur.src = A('custom-cursor.png'); cur.id = 'cur'; document.body.appendChild(cur);
+  let n = 0, down = false, lx = 0, ly = 0;
+  function spawn(x, y) {
+    const b = new Image(); b.src = A(n++ % 2 ? 'bat2.png' : 'bat1.png'); b.className = 'fb';
+    b.style.left = x + 'px'; b.style.top = y + 'px';
+    const a = Math.random() * Math.PI * 2, d = 60 + Math.random() * 70;
+    b.style.setProperty('--dx', Math.cos(a) * d + 'px');
+    b.style.setProperty('--dy', Math.sin(a) * d - 40 + 'px');
+    b.style.setProperty('--r', (Math.random() * 80 - 40) + 'deg');
+    document.body.appendChild(b); setTimeout(() => b.remove(), 900);
+  }
+  addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    cur.style.display = 'block'; cur.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
+    if (down && Math.hypot(e.clientX - lx, e.clientY - ly) > 34) { lx = e.clientX; ly = e.clientY; spawn(lx, ly); }
+  });
+  addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    down = true; lx = e.clientX; ly = e.clientY; spawn(lx, ly);
+  });
+  ['pointerup', 'pointercancel', 'blur'].forEach(ev => addEventListener(ev, () => down = false));
+})();
+
+if (!mobile) {
+  /* ================= КОМПЬЮТЕР: ЗАГЛУШКА ================= */
+  document.getElementById('desk').style.display = 'block';
+  document.getElementById('back').onclick = () => location.href = 'https://nracademy.github.io/Villains_Descendants/';
+} else initGame();
+
+function initGame() {
+  const COLS = 11, ROWS = 17, MIN_SWEETS = 2, COOLDOWN = 5 * 60 * 1000;
+  const BAT_SPEED = 4.2, ENEMY_SPEED = 3.0, WEB_SLOW = 0.22, ENEMY_DELAY = 2.5;
+  const EXIT = { x: COLS - 2, y: ROWS - 1 };
+
+  /* ---------- фон и музыка ---------- */
+  const bg = $('video'); bg.id = 'bg'; bg.src = A('фон.mp4'); bg.muted = true; bg.loop = true; bg.autoplay = true; bg.playsInline = true;
+  bg.setAttribute('playsinline', ''); bg.play().catch(() => {});
+  const mus = new Audio(A('фоновая мелодия.mp3')); mus.loop = true; mus.volume = .6;
+  const evs = ['touchstart', 'pointerdown', 'keydown', 'click'];
+  const unlock = () => { bg.play().catch(() => {}); mus.play().then(() => evs.forEach(ev => removeEventListener(ev, unlock))).catch(() => {}); };
+  evs.forEach(ev => addEventListener(ev, unlock, { passive: true })); unlock();
+
+  /* ---------- интерфейс ---------- */
+  const hud = $('div'); hud.id = 'hud';
+  const hudImgs = [1, 2, 3, 4].map(i => { const im = $('img', '', hud); im.src = A(`карта сладость ${i}.png`); return im; });
+  const board = $('div'); board.id = 'board';
+  const cv = $('canvas', '', board); cv.id = 'cv';
+  const dim = $('div'); dim.id = 'dim';
+  const flash = $('div'); flash.id = 'flash';
+  const res = $('div'); res.id = 'res';
+  const fail = $('div'); fail.id = 'fail';
+  fail.innerHTML = '<h1>ПРОВАЛ</h1><p>Коснись экрана, чтобы попробовать снова</p>';
+  const toast = $('div'); toast.id = 'toast';
+  let tt; const say = t => { toast.textContent = t; toast.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('on'), 1800); };
+
+  const ts = Math.floor(Math.min(innerWidth / COLS, (innerHeight - 60) / ROWS));
+  board.style.width = cv.width = COLS * ts; board.style.height = cv.height = ROWS * ts;
+  board.style.width = COLS * ts + 'px'; board.style.height = ROWS * ts + 'px';
+  const ctx = cv.getContext('2d');
+
+  /* ---------- кулдаун ---------- */
+  let saved = null; try { saved = JSON.parse(localStorage.getItem('maze_win')); } catch (e) {}
+  if (saved && Date.now() - saved.t < COOLDOWN) { showRes(saved.order, saved.t); return; }
+
+  /* ---------- генерация лабиринта ---------- */
+  const rnd = n => Math.random() * n | 0, pick = a => a[rnd(a.length)];
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1);[a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const g = Array.from({ length: ROWS }, () => Array(COLS).fill(1));
+  (function gen() {
+    const st = [[1, 1]]; g[1][1] = 0;
+    while (st.length) {
+      const [x, y] = st[st.length - 1];
+      const n = [[2, 0], [-2, 0], [0, 2], [0, -2]].map(([a, b]) => [x + a, y + b, a / 2, b / 2])
+        .filter(([nx, ny]) => nx > 0 && ny > 0 && nx < COLS - 1 && ny < ROWS - 1 && g[ny][nx]);
+      if (!n.length) { st.pop(); continue; }
+      const [nx, ny, hx, hy] = pick(n); g[y + hy][x + hx] = 0; g[ny][nx] = 0; st.push([nx, ny]);
+    }
+    const w = []; // лишние проходы -> несколько путей
+    for (let y = 1; y < ROWS - 1; y++) for (let x = 1; x < COLS - 1; x++) if (g[y][x] && ((x % 2 === 0) !== (y % 2 === 0))) w.push([x, y]);
+    shuffle(w).slice(0, 10).forEach(([x, y]) => g[y][x] = 0);
+    g[EXIT.y][EXIT.x] = 0;
+  })();
+  const P = []; for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) if (!g[y][x]) P.push([x, y]);
+
+  // отрисовка стен и полупрозрачных путей
+  for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) {
+    ctx.fillStyle = g[y][x] ? 'rgba(12,0,24,.78)' : (x === EXIT.x && y === EXIT.y ? 'rgba(120,255,160,.4)' : 'rgba(255,255,255,.14)');
+    ctx.fillRect(x * ts, y * ts, ts, ts);
+    if (g[y][x]) { ctx.strokeStyle = 'rgba(170,90,255,.35)'; ctx.strokeRect(x * ts + .5, y * ts + .5, ts - 1, ts - 1); }
+  }
+
+  /* ---------- сущности ---------- */
+  const ent = (cls, src) => { const d = $('div', 'e ' + cls, board); d.style.width = d.style.height = ts + 'px'; const i = $('img', '', d); i.src = A(src); return d; };
+  const place = (el, x, y) => el.style.transform = `translate(${x * ts}px,${y * ts}px)`;
+  let skull = null;
+  const free = (x, y) => x >= 0 && y >= 0 && x < COLS && y < ROWS && !g[y][x] && !(skull && skull.x === x && skull.y === y);
+  const DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+  function bfs(sx, sy) {
+    const d = Array.from({ length: ROWS }, () => Array(COLS).fill(-1)); d[sy][sx] = 0; const q = [[sx, sy]];
+    for (let i = 0; i < q.length; i++) { const [x, y] = q[i];
+      for (const [a, b] of DIRS) { const nx = x + a, ny = y + b; if (free(nx, ny) && d[ny][nx] < 0) { d[ny][nx] = d[y][x] + 1; q.push([nx, ny]); } } }
+    d.n = q.length; return d;
+  }
+
+  const bat = { x: 1, y: 1, tx: null, ty: null, fx: 1, fy: 1, dx: 1, dy: 0, moving: false };
+  const batEl = ent('bat', 'летучая мышь.gif'); const flipEl = batEl; const batImg = batEl.firstChild;
+  place(batEl, bat.x, bat.y);
+
+  // враг — в самой дальней точке от старта
+  const d0 = bfs(1, 1); let far = [1, 1], fd = -1;
+  P.forEach(([x, y]) => { if (d0[y][x] > fd && !(x === EXIT.x && y === EXIT.y)) { fd = d0[y][x]; far = [x, y]; } });
+  const enemy = { x: far[0], y: far[1], tx: null, ty: null, dx: 0, dy: 0 };
+  const enemyEl = ent('enemy', 'враг.png'); place(enemyEl, enemy.x, enemy.y);
+
+  // паутина (неподвижна, рисуется поверх мыши)
+  const webs = [];
+  shuffle(P.filter(([x, y]) => !(x === 1 && y === 1) && !(x === EXIT.x && y === EXIT.y) && !(x === far[0] && y === far[1]))).slice(0, 3)
+    .forEach(([x, y]) => { const el = ent('web', 'паутина.png'); place(el, x, y); webs.push({ x, y, el }); });
+
+  const skullEl = ent('skull', 'препятствие.png');
+  const sweets = [1, 2, 3, 4].map(id => ({ id, el: ent('sw', `сладость ${id}.png`), x: 0, y: 0 }));
+  const order = [];
+
+  function relocate() {
+    const bt = [Math.round(bat.x), Math.round(bat.y)], en = [Math.round(enemy.x), Math.round(enemy.y)];
+    const md = (a, b) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
+    const bad = c => (c[0] === EXIT.x && c[1] === EXIT.y) || md(c, bt) < 1 || webs.some(w => w.x === c[0] && w.y === c[1]);
+    // препятствие: не должно отрезать часть лабиринта
+    let s = null;
+    for (let i = 0; i < 100 && !s; i++) {
+      const c = pick(P); if (bad(c) || md(c, bt) < 2 || md(c, en) < 1) continue;
+      skull = { x: c[0], y: c[1] };
+      if (bfs(bt[0], bt[1]).n === P.length - 1) s = c;
+    }
+    if (!s) { // запасной вариант: тупик
+      const dead = P.filter(c => !bad(c) && md(c, bt) >= 2 && DIRS.filter(([a, b]) => !g[c[1] + b]?.[c[0] + a]).length === 1);
+      s = dead.length ? pick(dead) : null;
+    }
+    skull = s ? { x: s[0], y: s[1] } : null;
+    skullEl.style.display = skull ? '' : 'none';
+    if (skull) { place(skullEl, skull.x, skull.y); skullEl.classList.remove('pop'); void skullEl.offsetWidth; skullEl.classList.add('pop'); }
+    // оставшиеся сладости
+    const left = sweets.filter(w => !w.got);
+    const cand = shuffle(P.filter(c => !bad(c) && md(c, bt) >= 3 && !(skull && skull.x === c[0] && skull.y === c[1])));
+    left.forEach((w, i) => {
+      const c = cand[i] || pick(P); w.x = c[0]; w.y = c[1]; place(w.el, w.x, w.y);
+      w.el.classList.remove('pop'); void w.el.offsetWidth; w.el.classList.add('pop');
+    });
+  }
+  relocate();
+
+  /* ---------- управление ---------- */
+  let want = null, ax = 0, ay = 0, moved = false;
+  addEventListener('touchstart', e => { const t = e.touches[0]; ax = t.clientX; ay = t.clientY; moved = false; }, { passive: true });
+  addEventListener('touchmove', e => {
+    e.preventDefault(); const t = e.touches[0], dx = t.clientX - ax, dy = t.clientY - ay;
+    if (Math.hypot(dx, dy) > 14) { want = Math.abs(dx) > Math.abs(dy) ? [Math.sign(dx), 0] : [0, Math.sign(dy)]; ax = t.clientX; ay = t.clientY; moved = true; }
+  }, { passive: false });
+  addEventListener('touchend', () => { if (!moved) want = null; }); // касание без свайпа — остановка
+  const KEYS = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0], w: [0, -1], s: [0, 1], a: [-1, 0], d: [1, 0] };
+  addEventListener('keydown', e => { if (KEYS[e.key]) want = KEYS[e.key]; else if (e.key === ' ') want = null; });
+
+  /* ---------- движение ---------- */
+  function mover(e, dt, spd, choose) {
+    let left = spd * dt;
+    while (left > 0) {
+      if (e.tx == null) {
+        const d = choose(e); if (!d) { e.moving = false; return; }
+        e.fx = e.x; e.fy = e.y; e.tx = e.x + d[0]; e.ty = e.y + d[1]; e.dx = d[0]; e.dy = d[1];
+      }
+      const vx = e.tx - e.x, vy = e.ty - e.y, dist = Math.hypot(vx, vy);
+      if (dist <= left) { e.x = e.tx; e.y = e.ty; e.tx = null; left -= dist; }
+      else { e.x += vx / dist * left; e.y += vy / dist * left; left = 0; }
+    }
+    e.moving = true;
+  }
+  const batChoose = e => {
+    if (!want) return null; const nx = e.x + want[0], ny = e.y + want[1];
+    if (!free(nx, ny)) return null;
+    if (nx === EXIT.x && ny === EXIT.y && order.length < MIN_SWEETS) { say(`Собери минимум ${MIN_SWEETS} сладости`); want = null; return null; }
+    return want;
+  };
+  const enemyChoose = e => {
+    const d = bfs(Math.round(bat.x), Math.round(bat.y)); let best = null, bd = d[e.y][e.x];
+    if (bd <= 0) return null;
+    for (const [a, b] of DIRS) { const nx = e.x + a, ny = e.y + b; if (free(nx, ny) && d[ny][nx] >= 0 && d[ny][nx] < bd) { bd = d[ny][nx]; best = [a, b]; } }
+    return best;
+  };
+
+  /* ---------- цикл ---------- */
+  let state = 'play', last = performance.now(), time = 0;
+  function loop(now) {
+    const dt = Math.min(.05, (now - last) / 1000); last = now; time += dt;
+    if (state === 'play') {
+      // разворот в обратную сторону на полпути
+      if (bat.tx != null && want && want[0] === -bat.dx && want[1] === -bat.dy) {
+        [bat.tx, bat.fx] = [bat.fx, bat.tx]; [bat.ty, bat.fy] = [bat.fy, bat.ty]; bat.dx = want[0]; bat.dy = want[1];
+      }
+      const bx = Math.round(bat.x), by = Math.round(bat.y);
+      const slow = webs.some(w => w.x === bx && w.y === by);
+      mover(bat, dt, BAT_SPEED * (slow ? WEB_SLOW : 1), batChoose);
+      if (time > ENEMY_DELAY) mover(enemy, dt, ENEMY_SPEED, enemyChoose);
+      place(batEl, bat.x, bat.y); place(enemyEl, enemy.x, enemy.y);
+      batImg.classList.toggle('sway', bat.moving);
+      if (bat.dx) batImg.style.transform = bat.moving ? '' : ''; // раскачивается через класс
+      batEl.style.setProperty('--f', bat.dx < 0 ? -1 : 1);
+      batImg.parentElement.style.filter = '';
+      batEl.firstChild.style.scale = bat.dx < 0 ? '-1 1' : '1 1';
+      enemyEl.firstChild.style.scale = enemy.dx < 0 ? '-1 1' : '1 1';
+
+      for (const w of sweets) if (!w.got && Math.hypot(w.x - bat.x, w.y - bat.y) < .55) {
+        w.got = true; w.el.remove(); order.push(w.id); hudImgs[w.id - 1].classList.add('on');
+        if (sweets.some(s => !s.got)) relocate();
+      }
+      if (bat.x === EXIT.x && bat.y === EXIT.y) win();
+      else if (time > ENEMY_DELAY && Math.hypot(enemy.x - bat.x, enemy.y - bat.y) < .6) lose();
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  function win() {
+    state = 'over'; const t = Date.now();
+    localStorage.setItem('maze_win', JSON.stringify({ t, order }));
+    dim.classList.add('on');
+    setTimeout(() => { flash.classList.add('go'); setTimeout(() => showRes(order, t), 350); }, 1300);
+  }
+  function lose() {
+    state = 'over'; batEl.classList.add('burn'); batImg.classList.remove('sway');
+    setTimeout(() => { fail.classList.add('on'); fail.onclick = () => location.reload(); }, 1500);
+  }
+}
+
+/* ---------- результаты ---------- */
+function showRes(order, t) {
+  const COOLDOWN = 5 * 60 * 1000;
+  const res = document.getElementById('res') || (() => { const d = $('div'); d.id = 'res'; return d; })();
+  document.getElementById('dim')?.classList.add('on');
+  res.innerHTML = '<h1>ТВОЙ ПУТЬ</h1><div class="cards"></div><div id="tm"></div><button id="again" disabled>ИГРАТЬ СНОВА</button>';
+  const cards = res.querySelector('.cards');
+  if (!order.length) cards.textContent = 'Без сладостей…';
+  order.forEach((id, i) => { const c = $('div', 'card', cards); c.innerHTML = `<img src="${A(`карта сладость ${id}.png`)}"><b>${i + 1}</b>`; });
+  res.classList.add('on');
+  const tm = res.querySelector('#tm'), btn = res.querySelector('#again');
+  const tick = () => {
+    const l = COOLDOWN - (Date.now() - t);
+    if (l <= 0) { tm.textContent = 'Можно играть снова'; btn.disabled = false; clearInterval(iv); return; }
+    const s = Math.ceil(l / 1000); tm.textContent = `Следующая игра через ${String(s / 60 | 0).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+  };
+  const iv = setInterval(tick, 1000); tick();
+  btn.onclick = () => location.reload();
+}
+</script>
+</body>
+</html>
